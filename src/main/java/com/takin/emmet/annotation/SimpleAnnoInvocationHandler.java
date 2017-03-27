@@ -32,7 +32,7 @@ class SimpleAnnoInvocationHandler implements InvocationHandler {
         } else if (CommonUtil.eq("toString", methodName)) {
             return toString();
         }
-        
+
         Object result = method.getDefaultValue();
 
         if (result == null) {
