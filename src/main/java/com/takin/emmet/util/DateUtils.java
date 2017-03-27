@@ -1,4 +1,4 @@
-package com.takin.emmet.date;
+package com.takin.emmet.util;
 
 import java.text.DateFormat;
 import java.text.ParseException;
