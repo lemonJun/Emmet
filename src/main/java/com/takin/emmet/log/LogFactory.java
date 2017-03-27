@@ -10,6 +10,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import com.google.common.collect.Maps;
+import com.takin.emmet.collection.CollectionUtil;
 import com.takin.emmet.log.factory.Resource;
 import com.takin.emmet.log.factory.RollLogFactory;
 import com.takin.emmet.log.log.Log;
@@ -53,8 +55,12 @@ public class LogFactory {
                 e.printStackTrace();
             }
         }
-        logMaps = Collections.unmodifiableMap(tmplogMaps);
-        registerHandler(logMaps.entrySet());
+        if (CollectionUtil.isNotEmpty(tmplogMaps)) {
+            logMaps = Collections.unmodifiableMap(tmplogMaps);
+            registerHandler(logMaps.entrySet());
+        } else {
+            logMaps = Maps.newHashMap();
+        }
     }
 
     // 返回配置路径
