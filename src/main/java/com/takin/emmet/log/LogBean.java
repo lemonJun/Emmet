@@ -10,7 +10,7 @@ public class LogBean {
     public String getCls() {
         return cls;
     }
-    
+
     public void setCls(String cls) {
         this.cls = cls;
     }

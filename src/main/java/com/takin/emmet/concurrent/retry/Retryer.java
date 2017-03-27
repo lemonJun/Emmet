@@ -60,11 +60,9 @@ public final class Retryer<V> {
      *                           or not. If an attempt is rejected, the retryer will retry the call, unless the stop
      *                           strategy indicates otherwise or the thread is interrupted.
      */
-    public Retryer(@Nonnull StopStrategy stopStrategy,
-                   @Nonnull WaitStrategy waitStrategy,
-                   @Nonnull Predicate<Attempt<V>> rejectionPredicate) {
+    public Retryer(@Nonnull StopStrategy stopStrategy, @Nonnull WaitStrategy waitStrategy, @Nonnull Predicate<Attempt<V>> rejectionPredicate) {
 
-        this(AttemptTimeLimiters.<V>noTimeLimit(), stopStrategy, waitStrategy, BlockStrategies.threadSleepStrategy(), rejectionPredicate);
+        this(AttemptTimeLimiters.<V> noTimeLimit(), stopStrategy, waitStrategy, BlockStrategies.threadSleepStrategy(), rejectionPredicate);
     }
 
     /**
@@ -77,10 +75,7 @@ public final class Retryer<V> {
      *                           or not. If an attempt is rejected, the retryer will retry the call, unless the stop
      *                           strategy indicates otherwise or the thread is interrupted.
      */
-    public Retryer(@Nonnull AttemptTimeLimiter<V> attemptTimeLimiter,
-                   @Nonnull StopStrategy stopStrategy,
-                   @Nonnull WaitStrategy waitStrategy,
-                   @Nonnull Predicate<Attempt<V>> rejectionPredicate) {
+    public Retryer(@Nonnull AttemptTimeLimiter<V> attemptTimeLimiter, @Nonnull StopStrategy stopStrategy, @Nonnull WaitStrategy waitStrategy, @Nonnull Predicate<Attempt<V>> rejectionPredicate) {
         this(attemptTimeLimiter, stopStrategy, waitStrategy, BlockStrategies.threadSleepStrategy(), rejectionPredicate);
     }
 
@@ -95,11 +90,7 @@ public final class Retryer<V> {
      *                           or not. If an attempt is rejected, the retryer will retry the call, unless the stop
      *                           strategy indicates otherwise or the thread is interrupted.
      */
-    public Retryer(@Nonnull AttemptTimeLimiter<V> attemptTimeLimiter,
-                   @Nonnull StopStrategy stopStrategy,
-                   @Nonnull WaitStrategy waitStrategy,
-                   @Nonnull BlockStrategy blockStrategy,
-                   @Nonnull Predicate<Attempt<V>> rejectionPredicate) {
+    public Retryer(@Nonnull AttemptTimeLimiter<V> attemptTimeLimiter, @Nonnull StopStrategy stopStrategy, @Nonnull WaitStrategy waitStrategy, @Nonnull BlockStrategy blockStrategy, @Nonnull Predicate<Attempt<V>> rejectionPredicate) {
         this(attemptTimeLimiter, stopStrategy, waitStrategy, blockStrategy, rejectionPredicate, new ArrayList<RetryListener>());
     }
 
@@ -116,12 +107,7 @@ public final class Retryer<V> {
      * @param listeners          collection of retry listeners
      */
     @Beta
-    public Retryer(@Nonnull AttemptTimeLimiter<V> attemptTimeLimiter,
-                   @Nonnull StopStrategy stopStrategy,
-                   @Nonnull WaitStrategy waitStrategy,
-                   @Nonnull BlockStrategy blockStrategy,
-                   @Nonnull Predicate<Attempt<V>> rejectionPredicate,
-                   @Nonnull Collection<RetryListener> listeners) {
+    public Retryer(@Nonnull AttemptTimeLimiter<V> attemptTimeLimiter, @Nonnull StopStrategy stopStrategy, @Nonnull WaitStrategy waitStrategy, @Nonnull BlockStrategy blockStrategy, @Nonnull Predicate<Attempt<V>> rejectionPredicate, @Nonnull Collection<RetryListener> listeners) {
         Preconditions.checkNotNull(attemptTimeLimiter, "timeLimiter may not be null");
         Preconditions.checkNotNull(stopStrategy, "stopStrategy may not be null");
         Preconditions.checkNotNull(waitStrategy, "waitStrategy may not be null");
@@ -154,7 +140,7 @@ public final class Retryer<V> {
      */
     public V call(Callable<V> callable) throws ExecutionException, RetryException {
         long startTime = System.nanoTime();
-        for (int attemptNumber = 1; ; attemptNumber++) {
+        for (int attemptNumber = 1;; attemptNumber++) {
             Attempt<V> attempt;
             try {
                 V result = attemptTimeLimiter.call(callable);
@@ -302,8 +288,7 @@ public final class Retryer<V> {
         private Retryer<X> retryer;
         private Callable<X> callable;
 
-        private RetryerCallable(Retryer<X> retryer,
-                                Callable<X> callable) {
+        private RetryerCallable(Retryer<X> retryer, Callable<X> callable) {
             this.retryer = retryer;
             this.callable = callable;
         }

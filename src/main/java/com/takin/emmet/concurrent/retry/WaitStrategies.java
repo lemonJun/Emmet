@@ -46,7 +46,7 @@ public final class WaitStrategies {
     public static WaitStrategy noWait() {
         return NO_WAIT_STRATEGY;
     }
-    
+
     /**
      * Returns a wait strategy that sleeps a fixed amount of time before retrying.
      *
@@ -84,14 +84,10 @@ public final class WaitStrategies {
      * @throws IllegalStateException if the minimum sleep time is &lt; 0, or if the
      *                               maximum sleep time is less than (or equals to) the minimum.
      */
-    public static WaitStrategy randomWait(long minimumTime,
-                                          @Nonnull TimeUnit minimumTimeUnit,
-                                          long maximumTime,
-                                          @Nonnull TimeUnit maximumTimeUnit) {
+    public static WaitStrategy randomWait(long minimumTime, @Nonnull TimeUnit minimumTimeUnit, long maximumTime, @Nonnull TimeUnit maximumTimeUnit) {
         Preconditions.checkNotNull(minimumTimeUnit, "The minimum time unit may not be null");
         Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
-        return new RandomWaitStrategy(minimumTimeUnit.toMillis(minimumTime),
-                maximumTimeUnit.toMillis(maximumTime));
+        return new RandomWaitStrategy(minimumTimeUnit.toMillis(minimumTime), maximumTimeUnit.toMillis(maximumTime));
     }
 
     /**
@@ -105,14 +101,10 @@ public final class WaitStrategies {
      * @param incrementTimeUnit    the unit of the increment
      * @return a wait strategy that incrementally sleeps an additional fixed time after each failed attempt
      */
-    public static WaitStrategy incrementingWait(long initialSleepTime,
-                                                @Nonnull TimeUnit initialSleepTimeUnit,
-                                                long increment,
-                                                @Nonnull TimeUnit incrementTimeUnit) {
+    public static WaitStrategy incrementingWait(long initialSleepTime, @Nonnull TimeUnit initialSleepTimeUnit, long increment, @Nonnull TimeUnit incrementTimeUnit) {
         Preconditions.checkNotNull(initialSleepTimeUnit, "The initial sleep time unit may not be null");
         Preconditions.checkNotNull(incrementTimeUnit, "The increment time unit may not be null");
-        return new IncrementingWaitStrategy(initialSleepTimeUnit.toMillis(initialSleepTime),
-                incrementTimeUnit.toMillis(increment));
+        return new IncrementingWaitStrategy(initialSleepTimeUnit.toMillis(initialSleepTime), incrementTimeUnit.toMillis(increment));
     }
 
     /**
@@ -133,8 +125,7 @@ public final class WaitStrategies {
      * @param maximumTimeUnit the unit of the maximum time
      * @return a wait strategy that increments with each failed attempt using exponential backoff
      */
-    public static WaitStrategy exponentialWait(long maximumTime,
-                                               @Nonnull TimeUnit maximumTimeUnit) {
+    public static WaitStrategy exponentialWait(long maximumTime, @Nonnull TimeUnit maximumTimeUnit) {
         Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
         return new ExponentialWaitStrategy(1, maximumTimeUnit.toMillis(maximumTime));
     }
@@ -150,9 +141,7 @@ public final class WaitStrategies {
      * @param maximumTimeUnit the unit of the maximum time
      * @return a wait strategy that increments with each failed attempt using exponential backoff
      */
-    public static WaitStrategy exponentialWait(long multiplier,
-                                               long maximumTime,
-                                               @Nonnull TimeUnit maximumTimeUnit) {
+    public static WaitStrategy exponentialWait(long multiplier, long maximumTime, @Nonnull TimeUnit maximumTimeUnit) {
         Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
         return new ExponentialWaitStrategy(multiplier, maximumTimeUnit.toMillis(maximumTime));
     }
@@ -175,8 +164,7 @@ public final class WaitStrategies {
      * @param maximumTimeUnit the unit of the maximum time
      * @return a wait strategy that increments with each failed attempt using a Fibonacci sequence
      */
-    public static WaitStrategy fibonacciWait(long maximumTime,
-                                             @Nonnull TimeUnit maximumTimeUnit) {
+    public static WaitStrategy fibonacciWait(long maximumTime, @Nonnull TimeUnit maximumTimeUnit) {
         Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
         return new FibonacciWaitStrategy(1, maximumTimeUnit.toMillis(maximumTime));
     }
@@ -192,9 +180,7 @@ public final class WaitStrategies {
      * @param maximumTimeUnit the unit of the maximum time
      * @return a wait strategy that increments with each failed attempt using a Fibonacci sequence
      */
-    public static WaitStrategy fibonacciWait(long multiplier,
-                                             long maximumTime,
-                                             @Nonnull TimeUnit maximumTimeUnit) {
+    public static WaitStrategy fibonacciWait(long multiplier, long maximumTime, @Nonnull TimeUnit maximumTimeUnit) {
         Preconditions.checkNotNull(maximumTimeUnit, "The maximum time unit may not be null");
         return new FibonacciWaitStrategy(multiplier, maximumTimeUnit.toMillis(maximumTime));
     }
@@ -208,8 +194,7 @@ public final class WaitStrategies {
      * @param exceptionClass class to calculate sleep time from
      * @return a wait strategy calculated from the failed attempt
      */
-    public static <T extends Throwable> WaitStrategy exceptionWait(@Nonnull Class<T> exceptionClass,
-                                                                   @Nonnull Function<T, Long> function) {
+    public static <T extends Throwable> WaitStrategy exceptionWait(@Nonnull Class<T> exceptionClass, @Nonnull Function<T, Long> function) {
         Preconditions.checkNotNull(exceptionClass, "exceptionClass may not be null");
         Preconditions.checkNotNull(function, "function may not be null");
         return new ExceptionWaitStrategy<T>(exceptionClass, function);
@@ -270,8 +255,7 @@ public final class WaitStrategies {
         private final long initialSleepTime;
         private final long increment;
 
-        public IncrementingWaitStrategy(long initialSleepTime,
-                                        long increment) {
+        public IncrementingWaitStrategy(long initialSleepTime, long increment) {
             Preconditions.checkArgument(initialSleepTime >= 0L, "initialSleepTime must be >= 0 but is %d", initialSleepTime);
             this.initialSleepTime = initialSleepTime;
             this.increment = increment;
@@ -289,8 +273,7 @@ public final class WaitStrategies {
         private final long multiplier;
         private final long maximumWait;
 
-        public ExponentialWaitStrategy(long multiplier,
-                                       long maximumWait) {
+        public ExponentialWaitStrategy(long multiplier, long maximumWait) {
             Preconditions.checkArgument(multiplier > 0L, "multiplier must be > 0 but is %d", multiplier);
             Preconditions.checkArgument(maximumWait >= 0L, "maximumWait must be >= 0 but is %d", maximumWait);
             Preconditions.checkArgument(multiplier < maximumWait, "multiplier must be < maximumWait but is %d", multiplier);
@@ -335,8 +318,10 @@ public final class WaitStrategies {
         }
 
         private long fib(long n) {
-            if (n == 0L) return 0L;
-            if (n == 1L) return 1L;
+            if (n == 0L)
+                return 0L;
+            if (n == 1L)
+                return 1L;
 
             long prevPrev = 0L;
             long prev = 1L;
@@ -381,7 +366,7 @@ public final class WaitStrategies {
             this.function = function;
         }
 
-        @SuppressWarnings({"ThrowableResultOfMethodCallIgnored", "ConstantConditions", "unchecked"})
+        @SuppressWarnings({ "ThrowableResultOfMethodCallIgnored", "ConstantConditions", "unchecked" })
         @Override
         public long computeSleepTime(Attempt lastAttempt) {
             if (lastAttempt.hasException()) {

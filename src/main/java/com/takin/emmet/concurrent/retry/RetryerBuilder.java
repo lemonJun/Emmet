@@ -93,7 +93,6 @@ public class RetryerBuilder<V> {
         return this;
     }
 
-
     /**
      * Sets the block strategy used to decide how to block between retry attempts. The default strategy is to use Thread#sleep().
      *
@@ -107,7 +106,6 @@ public class RetryerBuilder<V> {
         this.blockStrategy = blockStrategy;
         return this;
     }
-
 
     /**
      * Configures the retryer to limit the duration of any particular attempt by the given duration.
@@ -188,7 +186,7 @@ public class RetryerBuilder<V> {
      * @return the built retryer.
      */
     public Retryer<V> build() {
-        AttemptTimeLimiter<V> theAttemptTimeLimiter = attemptTimeLimiter == null ? AttemptTimeLimiters.<V>noTimeLimit() : attemptTimeLimiter;
+        AttemptTimeLimiter<V> theAttemptTimeLimiter = attemptTimeLimiter == null ? AttemptTimeLimiters.<V> noTimeLimit() : attemptTimeLimiter;
         StopStrategy theStopStrategy = stopStrategy == null ? StopStrategies.neverStop() : stopStrategy;
         WaitStrategy theWaitStrategy = waitStrategy == null ? WaitStrategies.noWait() : waitStrategy;
         BlockStrategy theBlockStrategy = blockStrategy == null ? BlockStrategies.threadSleepStrategy() : blockStrategy;
