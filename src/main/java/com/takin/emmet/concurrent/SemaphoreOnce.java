@@ -22,7 +22,7 @@ public class SemaphoreOnce {
             }
         }
     }
-
+    
     public Semaphore getSemaphore() {
         return semaphore;
     }
