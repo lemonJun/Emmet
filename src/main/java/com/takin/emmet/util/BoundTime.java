@@ -12,7 +12,6 @@ import java.util.Calendar;
  * @since
  */
 public class BoundTime {
-
     private Bound bound = new Bound();
     private int type;
     private Handler handler;
