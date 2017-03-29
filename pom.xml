@@ -15,7 +15,7 @@
 			<artifactId>guava</artifactId>
 			<version>21.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.google.code.findbugs</groupId>
 			<artifactId>jsr305</artifactId>
@@ -31,9 +31,8 @@
 
 		<dependency>
 			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.12</version>
-			<scope>test</scope>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.22</version>
 		</dependency>
 	</dependencies>
 
@@ -58,22 +57,6 @@
 				<executions>
 					<execution>
 						<phase>compile</phase>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.10.2</version>
-				<configuration>
-					<aggregate>true</aggregate>
-				</configuration>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
 						<goals>
 							<goal>jar</goal>
 						</goals>

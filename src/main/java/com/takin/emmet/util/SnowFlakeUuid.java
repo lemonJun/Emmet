@@ -1,6 +1,7 @@
 package com.takin.emmet.util;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 在分布式环境下快速生成 唯一、递增、长度固定  最大19位ID
@@ -17,7 +18,7 @@ import org.apache.log4j.Logger;
  */
 public class SnowFlakeUuid {
 
-    protected static final Logger logger = Logger.getLogger(SnowFlakeUuid.class);
+    protected static final Logger logger = LoggerFactory.getLogger(SnowFlakeUuid.class);
 
     private long workerId = 6;
     private long datacenterId;
