@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.List;
 
-import com.takin.emmet.reflect.FileHelper;
+import com.takin.emmet.file.FileHelper;
 
 /**
  * A URLClassLoader for dynamic load class from jar

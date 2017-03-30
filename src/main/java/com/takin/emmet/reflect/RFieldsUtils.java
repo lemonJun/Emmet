@@ -11,7 +11,7 @@ import java.util.List;
  * @date  2017年3月27日 下午3:41:37
  * @see
  */
-public class ReflectionUtils {
+public class RFieldsUtils {
 
     /**
      * 得到所有field , 包括 父类
@@ -23,7 +23,6 @@ public class ReflectionUtils {
     @SuppressWarnings("rawtypes")
     public static Field[] findFields(Class clazz) throws IllegalAccessException {
         final List<Field> fieldList = new ArrayList<Field>();
-
         doWithDeclaredFields(clazz, new FieldCallback() {
             public void doWith(Field field) {
                 fieldList.add(field);
@@ -56,7 +55,6 @@ public class ReflectionUtils {
     }
 
     protected interface FieldCallback {
-
         void doWith(Field field) throws IllegalArgumentException, IllegalAccessException;
     }
 }
