@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 public class MavenDelLastUpdated {
     //    private static PropertyHelper propHelper = new PropertyHelper("config");
-    private static final String KEY_MAVEN_REPO = "maven.repo";
     //    private static final String MAVEN_REPO_PATH = propHelper.getValue(KEY_MAVEN_REPO);
     private static final String FILE_SUFFIX = "lastUpdated";
     private static final Logger _log = LoggerFactory.getLogger(MavenDelLastUpdated.class);
