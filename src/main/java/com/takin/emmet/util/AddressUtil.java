@@ -37,7 +37,6 @@ public class AddressUtil {
                     if (ip.startsWith("127.0") || ip.startsWith("192.168")) {
                         continue;
                     }
-
                     return ip;
                 }
 
