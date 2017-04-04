@@ -14,7 +14,7 @@ public class SemaphoreOnce {
     public SemaphoreOnce(Semaphore semaphore) {
         this.semaphore = semaphore;
     }
-
+    
     public void release() {
         if (this.semaphore != null) {
             if (this.released.compareAndSet(false, true)) {
