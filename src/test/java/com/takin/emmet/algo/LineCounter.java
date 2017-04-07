@@ -1,11 +1,10 @@
-package com.takin.emmet.file;
+package com.takin.emmet.algo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import com.google.common.base.Preconditions;
-import com.takin.emmet.algo.Queue;
 import com.takin.emmet.algo.collections.HashSet;
 import com.takin.emmet.algo.collections.LinkedList;
 
