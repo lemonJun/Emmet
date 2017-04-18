@@ -8,6 +8,16 @@ import org.junit.Test;
 public class TestBtyeBuffer {
 
     //<fieldschema,list<posting>>
+    private static final String ENCODING = "UTF-8";
+
+    @Test
+    public void length() {
+        try {
+            System.out.println("\001".getBytes(ENCODING).length);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Test
     public void bytebuffer() {
