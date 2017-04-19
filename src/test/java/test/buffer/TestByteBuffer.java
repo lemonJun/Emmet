@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 
 import org.junit.Test;
 
-public class TestBtyeBuffer {
+public class TestByteBuffer {
 
     //<fieldschema,list<posting>>
     private static final String ENCODING = "UTF-8";
