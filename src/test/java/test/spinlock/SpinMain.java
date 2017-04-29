@@ -1,14 +1,20 @@
 package test.spinlock;
 
 public class SpinMain {
-    private static TimeCost timeCost = new TimeCost(new TASLock());
+    //    private static TimeCost timeCost = new TimeCost(new TASLock());
 
     //    private static TimeCost timeCost = new TimeCost(new TTASLock());
 
+    private static final Lock lock = new CLHLock();
+
+    private static volatile int value = 0;
+
     public static void method() {
-        timeCost.lock();
+        lock.lock();
         //int a = 10;  
-        timeCost.unlock();
+        System.out.println("Value: " + ++value);
+
+        lock.unlock();
     }
 
     public static void main(String[] args) {
