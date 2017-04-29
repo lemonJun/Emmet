@@ -2,6 +2,12 @@ package test.spinlock;
 
 import java.util.concurrent.atomic.AtomicReference;
 
+/** 
+ * 无界队列锁，使用一个链表来组织线程 
+ * 假设L把锁，n个线程，那么锁的空间复杂度为O(L+n) 
+ * 
+ * 
+ */
 public class CLHLock implements Lock {
 
     private AtomicReference<QNode> tail;

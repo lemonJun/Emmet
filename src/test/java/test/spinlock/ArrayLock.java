@@ -2,6 +2,11 @@ package test.spinlock;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
+/** 
+ * 有界队列锁，使用一个volatile数组来组织线程 
+ * 缺点是得预先知道线程的规模n，所有线程获取同一个锁的次数不能超过n 
+ * 假设L把锁，那么锁的空间复杂度为O(Ln) 
+ * **/
 public class ArrayLock implements Lock {
 
     private volatile boolean[] flags;
