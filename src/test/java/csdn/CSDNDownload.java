@@ -251,8 +251,10 @@ public class CSDNDownload extends JFrame {
             //            System.out.println(doc.getElementById("article_content").toString());
             bw.write("<html><head>".getBytes("utf-8"));
             bw.write("  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> ".getBytes("utf-8"));
-            bw.write(" </head> <body>".getBytes("utf-8"));
-            bw.write(doc.getElementsByClass("article_title").toString().getBytes("utf-8"));
+            bw.write(" </head> <body><h1>".getBytes("utf-8"));
+            bw.write(doc.getElementsByClass("article_title").text().toString().getBytes("utf-8"));
+            bw.write("</h1>".getBytes("utf-8"));
+            
             bw.write(doc.getElementById("article_content").toString().getBytes("utf-8"));
             bw.write(" </body></html>".getBytes("utf-8"));
             bw.close();
