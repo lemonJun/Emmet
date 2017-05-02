@@ -19,6 +19,8 @@ public class BlockingArray<T> {
             wait();
         }
         array[tail] = item;
+        System.out.println("put-" + item);
+
         if (++tail == array.length) {
             tail = 0;
         }
@@ -31,6 +33,7 @@ public class BlockingArray<T> {
             wait();
         }
         Object obj = array[head];
+        System.out.println("take-" + obj);
         if (++head == array.length) {
             head = 0;
         }
