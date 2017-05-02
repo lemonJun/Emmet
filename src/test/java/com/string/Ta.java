@@ -1,4 +1,4 @@
-package test.string;
+package com.string;
 
 public class Ta {
 

@@ -1,4 +1,4 @@
-package test.spinlock;
+package com.concurrent.spinlock;
 
 import java.util.concurrent.TimeUnit;
 

@@ -39,7 +39,7 @@ public class CSDNColumnDownload extends JFrame {
     /* private JPanel contentPane; */
     private JTextField textField, textField2;
     private TextArea textArea, textArea_1;
-    static String chooserpath = "G:\\csdn_down";
+    static String chooserpath = "D:\\csdn_down";
     static int bolgnum = 0;
 
     /**

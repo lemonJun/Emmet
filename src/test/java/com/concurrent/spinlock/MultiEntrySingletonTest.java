@@ -1,4 +1,4 @@
-package test.spinlock;
+package com.concurrent.spinlock;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;

@@ -1,3 +1,4 @@
+package com.string;
 ///*
 // *
 // *  * The MIT License

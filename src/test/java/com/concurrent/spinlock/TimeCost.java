@@ -1,4 +1,4 @@
-package test.spinlock;
+package com.concurrent.spinlock;
 
 public class TimeCost implements Lock {
 

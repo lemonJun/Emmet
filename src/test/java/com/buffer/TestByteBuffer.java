@@ -1,4 +1,4 @@
-package test.buffer;
+package com.buffer;
 
 import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
