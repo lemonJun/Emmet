@@ -39,7 +39,7 @@ public class CSDNColumnDownload extends JFrame {
     /* private JPanel contentPane; */
     private JTextField textField, textField2;
     private TextArea textArea, textArea_1;
-    static String chooserpath = "D:\\csdn_down";
+    static String chooserpath = "E:\\csdn_down";
     static int bolgnum = 0;
 
     /**
@@ -227,13 +227,14 @@ public class CSDNColumnDownload extends JFrame {
 
     // 字节流保存文件
 
-    protected void mywriter(String path, Document doc) {
+    protected void mywriter(String path, Document doc, String sb) {
         try {
             FileOutputStream output = new FileOutputStream(path);
             BufferedOutputStream bw = new BufferedOutputStream(output);
             //            System.out.println(doc.getElementById("article_content").toString());
             bw.write("<html><head>".getBytes("utf-8"));
             bw.write("  <meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\"> ".getBytes("utf-8"));
+            bw.write(sb.getBytes("utf-8"));
             bw.write(" </head> <body><h1>".getBytes("utf-8"));
             bw.write(doc.getElementsByClass("article_title").text().toString().getBytes("utf-8"));
             bw.write("</h1>".getBytes("utf-8"));
@@ -319,6 +320,9 @@ public class CSDNColumnDownload extends JFrame {
                 //得到Url进行图片下载
                 downloadImg(doc1);
 
+                //
+                StringBuilder sb = downloadCss(doc1);
+
                 //将获得的内容写入本地html
 
                 String title2 = "=>标题<" + doc1.title().replace(" - 博客频道 - CSDN.NET", "") + ">=";// 获得标题头去除多余的字符串
@@ -334,7 +338,7 @@ public class CSDNColumnDownload extends JFrame {
                 // 创造html文件
                 File bokefile = new File(bokepath2);
                 // 调用写入本地的方法
-                mywriter(bokepath2, doc1);
+                mywriter(bokepath2, doc1, sb.toString());
 
                 String showtext = iiii + "-保存成功！" + title2 + "\n";
                 // System.out.println(showtext);
@@ -379,6 +383,45 @@ public class CSDNColumnDownload extends JFrame {
 
             }
         }
+    }
+
+    private StringBuilder downloadCss(Document doc1) {
+        //在博客heml中查找img标签
+        StringBuilder sb = new StringBuilder();
+        Elements ems = doc1.select("link");
+        for (Element css : ems) {
+            String cssurl = css.attr("href");
+            if (!cssurl.contains("css")) {
+                continue;
+            }
+            System.out.println("cssurl---" + cssurl);
+
+            String rawurl = cssurl.split("\\?")[0];
+            String rawname = "";
+            if (rawurl.toLowerCase().endsWith(".css")) {
+                rawname = rawurl.substring(rawurl.lastIndexOf("/") + 1);
+            }
+
+            String cssname = textField2.getText() + "\\bolgImg\\css" + rawname;
+
+            System.out.println(cssname);
+            File csspath = new File(cssname);
+            if (!csspath.exists()) {
+                try {
+                    getImg(cssurl, csspath);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            if (cssurl.trim().startsWith("http")) {
+                //改变博客html中博客的地址为本地地址，jsoup中的方法
+                css.attr("href", cssname);
+                sb.append(" <link type=\"text/css\" rel=\"stylesheet\" href=\"");
+                sb.append(cssname);
+                sb.append("\" />");
+            }
+        }
+        return sb;
     }
 
     /* 保存网站图片 */
