@@ -29,10 +29,10 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 @SuppressWarnings("serial")
-public class CSDNColumnDownload extends JFrame {
+public class CSDNCategoryDownload extends JFrame {
     // 常量
     // http://blog.csdn.net/bushijieinside?viewmode=contents
-    static String bokeurl = "http://blog.csdn.net/column/details/loveconcurrency.html";
+    static String bokeurl = "http://blog.csdn.net/ITer_ZC/article/category/2719317";
     static String myurl = "";
     static int iiii, tttt, jjjj = 0;
     private static String geturl, imgname = "";
@@ -49,7 +49,7 @@ public class CSDNColumnDownload extends JFrame {
         EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    CSDNColumnDownload frame = new CSDNColumnDownload();
+                    CSDNCategoryDownload frame = new CSDNCategoryDownload();
                     frame.setVisible(true);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -61,7 +61,7 @@ public class CSDNColumnDownload extends JFrame {
     /**
      * Create the frame.
      */
-    public CSDNColumnDownload() {
+    public CSDNCategoryDownload() {
         //        setIconImage(Toolkit.getDefaultToolkit().getImage(CSDNColumnDownload.class.getResource("tupian.png")));
 
         // setIconImage(Toolkit.getDefaultToolkit().getImage("res//title.png"));
@@ -93,7 +93,7 @@ public class CSDNColumnDownload extends JFrame {
                     if (k == 1) {
                         bolgnums(myurl);
                     } else {
-                        bolgnums(myurl + "?page=" + k);
+                        bolgnums(myurl + "/" + k);
                     }
                 }
             }
@@ -145,7 +145,7 @@ public class CSDNColumnDownload extends JFrame {
                     if (k == 1) {
                         bolgrun(myurl);
                     } else {
-                        bolgrun(myurl + "?page=" + k);
+                        bolgrun(myurl + "/" + k);
                     }
                 }
             }
@@ -258,7 +258,7 @@ public class CSDNColumnDownload extends JFrame {
         textArea.append(title);
         System.out.println("title ============" + title);
         //        Elements links1 = doc.select("span.link_title");// .Select("a[href]");
-        Elements links1 = doc.select(".detail_list h4");// .Select("a[href]");
+        Elements links1 = doc.select("span.link_title");// .Select("a[href]");
         for (Element ele : links1) {
             System.out.println("----" + ele.text());
         }
@@ -283,13 +283,18 @@ public class CSDNColumnDownload extends JFrame {
         Document doc;
         doc = Jsoup.connect(myurl).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0").timeout(6 * 1000).post();
 
-        Elements links3 = doc.select(".statistics_t");// .Select("a[href]");
-        String bolgnums = links3.select("span").get(0).text().toString();
-
-        bolgnum = Integer.valueOf(bolgnums.substring(0, bolgnums.length()));
-        System.out.println("bolgnum--" + bolgnum);
-        String bolgstatistics = links3.toString().substring(25).replaceAll("[<li></lui></span>]", "");
-
+        Elements links3 = doc.select("div#papelist");// .Select("a[href]");
+        String bolgstatistics = "";
+        if (links3 != null && links3.size() > 0) {
+            String bolgnums = links3.select("span").get(0).text().toString();
+            bolgnums = bolgnums.trim();
+            bolgnum = Integer.valueOf(bolgnums.substring(0, bolgnums.split(" ")[0].length() - 1));
+            System.out.println("bolgnum--" + bolgnum);
+            bolgstatistics = links3.toString().substring(25).replaceAll("[<li></lui></span>]", "");
+        } else {
+            bolgnum = 15;
+            bolgstatistics = "<20";
+        }
         textArea_1.setText(bolgstatistics);
         return bolgnum;
     }
@@ -308,7 +313,7 @@ public class CSDNColumnDownload extends JFrame {
                 // 网站链接不完整的/bushijieinside/article/details/11898583
                 String bokeUrl = link.select("a[href]").attr("href");
                 // 改造为可用链接http://blog.csdn.net/bushijieinside/article/details/14495003
-                String useUrl = bokeUrl;
+                String useUrl = "http://blog.csdn.net" + bokeUrl;
                 String code = bokeUrl.substring(bokeUrl.lastIndexOf("/"));
 
                 // 向网址发送请求得到dom
@@ -383,45 +388,6 @@ public class CSDNColumnDownload extends JFrame {
 
             }
         }
-    }
-
-    private StringBuilder downloadCss(Document doc1) {
-        //在博客heml中查找img标签
-        StringBuilder sb = new StringBuilder();
-        Elements ems = doc1.select("link");
-        for (Element css : ems) {
-            String cssurl = css.attr("href");
-            if (!cssurl.contains("css")) {
-                continue;
-            }
-            System.out.println("cssurl---" + cssurl);
-
-            String rawurl = cssurl.split("\\?")[0];
-            String rawname = "";
-            if (rawurl.toLowerCase().endsWith(".css")) {
-                rawname = rawurl.substring(rawurl.lastIndexOf("/") + 1);
-            }
-
-            String cssname = textField2.getText() + "\\bolgImg\\css" + rawname;
-
-            System.out.println(cssname);
-            File csspath = new File(cssname);
-            if (!csspath.exists()) {
-                try {
-                    getImg(cssurl, csspath);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-            if (cssurl.trim().startsWith("http")) {
-                //改变博客html中博客的地址为本地地址，jsoup中的方法
-                css.attr("href", cssname);
-                sb.append(" <link type=\"text/css\" rel=\"stylesheet\" href=\"");
-                sb.append(cssname);
-                sb.append("\" />");
-            }
-        }
-        return sb;
     }
 
     /* 保存网站图片 */
