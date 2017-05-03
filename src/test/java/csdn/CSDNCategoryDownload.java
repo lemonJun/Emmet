@@ -253,7 +253,7 @@ public class CSDNCategoryDownload extends JFrame {
         doc = Jsoup.connect(myurl).header("User-Agent", "Mozilla/5.0 (Windows NT 6.1; rv:25.0) Gecko/20100101 Firefox/25.0").post();
 
         tttt++;
-        String title = "===<<" + doc.title() + ">>第" + tttt + "页===\n";// 获得标题头
+        String title = "===第--- " + tttt + " ---页=== \n";// 获得标题头
 
         textArea.append(title);
         System.out.println("title ============" + title);
@@ -302,54 +302,55 @@ public class CSDNCategoryDownload extends JFrame {
     /*
      * 得到URL调用保存方法
      */
-
     public void bolgrun(String myurl2) {
         try {
             Elements allurl = selectUrl(myurl2); // 调用方法返回需要的节点
-
             for (Element link : allurl) {
-                iiii++;
+                try {
+                    iiii++;
+                    // 网站链接不完整的/bushijieinside/article/details/11898583
+                    String bokeUrl = link.select("a[href]").attr("href");
+                    // 改造为可用链接http://blog.csdn.net/bushijieinside/article/details/14495003
+                    String useUrl = "http://blog.csdn.net" + bokeUrl;
+                    String code = bokeUrl.substring(bokeUrl.lastIndexOf("/"));
 
-                // 网站链接不完整的/bushijieinside/article/details/11898583
-                String bokeUrl = link.select("a[href]").attr("href");
-                // 改造为可用链接http://blog.csdn.net/bushijieinside/article/details/14495003
-                String useUrl = "http://blog.csdn.net" + bokeUrl;
-                String code = bokeUrl.substring(bokeUrl.lastIndexOf("/"));
+                    // 向网址发送请求得到dom
+                    Document doc1 = getdom(useUrl);
+                    //创建图片保存位置
+                    (new File(textField2.getText() + "\\bolgImg")).mkdirs();
+                    // 保存博客中图片，并修改博客html文件中的图片超链接
 
-                // 向网址发送请求得到dom
-                Document doc1 = getdom(useUrl);
-                //创建图片保存位置
-                (new File(textField2.getText() + "\\bolgImg")).mkdirs();
-                // 保存博客中图片，并修改博客html文件中的图片超链接
+                    //得到Url进行图片下载
+                    downloadImg(doc1);
 
-                //得到Url进行图片下载
-                downloadImg(doc1);
+                    //
+                    //                StringBuilder sb = downloadCss(doc1);
 
-                //
-                //                StringBuilder sb = downloadCss(doc1);
+                    //将获得的内容写入本地html
 
-                //将获得的内容写入本地html
+                    String title2 = "---" + doc1.title().replace(" - 博客频道 - CSDN.NET", "") + "---";// 获得标题头去除多余的字符串
+                    // 创造文件夹避免找不到文件夹地址
+                    (new File(textField2.getText())).mkdirs();
+                    // 对i进行处理是标题从00开始便于后期做成目录
 
-                String title2 = "=>标题<" + doc1.title().replace(" - 博客频道 - CSDN.NET", "") + ">=";// 获得标题头去除多余的字符串
-                // 创造文件夹避免找不到文件夹地址
-                (new File(textField2.getText())).mkdirs();
-                // 对i进行处理是标题从00开始便于后期做成目录
+                    // 通过标题构造本地文件名,本地路径
+                    //                String bokepath = textField2.getText() + "\\" + y + "》" + doc1.title().replace(" - 博客频道 - CSDN.NET", "").replaceAll("[\"?\\*]", "") + ".html";
+                    String bokepath = textField2.getText() + "\\" + code + "_" + doc1.title().replace(" - 博客频道 - CSDN.NET", "").replaceAll("[\"?\\*]", "") + ".html";
+                    String bokepath2 = bokepath.replace("（", "").replace("）", "").replace("(", "").replace(")", "");
 
-                // 通过标题构造本地文件名,本地路径
-                //                String bokepath = textField2.getText() + "\\" + y + "》" + doc1.title().replace(" - 博客频道 - CSDN.NET", "").replaceAll("[\"?\\*]", "") + ".html";
-                String bokepath = textField2.getText() + "\\" + code + "_" + doc1.title().replace(" - 博客频道 - CSDN.NET", "").replaceAll("[\"?\\*]", "") + ".html";
-                String bokepath2 = bokepath.replace("（", "").replace("）", "").replace("(", "").replace(")", "");
+                    // 创造html文件
+                    File bokefile = new File(bokepath2);
+                    // 调用写入本地的方法
+                    mywriter(bokepath2, doc1, "");
 
-                // 创造html文件
-                File bokefile = new File(bokepath2);
-                // 调用写入本地的方法
-                mywriter(bokepath2, doc1, "");
-
-                String showtext = iiii + "-保存成功！" + title2 + "\n";
-                // System.out.println(showtext);
-                //在界面中反馈出保存成功
-                textArea.append(showtext);
-
+                    String showtext = iiii + "success:" + title2 + "\n";
+                    System.out.println(showtext);
+                    // System.out.println(showtext);
+                    //在界面中反馈出保存成功
+                    textArea.append(showtext);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         } catch (IOException e1) {
             e1.printStackTrace();
@@ -362,23 +363,22 @@ public class CSDNCategoryDownload extends JFrame {
         Elements ems = doc1.select("div#article_details").select("img[src]");
 
         for (Element img : ems) {
-            System.out.println(img);
+            //            System.out.println(img);
             jjjj++;
             geturl = img.attr("src");
             if (geturl.contains("arrow_triangle _down")) {
                 continue;
             }
-            System.out.print(jjjj);
-            System.out.println(geturl);
+            //            System.out.print(jjjj);
+            //            System.out.println(geturl);
             //UUID.randomUUID().hashCode();
 
             imgname = textField2.getText() + "\\bolgImg\\pic" + (int) (Math.random() * 1999999999 + 100000) + ".gif";
-            System.out.println(imgname);
+            //            System.out.println(imgname);
             File imgpath = new File(imgname);
             try {
                 getImg(geturl, imgpath);
             } catch (Exception e) {
-                e.printStackTrace();
             }
             if (geturl.trim().startsWith("http")) {
                 //改变博客html中博客的地址为本地地址，jsoup中的方法
@@ -440,9 +440,9 @@ public class CSDNCategoryDownload extends JFrame {
 
             for (Element link : allurl) {
                 iiii++;
-                String linkText = "标题==<<" + link.text() + ">>====\n博客URL******>http://blog.csdn.net/";// 网页标题
+                String linkText = link.text();// 网页标题
                 String lin = link.select("a[href]").attr("href") + "\n";// 网站链接
-                String showtext = iiii + linkText + lin;
+                String showtext = iiii + "---" + linkText + lin;
                 // System.out.println(i+"==="+lin +"==>"+linkText);
 
                 textArea.append(showtext);
