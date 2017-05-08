@@ -183,7 +183,7 @@ public final class Retryer<V> {
     }
 
     @Immutable
-    static final class ResultAttempt<R> implements Attempt<R> {
+    public static final class ResultAttempt<R> implements Attempt<R> {
         private final R result;
         private final long attemptNumber;
         private final long delaySinceFirstAttempt;
