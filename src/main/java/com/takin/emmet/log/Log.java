@@ -1,4 +1,4 @@
-package com.takin.emmet.log.log;
+package com.takin.emmet.log;
 
 public interface Log {
 

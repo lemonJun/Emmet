@@ -14,7 +14,6 @@ import com.google.common.collect.Maps;
 import com.takin.emmet.collection.CollectionUtil;
 import com.takin.emmet.log.factory.Resource;
 import com.takin.emmet.log.factory.RollLogFactory;
-import com.takin.emmet.log.log.Log;
 import com.takin.emmet.log.log.RollLog;
 
 import java.util.Properties;

@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.takin.emmet.log.Log;
 import com.takin.emmet.log.LogBean;
 
 /**
@@ -22,7 +23,7 @@ public abstract class RollLog implements Log {
     private String filename;
     // 日志路径
     private String path;
-    // 同步�?
+    // 同步锁 
     private final ReentrantLock lock = new ReentrantLock();
 
     volatile OutputStream writer = null;
