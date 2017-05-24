@@ -443,7 +443,7 @@ public class Reflect {
                     return method;
                 }
             }
-
+            
             type = type.getSuperclass();
         } while (type != null);
 
@@ -457,7 +457,7 @@ public class Reflect {
     private boolean isSimilarSignature(Method possiblyMatchingMethod, String desiredMethodName, Class<?>[] desiredParamTypes) {
         return possiblyMatchingMethod.getName().equals(desiredMethodName) && match(possiblyMatchingMethod.getParameterTypes(), desiredParamTypes);
     }
-
+    
     /**
      * Call a constructor.
      * <p>

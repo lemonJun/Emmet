@@ -3,14 +3,25 @@ package com.takin.emmet.reflect;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class RMethodUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(RMethodUtils.class);
 
     public static Method searchMethod(Class<?> currentClass, String methodName, Class<?>[] parameterTypes) throws NoSuchMethodException {
         if (currentClass == null) {
             throw new NoSuchMethodException("class == null");
         }
         try {
-            return currentClass.getMethod(methodName, parameterTypes);
+            logger.info(String.format("class:%s method:%s args:%s ", currentClass.getName(), methodName, parameterTypes.toString()));
+            Method method = currentClass.getMethod(methodName, parameterTypes);
+            if (method != null) {
+                return method;
+            } else {
+                throw new NoSuchMethodException();
+            }
         } catch (NoSuchMethodException e) {
             for (Method method : currentClass.getMethods()) {
                 if (method.getName().equals(methodName) && parameterTypes.length == method.getParameterTypes().length && Modifier.isPublic(method.getModifiers())) {
