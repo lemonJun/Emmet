@@ -1,33 +1,42 @@
 package com.takin.emmet.store;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import com.takin.emmet.util.Closer;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public class GZIPCompression {
 
-    protected final InputStream inputStream;
+    public static byte[] compress(byte[] src) throws IOException {
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        GZIPOutputStream gzipStream = new GZIPOutputStream(bout);
 
-    protected final OutputStream outputStream;
+        gzipStream.write(src);
+        gzipStream.flush();
+        gzipStream.close();
+        bout.flush();
 
-    public GZIPCompression(InputStream inputStream, OutputStream outputStream) {
-        this.inputStream = inputStream;
-        this.outputStream = outputStream;
+        return bout.toByteArray();
     }
 
-    public void close() {
-        Closer.closeQuietly(inputStream);
-        Closer.closeQuietly(outputStream);
-    }
-
-    public int read(byte[] b) throws IOException {
-        return inputStream.read(b);
-    }
-
-    public void write(byte[] b) throws IOException {
-        outputStream.write(b);
+    public static byte[] uncompress(byte[] src) throws IOException {
+        byte[] buffer = new byte[1024]; // 1k buffer
+        ByteArrayInputStream bin = new ByteArrayInputStream(src);
+        GZIPInputStream gzipIn = new GZIPInputStream(bin);
+        ByteArrayOutputStream bout = new ByteArrayOutputStream();
+        while (gzipIn.available() > 0) {
+            int len = gzipIn.read(buffer);
+            if (len <= 0)
+                break;
+            if (len < buffer.length) {
+                bout.write(buffer, 0, len);
+            } else {
+                bout.write(buffer);
+            }
+        }
+        bout.flush();
+        return bout.toByteArray();
     }
 
 }
