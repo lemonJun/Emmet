@@ -53,16 +53,14 @@ public final class GenericsUtils {
      * @throws NoGenericException      when generic not found or not generified type provided
      * @throws UnknownGenericException when found generic not declared on type (e.g. method generic)
      */
-    public static List<Class<?>> resolveGenericsOf(final Type type,
-                                                   final Map<String, Type> generics) throws NoGenericException {
+    public static List<Class<?>> resolveGenericsOf(final Type type, final Map<String, Type> generics) throws NoGenericException {
         final List<Class<?>> res = new ArrayList<Class<?>>();
         Type analyzingType = type;
         if (type instanceof TypeVariable) {
             // if type is pure generic recovering parametrization
             analyzingType = declaredGeneric((TypeVariable) type, generics);
         }
-        if (!(analyzingType instanceof ParameterizedType)
-                || ((ParameterizedType) analyzingType).getActualTypeArguments().length == 0) {
+        if (!(analyzingType instanceof ParameterizedType) || ((ParameterizedType) analyzingType).getActualTypeArguments().length == 0) {
             throw new NoGenericException();
         } else {
             final Type[] actualTypeArguments = ((ParameterizedType) analyzingType).getActualTypeArguments();

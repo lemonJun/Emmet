@@ -42,6 +42,6 @@ public class GenericArrayTypeImpl implements GenericArrayType {
 
     @Override
     public String toString() {
-        return TypeToStringUtils.toStringType(this, Collections.<String, Type>emptyMap());
+        return TypeToStringUtils.toStringType(this, Collections.<String, Type> emptyMap());
     }
 }

@@ -25,8 +25,7 @@ public final class GenericInfoUtils {
     }
 
     public static GenericsInfo create(final Class<?> type, final Class<?>... ignoreClasses) {
-        final Map<Class<?>, LinkedHashMap<String, Type>> generics =
-                new HashMap<Class<?>, LinkedHashMap<String, Type>>();
+        final Map<Class<?>, LinkedHashMap<String, Type>> generics = new HashMap<Class<?>, LinkedHashMap<String, Type>>();
         if (type.getTypeParameters().length > 0) {
             // special case: root class also contains generics
             generics.put(type, resolveRawGenerics(type.getTypeParameters()));
@@ -37,8 +36,7 @@ public final class GenericInfoUtils {
         return new GenericsInfo(type, generics);
     }
 
-    private static void analyzeType(final Map<Class<?>, LinkedHashMap<String, Type>> types, final Class<?> type,
-                                    final List<Class<?>> ignoreClasses) {
+    private static void analyzeType(final Map<Class<?>, LinkedHashMap<String, Type>> types, final Class<?> type, final List<Class<?>> ignoreClasses) {
         Class<?> supertype = type;
         while (true) {
             for (Type iface : supertype.getGenericInterfaces()) {
@@ -53,22 +51,16 @@ public final class GenericInfoUtils {
         }
     }
 
-    private static void analyzeInterface(final Map<Class<?>, LinkedHashMap<String, Type>> types, final Type iface,
-                                         final Class<?> supertype, final List<Class<?>> ignoreClasses) {
-        final Class interfaceType = iface instanceof ParameterizedType
-                ? (Class) ((ParameterizedType) iface).getRawType()
-                : (Class) iface;
+    private static void analyzeInterface(final Map<Class<?>, LinkedHashMap<String, Type>> types, final Type iface, final Class<?> supertype, final List<Class<?>> ignoreClasses) {
+        final Class interfaceType = iface instanceof ParameterizedType ? (Class) ((ParameterizedType) iface).getRawType() : (Class) iface;
         if (!ignoreClasses.contains(interfaceType)) {
             if (iface instanceof ParameterizedType) {
                 final ParameterizedType parametrization = (ParameterizedType) iface;
-                final LinkedHashMap<String, Type> generics =
-                        resolveGenerics(parametrization, types.get(supertype));
+                final LinkedHashMap<String, Type> generics = resolveGenerics(parametrization, types.get(supertype));
 
                 // no generics case and same resolved generics are ok (even if types in different branches of hierarchy)
                 if (types.containsKey(interfaceType) && !generics.equals(types.get(interfaceType))) {
-                    throw new IllegalStateException(String.format(
-                            "Duplicate interface %s declaration in hierarchy: "
-                                    + "can't properly resolve generics.", interfaceType.getName()));
+                    throw new IllegalStateException(String.format("Duplicate interface %s declaration in hierarchy: " + "can't properly resolve generics.", interfaceType.getName()));
                 }
                 types.put(interfaceType, generics);
             } else if (interfaceType.getTypeParameters().length > 0) {
@@ -82,12 +74,10 @@ public final class GenericInfoUtils {
         }
     }
 
-    private static LinkedHashMap<String, Type> analyzeParent(final Class type,
-                                                             final Map<String, Type> rootGenerics) {
+    private static LinkedHashMap<String, Type> analyzeParent(final Class type, final Map<String, Type> rootGenerics) {
         LinkedHashMap<String, Type> generics = null;
         final Class parent = type.getSuperclass();
-        if (!type.isInterface() && parent != null && parent != Object.class
-                && type.getGenericSuperclass() instanceof ParameterizedType) {
+        if (!type.isInterface() && parent != null && parent != Object.class && type.getGenericSuperclass() instanceof ParameterizedType) {
             generics = resolveGenerics((ParameterizedType) type.getGenericSuperclass(), rootGenerics);
         } else if (parent != null && parent.getTypeParameters().length > 0) {
             // root class didn't declare generics
@@ -96,8 +86,7 @@ public final class GenericInfoUtils {
         return generics == null ? EMPTY_MAP : generics;
     }
 
-    private static LinkedHashMap<String, Type> resolveGenerics(final ParameterizedType type,
-                                                               final Map<String, Type> rootGenerics) {
+    private static LinkedHashMap<String, Type> resolveGenerics(final ParameterizedType type, final Map<String, Type> rootGenerics) {
         final LinkedHashMap<String, Type> generics = new LinkedHashMap<String, Type>();
         final Type[] genericTypes = type.getActualTypeArguments();
         final Class interfaceType = (Class) type.getRawType();
@@ -120,16 +109,13 @@ public final class GenericInfoUtils {
             resolvedGenericType = genericType;
         } else if (genericType instanceof ParameterizedType) {
             final ParameterizedType parametrizedType = (ParameterizedType) genericType;
-            resolvedGenericType = new ParameterizedTypeImpl(parametrizedType.getRawType(),
-                    resolve(parametrizedType.getActualTypeArguments(), rootGenerics), parametrizedType.getOwnerType());
+            resolvedGenericType = new ParameterizedTypeImpl(parametrizedType.getRawType(), resolve(parametrizedType.getActualTypeArguments(), rootGenerics), parametrizedType.getOwnerType());
         } else if (genericType instanceof GenericArrayType) {
             final GenericArrayType arrayType = (GenericArrayType) genericType;
-            resolvedGenericType = new GenericArrayTypeImpl(resolveActualType(
-                    arrayType.getGenericComponentType(), rootGenerics));
+            resolvedGenericType = new GenericArrayTypeImpl(resolveActualType(arrayType.getGenericComponentType(), rootGenerics));
         } else if (genericType instanceof WildcardType) {
             final WildcardType wildcard = (WildcardType) genericType;
-            resolvedGenericType = new WildcardTypeImpl(resolve(wildcard.getUpperBounds(), rootGenerics),
-                    resolve(wildcard.getLowerBounds(), rootGenerics));
+            resolvedGenericType = new WildcardTypeImpl(resolve(wildcard.getUpperBounds(), rootGenerics), resolve(wildcard.getLowerBounds(), rootGenerics));
         }
         return resolvedGenericType;
     }
@@ -142,8 +128,7 @@ public final class GenericInfoUtils {
         return resolved;
     }
 
-    private static LinkedHashMap<String, Type> resolveRawGenerics(
-            final TypeVariable... declaredGenerics) {
+    private static LinkedHashMap<String, Type> resolveRawGenerics(final TypeVariable... declaredGenerics) {
         final LinkedHashMap<String, Type> generics = new LinkedHashMap<String, Type>();
         for (TypeVariable type : declaredGenerics) {
             generics.put(type.getName(), resolveActualType(type.getBounds()[0], generics));

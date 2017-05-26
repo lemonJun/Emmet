@@ -36,8 +36,7 @@ public class GenericsInfo {
      */
     public Map<String, Type> getTypeGenerics(final Class<?> type) {
         if (!types.containsKey(type)) {
-            throw new IllegalArgumentException(String.format("Type %s is not assignable from %s",
-                    type.getName(), root.getName()));
+            throw new IllegalArgumentException(String.format("Type %s is not assignable from %s", type.getName(), root.getName()));
         }
         return new LinkedHashMap<String, Type>(types.get(type));
     }

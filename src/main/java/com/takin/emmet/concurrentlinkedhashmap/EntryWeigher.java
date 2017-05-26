@@ -28,13 +28,13 @@ import javax.annotation.concurrent.ThreadSafe;
 @ThreadSafe
 public interface EntryWeigher<K, V> {
 
-  /**
-   * Measures an entry's weight to determine how many units of capacity that
-   * the key and value consumes. An entry must consume a minimum of one unit.
-   *
-   * @param key the key to weigh
-   * @param value the value to weigh
-   * @return the entry's weight
-   */
-  int weightOf(K key, V value);
+    /**
+     * Measures an entry's weight to determine how many units of capacity that
+     * the key and value consumes. An entry must consume a minimum of one unit.
+     *
+     * @param key the key to weigh
+     * @param value the value to weigh
+     * @return the entry's weight
+     */
+    int weightOf(K key, V value);
 }

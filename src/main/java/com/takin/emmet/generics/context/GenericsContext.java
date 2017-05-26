@@ -33,7 +33,7 @@ import com.takin.emmet.generics.util.UnknownGenericException;
  * @since 17.11.2014
  */
 // huge class size is OK, because it should be the only entry point for api
-@SuppressWarnings({"PMD.ExcessiveClassLength", "PMD.PreserveStackTrace"})
+@SuppressWarnings({ "PMD.ExcessiveClassLength", "PMD.PreserveStackTrace" })
 public abstract class GenericsContext {
     protected final GenericsInfo genericsInfo;
     protected final Class<?> currentType;

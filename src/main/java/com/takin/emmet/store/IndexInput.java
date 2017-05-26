@@ -62,7 +62,7 @@ public abstract class IndexInput implements Cloneable {
         }
         return i;
     }
-    
+
     /** Reads eight bytes and returns a long.
      * @see IndexOutput#writeLong(long)
      */

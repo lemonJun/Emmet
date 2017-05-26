@@ -50,9 +50,7 @@ public class ParameterizedTypeImpl implements ParameterizedType {
             final Type thatOwnerType = that.getOwnerType();
             final Type thatRawType = that.getRawType();
 
-            res = Arrays.equals(actualArguments, thatActualArguments)
-                    && (ownerType != null ? ownerType.equals(thatOwnerType) : thatOwnerType == null)
-                    && (rawType != null ? rawType.equals(thatRawType) : thatRawType == null);
+            res = Arrays.equals(actualArguments, thatActualArguments) && (ownerType != null ? ownerType.equals(thatOwnerType) : thatOwnerType == null) && (rawType != null ? rawType.equals(thatRawType) : thatRawType == null);
         }
         return res;
     }
@@ -67,6 +65,6 @@ public class ParameterizedTypeImpl implements ParameterizedType {
 
     @Override
     public String toString() {
-        return TypeToStringUtils.toStringType(this, Collections.<String, Type>emptyMap());
+        return TypeToStringUtils.toStringType(this, Collections.<String, Type> emptyMap());
     }
 }

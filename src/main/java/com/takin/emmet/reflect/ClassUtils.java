@@ -280,8 +280,6 @@ public class ClassUtils {
         }
     }
 
-
-
     public static String getInitCode(Class<?> type) {
         if (byte.class.equals(type) || short.class.equals(type) || int.class.equals(type) || long.class.equals(type) || float.class.equals(type) || double.class.equals(type)) {
             return "0";

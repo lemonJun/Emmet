@@ -56,6 +56,6 @@ public class WildcardTypeImpl implements WildcardType {
 
     @Override
     public String toString() {
-        return TypeToStringUtils.toStringType(this, Collections.<String, Type>emptyMap());
+        return TypeToStringUtils.toStringType(this, Collections.<String, Type> emptyMap());
     }
 }

@@ -35,8 +35,7 @@ public class UnknownGenericException extends RuntimeException {
     }
 
     UnknownGenericException(final Class contextType, final String genericName, final Throwable cause) {
-        super(String.format("Generic '%s' is not declared %s",
-                genericName, contextType == null ? "" : "on type " + contextType.getName()), cause);
+        super(String.format("Generic '%s' is not declared %s", genericName, contextType == null ? "" : "on type " + contextType.getName()), cause);
         this.contextType = contextType;
         this.genericName = genericName;
     }

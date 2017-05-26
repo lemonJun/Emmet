@@ -41,8 +41,7 @@ public final class GenericsInfoFactory {
      * @return descriptor for class hierarchy generics substitution
      */
     public static GenericsInfo create(final Class<?> type, final Class<?>... ignoreClasses) {
-        GenericsInfo descriptor = ignoreClasses.length > 0
-                ? GenericInfoUtils.create(type, ignoreClasses) : CACHE.get(type);
+        GenericsInfo descriptor = ignoreClasses.length > 0 ? GenericInfoUtils.create(type, ignoreClasses) : CACHE.get(type);
         if (descriptor == null) {
             LOCK.lock();
             try {
@@ -93,7 +92,6 @@ public final class GenericsInfoFactory {
      */
     public static boolean isCacheEnabled() {
         final String no = Boolean.FALSE.toString();
-        return !no.equals(System.getenv(CACHE_PROPERTY))
-                && !no.equals(System.getProperty(CACHE_PROPERTY));
+        return !no.equals(System.getenv(CACHE_PROPERTY)) && !no.equals(System.getProperty(CACHE_PROPERTY));
     }
 }

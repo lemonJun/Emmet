@@ -31,9 +31,7 @@ public class MethodGenericsContext extends GenericsContext {
         super(genericsInfo, type);
         final Class<?> declaringType = method.getDeclaringClass();
         if (!declaringType.equals(type)) {
-            throw new IllegalArgumentException(String.format(
-                    "Method '%s' should be resolved on type %s and not %s",
-                    method.getName(), declaringType.getSimpleName(), type.getSimpleName()));
+            throw new IllegalArgumentException(String.format("Method '%s' should be resolved on type %s and not %s", method.getName(), declaringType.getSimpleName(), type.getSimpleName()));
         }
         this.method = method;
         initGenerics();
@@ -141,11 +139,9 @@ public class MethodGenericsContext extends GenericsContext {
     private void initGenerics() {
         final TypeVariable<Method>[] methodGenerics = method.getTypeParameters();
         final boolean hasMethodGenerics = methodGenerics.length > 0;
-        this.methodGenerics = hasMethodGenerics
-                ? new LinkedHashMap<String, Type>() : Collections.<String, Type>emptyMap();
+        this.methodGenerics = hasMethodGenerics ? new LinkedHashMap<String, Type>() : Collections.<String, Type> emptyMap();
         // important to fill it in time of resolution because method generics could be dependant
-        this.allGenerics = hasMethodGenerics
-                ? new LinkedHashMap<String, Type>(typeGenerics) : typeGenerics;
+        this.allGenerics = hasMethodGenerics ? new LinkedHashMap<String, Type>(typeGenerics) : typeGenerics;
         for (TypeVariable<Method> generic : methodGenerics) {
             final Class<?> value = resolveClass(generic.getBounds()[0]);
             this.methodGenerics.put(generic.getName(), value);

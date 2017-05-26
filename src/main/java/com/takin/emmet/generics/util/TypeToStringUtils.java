@@ -42,8 +42,7 @@ public final class TypeToStringUtils {
     }
 
     @SuppressWarnings("PMD.UseStringBufferForStringAppends")
-    private static String processParametrizedType(final ParameterizedType parametrized,
-                                                  final Map<String, Type> generics) {
+    private static String processParametrizedType(final ParameterizedType parametrized, final Map<String, Type> generics) {
         String res = toStringType(parametrized.getRawType(), generics);
         final List<String> args = new ArrayList<String>();
         for (Type t : parametrized.getActualTypeArguments()) {
@@ -58,11 +57,9 @@ public final class TypeToStringUtils {
     private static String processWildcardType(final WildcardType wildcard, final Map<String, Type> generics) {
         final String res;
         if (wildcard.getLowerBounds().length == 0) {
-            res = "? extends " + toStringType(
-                    GenericsUtils.resolveClass(wildcard.getUpperBounds()[0], generics), generics);
+            res = "? extends " + toStringType(GenericsUtils.resolveClass(wildcard.getUpperBounds()[0], generics), generics);
         } else {
-            res = "? super " + toStringType(
-                    GenericsUtils.resolveClass(wildcard.getLowerBounds()[0], generics), generics);
+            res = "? super " + toStringType(GenericsUtils.resolveClass(wildcard.getLowerBounds()[0], generics), generics);
         }
         return res;
     }
