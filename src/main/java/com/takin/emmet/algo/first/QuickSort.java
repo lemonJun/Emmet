@@ -24,7 +24,7 @@ public class QuickSort {
 
     public static void main(String[] args) {
         int[] data = { 6, 3, 2, 5, 16, 23, 12, 8, 10, 9 };
-        //        int[] retVal = sort(data);
+        //        int[] retVal = sort(data, 0, 0);
         //        for (int i : retVal) {
         //            System.out.print(i + " ");
         //        }
