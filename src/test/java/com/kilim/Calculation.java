@@ -12,7 +12,7 @@ public class Calculation {
         this.dividend = dividend;
         this.divisor = divisor;
     }
-    
+
     public BigDecimal getDividend() {
         return dividend;
     }
