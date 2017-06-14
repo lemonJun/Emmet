@@ -19,7 +19,6 @@ public class LRUCache<K, V> {
         this.cacheSize = cacheSize;
         int hashTableCapacity = (int) Math.ceil(cacheSize / hashTableLoadFactor) + 1;
         map = new LinkedHashMap<K, V>(hashTableCapacity, hashTableLoadFactor, true) {
-            // (an anonymous inner class)  
             private static final long serialVersionUID = 1;
 
             @Override
