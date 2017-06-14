@@ -575,8 +575,7 @@ public abstract class AbstractSorter implements Sorter {
      * @param j
      *            the second position
      */
-    protected static <T extends Comparable<T>> void swapIfGreater(T[] a, int i,
-            int j) {
+    protected static <T extends Comparable<T>> void swapIfGreater(T[] a, int i, int j) {
         if (a[i].compareTo(a[j]) < 0)
             swap(a, i, j);
     }
@@ -594,8 +593,7 @@ public abstract class AbstractSorter implements Sorter {
      * @param j
      *            the second position
      */
-    protected static <T extends Comparable<T>> void swapIfLess(T[] a, int i,
-            int j) {
+    protected static <T extends Comparable<T>> void swapIfLess(T[] a, int i, int j) {
         if (a[i].compareTo(a[j]) > 0)
             swap(a, i, j);
     }

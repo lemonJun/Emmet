@@ -23,12 +23,12 @@ package org.amino.pattern.internal;
  * @param <S> type of the input work item.
  * @param <T> the type of the output.
  */
-public interface DynamicWorker<S,T> {
-	/**
-	 *
-	 * @param w workitem
-	 * @param wq workqueue
-	 * @return result
-	 */
-	T run (S w, WorkQueue<S> wq);
+public interface DynamicWorker<S, T> {
+    /**
+     *
+     * @param w workitem
+     * @param wq workqueue
+     * @return result
+     */
+    T run(S w, WorkQueue<S> wq);
 }

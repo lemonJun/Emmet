@@ -149,8 +149,7 @@ public class ParallelRBTree<E> {
          * Default constructor.
          * 
          * @SuppressWarnings("unchecked")
-*/
-         
+        */
 
         @SuppressWarnings("unchecked")
         Node() {
@@ -222,9 +221,7 @@ public class ParallelRBTree<E> {
          * {@inheritDoc}
          */
         public String toString() {
-            return value == null ? "sentinal" : value.toString()
-                    + ((color == Color.BLACK) ? "B" : "R") + req
-                    + this.hashCode();
+            return value == null ? "sentinal" : value.toString() + ((color == Color.BLACK) ? "B" : "R") + req + this.hashCode();
         }
 
         /**
@@ -350,8 +347,7 @@ public class ParallelRBTree<E> {
                     }
                     x.color = Color.RED;
 
-                    assert x.left.color == Color.BLACK
-                            && x.right.color == Color.BLACK;
+                    assert x.left.color == Color.BLACK && x.right.color == Color.BLACK;
 
                     // addtional transformation
                     // if (x.req.contains(Request.UP_OUT)) {
@@ -432,8 +428,7 @@ public class ParallelRBTree<E> {
                     final Node<E> parent = x.p; // x's parent
                     try {
                         // get the lock of y
-                        if (parent.xlock.tryLock(WAIT_FOR_TRY_LOCK,
-                                TimeUnit.MILLISECONDS)) {
+                        if (parent.xlock.tryLock(WAIT_FOR_TRY_LOCK, TimeUnit.MILLISECONDS)) {
                             if (Color.RED == parent.color) {
                                 balancer.removeLeafAndParent(x);
                             } else {// see Fig 3a-c
@@ -696,17 +691,17 @@ public class ParallelRBTree<E> {
                             node.xlock.lock();
                             try {
                                 switch (req) {
-                                case REMOVAL:
-                                    handleRemoval(node);
-                                    break;
-                                case UP_IN:
-                                    handleUpIn(node);
-                                    break;
-                                case UP_OUT:
-                                    handleUpOut(node);
-                                    break;
-                                default:
-                                    return false;
+                                    case REMOVAL:
+                                        handleRemoval(node);
+                                        break;
+                                    case UP_IN:
+                                        handleUpIn(node);
+                                        break;
+                                    case UP_OUT:
+                                        handleUpOut(node);
+                                        break;
+                                    default:
+                                        return false;
                                 }
                             } finally {
                                 node.xlock.unlock();
@@ -756,8 +751,7 @@ public class ParallelRBTree<E> {
 
             final Node<E> parent = node.p;
             try {
-                if (parent.xlock.tryLock(WAIT_FOR_TRY_LOCK,
-                        TimeUnit.MILLISECONDS)) {
+                if (parent.xlock.tryLock(WAIT_FOR_TRY_LOCK, TimeUnit.MILLISECONDS)) {
                     Node<E> x = null; // remaining sibling
                     if (node == parent.left) { // z is left child
                         x = parent.right;
@@ -844,8 +838,7 @@ public class ParallelRBTree<E> {
             // check the parent node
             try {
                 final Node<E> zParent = node.p;
-                if (zParent.xlock.tryLock(WAIT_FOR_TRY_LOCK,
-                        TimeUnit.MILLISECONDS)) {
+                if (zParent.xlock.tryLock(WAIT_FOR_TRY_LOCK, TimeUnit.MILLISECONDS)) {
                     // parent node is locked
                     if (root == node.p) {
                         node.p.color = Color.BLACK;
@@ -856,8 +849,7 @@ public class ParallelRBTree<E> {
                     if (Color.RED == node.p.color) {
                         Node<E> y = null; // sibling of parent
                         final Node<E> zGrandparent = node.p.p;
-                        if (zGrandparent.xlock.tryLock(WAIT_FOR_TRY_LOCK,
-                                TimeUnit.MILLISECONDS)) {
+                        if (zGrandparent.xlock.tryLock(WAIT_FOR_TRY_LOCK, TimeUnit.MILLISECONDS)) {
 
                             // get grandfather's lock
                             assert node.p.p != SENTINEL;
@@ -971,7 +963,7 @@ public class ParallelRBTree<E> {
                     }
 
                     if ((Color.BLACK == w.left.color) // case 4.b
-                            && (Color.BLACK == w.right.color)) {
+                                    && (Color.BLACK == w.right.color)) {
                         w.color = Color.RED;
                         if (Color.RED == x.p.color) {
                             x.p.color = Color.BLACK;
@@ -996,8 +988,7 @@ public class ParallelRBTree<E> {
                         rightRotate(x.p);
                         w = x.p.left;
                     }
-                    if ((Color.BLACK == w.right.color)
-                            && (Color.BLACK == w.left.color)) {
+                    if ((Color.BLACK == w.right.color) && (Color.BLACK == w.left.color)) {
                         w.color = Color.RED;
                         if (Color.RED == x.p.color) {
                             x.p.color = Color.BLACK;
@@ -1033,8 +1024,7 @@ public class ParallelRBTree<E> {
             assert node != root;
 
             Node<E> y = node.p;
-            assert (y.left.req.contains(Request.UP_OUT) && y.right.req
-                    .contains(Request.UP_OUT));
+            assert (y.left.req.contains(Request.UP_OUT) && y.right.req.contains(Request.UP_OUT));
 
             y.left.req.remove(Request.UP_OUT);
             y.right.req.remove(Request.UP_OUT);
@@ -1066,8 +1056,7 @@ public class ParallelRBTree<E> {
 
             final Node<E> parent = z.p;
             try {
-                if (parent.xlock.tryLock(WAIT_FOR_TRY_LOCK,
-                        TimeUnit.MILLISECONDS)) {
+                if (parent.xlock.tryLock(WAIT_FOR_TRY_LOCK, TimeUnit.MILLISECONDS)) {
 
                     Node<E> sibling = null; // remaining sibling
                     if (z == parent.left) { // z is left child
@@ -1251,11 +1240,9 @@ public class ParallelRBTree<E> {
      * Print the reb-blak tree.
      */
     public void printBinTree() {
-        System.out
-                .println("=====================start of RB Tree=======================");
+        System.out.println("=====================start of RB Tree=======================");
         printTree(root, 0);
-        System.out
-                .println("=====================end of RB Tree========================");
+        System.out.println("=====================end of RB Tree========================");
     }
 
     private void printTree(Node<E> node, int level) {

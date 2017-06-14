@@ -96,10 +96,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
      * interal class.
      * 
      */
-    private class ByteSortUpWorker implements
-            DynamicWorker<ByteWorkPacket, Integer> {
-        private void sortPartition(byte[] data, int from, int to,
-                WorkQueue<ByteWorkPacket> wq) {
+    private class ByteSortUpWorker implements DynamicWorker<ByteWorkPacket, Integer> {
+        private void sortPartition(byte[] data, int from, int to, WorkQueue<ByteWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -110,8 +108,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortUp(byte[] data, int from, int to,
-                WorkQueue<ByteWorkPacket> wq) {
+        private void qsortUp(byte[] data, int from, int to, WorkQueue<ByteWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -186,8 +183,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new ByteSortUpWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new ByteSortUpWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new ByteSortUpWorker(), numWorkers);
             }
 
             mw.submit(new ByteWorkPacket(data, from, to));
@@ -203,10 +199,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
      * internal class.
      * 
      */
-    private class ByteSortDownWorker implements
-            DynamicWorker<ByteWorkPacket, Integer> {
-        private void sortPartition(byte[] data, int from, int to,
-                WorkQueue<ByteWorkPacket> wq) {
+    private class ByteSortDownWorker implements DynamicWorker<ByteWorkPacket, Integer> {
+        private void sortPartition(byte[] data, int from, int to, WorkQueue<ByteWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -217,8 +211,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortDown(byte[] data, int from, int to,
-                WorkQueue<ByteWorkPacket> wq) {
+        private void qsortDown(byte[] data, int from, int to, WorkQueue<ByteWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -293,8 +286,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new ByteSortDownWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new ByteSortDownWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new ByteSortDownWorker(), numWorkers);
             }
 
             mw.submit(new ByteWorkPacket(data, from, to));
@@ -347,10 +339,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class ChaqsortUpUpWorker implements
-            DynamicWorker<CharWorkPacket, Integer> {
-        private void sortPartition(char[] data, int from, int to,
-                WorkQueue<CharWorkPacket> wq) {
+    private class ChaqsortUpUpWorker implements DynamicWorker<CharWorkPacket, Integer> {
+        private void sortPartition(char[] data, int from, int to, WorkQueue<CharWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -361,8 +351,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortUp(char[] data, int from, int to,
-                WorkQueue<CharWorkPacket> wq) {
+        private void qsortUp(char[] data, int from, int to, WorkQueue<CharWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -437,8 +426,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new ChaqsortUpUpWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new ChaqsortUpUpWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new ChaqsortUpUpWorker(), numWorkers);
             }
 
             mw.submit(new CharWorkPacket(data, from, to));
@@ -452,10 +440,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class CharSortDownWorker implements
-            DynamicWorker<CharWorkPacket, Integer> {
-        private void sortPartition(char[] data, int from, int to,
-                WorkQueue<CharWorkPacket> wq) {
+    private class CharSortDownWorker implements DynamicWorker<CharWorkPacket, Integer> {
+        private void sortPartition(char[] data, int from, int to, WorkQueue<CharWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -466,8 +452,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortDown(char[] data, int from, int to,
-                WorkQueue<CharWorkPacket> wq) {
+        private void qsortDown(char[] data, int from, int to, WorkQueue<CharWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -542,8 +527,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new CharSortDownWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new CharSortDownWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new CharSortDownWorker(), numWorkers);
             }
 
             mw.submit(new CharWorkPacket(data, from, to));
@@ -596,10 +580,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class ShortSortUpWorker implements
-            DynamicWorker<ShortWorkPacket, Integer> {
-        private void sortPartition(short[] data, int from, int to,
-                WorkQueue<ShortWorkPacket> wq) {
+    private class ShortSortUpWorker implements DynamicWorker<ShortWorkPacket, Integer> {
+        private void sortPartition(short[] data, int from, int to, WorkQueue<ShortWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -610,8 +592,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortUp(short[] data, int from, int to,
-                WorkQueue<ShortWorkPacket> wq) {
+        private void qsortUp(short[] data, int from, int to, WorkQueue<ShortWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -686,8 +667,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new ShortSortUpWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new ShortSortUpWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new ShortSortUpWorker(), numWorkers);
             }
 
             mw.submit(new ShortWorkPacket(data, from, to));
@@ -701,10 +681,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class ShortSortDownWorker implements
-            DynamicWorker<ShortWorkPacket, Integer> {
-        private void sortPartition(short[] data, int from, int to,
-                WorkQueue<ShortWorkPacket> wq) {
+    private class ShortSortDownWorker implements DynamicWorker<ShortWorkPacket, Integer> {
+        private void sortPartition(short[] data, int from, int to, WorkQueue<ShortWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -715,8 +693,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortDown(short[] data, int from, int to,
-                WorkQueue<ShortWorkPacket> wq) {
+        private void qsortDown(short[] data, int from, int to, WorkQueue<ShortWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -791,8 +768,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new ShortSortDownWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new ShortSortDownWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new ShortSortDownWorker(), numWorkers);
             }
 
             mw.submit(new ShortWorkPacket(data, from, to));
@@ -845,10 +821,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class IntSortUpWorker implements
-            DynamicWorker<IntWorkPacket, Integer> {
-        private void sortPartition(int[] data, int from, int to,
-                WorkQueue<IntWorkPacket> wq) {
+    private class IntSortUpWorker implements DynamicWorker<IntWorkPacket, Integer> {
+        private void sortPartition(int[] data, int from, int to, WorkQueue<IntWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -859,8 +833,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortUp(int[] data, int from, int to,
-                WorkQueue<IntWorkPacket> wq) {
+        private void qsortUp(int[] data, int from, int to, WorkQueue<IntWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -935,8 +908,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new IntSortUpWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new IntSortUpWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new IntSortUpWorker(), numWorkers);
             }
 
             mw.submit(new IntWorkPacket(data, from, to));
@@ -950,10 +922,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class IntSortDownWorker implements
-            DynamicWorker<IntWorkPacket, Integer> {
-        private void sortPartition(int[] data, int from, int to,
-                WorkQueue<IntWorkPacket> wq) {
+    private class IntSortDownWorker implements DynamicWorker<IntWorkPacket, Integer> {
+        private void sortPartition(int[] data, int from, int to, WorkQueue<IntWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -964,8 +934,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortDown(int[] data, int from, int to,
-                WorkQueue<IntWorkPacket> wq) {
+        private void qsortDown(int[] data, int from, int to, WorkQueue<IntWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -1040,8 +1009,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new IntSortDownWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new IntSortDownWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new IntSortDownWorker(), numWorkers);
             }
 
             mw.submit(new IntWorkPacket(data, from, to));
@@ -1094,10 +1062,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class LongSortUpWorker implements
-            DynamicWorker<LongWorkPacket, Integer> {
-        private void sortPartition(long[] data, int from, int to,
-                WorkQueue<LongWorkPacket> wq) {
+    private class LongSortUpWorker implements DynamicWorker<LongWorkPacket, Integer> {
+        private void sortPartition(long[] data, int from, int to, WorkQueue<LongWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -1108,8 +1074,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortUp(long[] data, int from, int to,
-                WorkQueue<LongWorkPacket> wq) {
+        private void qsortUp(long[] data, int from, int to, WorkQueue<LongWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -1184,8 +1149,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new LongSortUpWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new LongSortUpWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new LongSortUpWorker(), numWorkers);
             }
 
             mw.submit(new LongWorkPacket(data, from, to));
@@ -1199,10 +1163,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class LongSortDownWorker implements
-            DynamicWorker<LongWorkPacket, Integer> {
-        private void sortPartition(long[] data, int from, int to,
-                WorkQueue<LongWorkPacket> wq) {
+    private class LongSortDownWorker implements DynamicWorker<LongWorkPacket, Integer> {
+        private void sortPartition(long[] data, int from, int to, WorkQueue<LongWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -1213,8 +1175,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortDown(long[] data, int from, int to,
-                WorkQueue<LongWorkPacket> wq) {
+        private void qsortDown(long[] data, int from, int to, WorkQueue<LongWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -1289,8 +1250,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new LongSortDownWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new LongSortDownWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new LongSortDownWorker(), numWorkers);
             }
 
             mw.submit(new LongWorkPacket(data, from, to));
@@ -1343,10 +1303,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class FloatSortUpWorker implements
-            DynamicWorker<FloatWorkPacket, Integer> {
-        private void sortPartition(float[] data, int from, int to,
-                WorkQueue<FloatWorkPacket> wq) {
+    private class FloatSortUpWorker implements DynamicWorker<FloatWorkPacket, Integer> {
+        private void sortPartition(float[] data, int from, int to, WorkQueue<FloatWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -1356,8 +1314,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             }
         }
 
-        private void qsortUp(float[] data, int from, int to,
-                WorkQueue<FloatWorkPacket> wq) {
+        private void qsortUp(float[] data, int from, int to, WorkQueue<FloatWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -1432,8 +1389,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new FloatSortUpWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new FloatSortUpWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new FloatSortUpWorker(), numWorkers);
             }
 
             mw.submit(new FloatWorkPacket(data, from, to));
@@ -1447,10 +1403,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class FloatSortDownWorker implements
-            DynamicWorker<FloatWorkPacket, Integer> {
-        private void sortPartition(float[] data, int from, int to,
-                WorkQueue<FloatWorkPacket> wq) {
+    private class FloatSortDownWorker implements DynamicWorker<FloatWorkPacket, Integer> {
+        private void sortPartition(float[] data, int from, int to, WorkQueue<FloatWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -1461,8 +1415,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortDown(float[] data, int from, int to,
-                WorkQueue<FloatWorkPacket> wq) {
+        private void qsortDown(float[] data, int from, int to, WorkQueue<FloatWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -1537,8 +1490,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new FloatSortDownWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new FloatSortDownWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new FloatSortDownWorker(), numWorkers);
             }
 
             mw.submit(new FloatWorkPacket(data, from, to));
@@ -1591,10 +1543,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class DoubleSortUpWorker implements
-            DynamicWorker<DoubleWorkPacket, Integer> {
-        private void sortPartition(double[] data, int from, int to,
-                WorkQueue<DoubleWorkPacket> wq) {
+    private class DoubleSortUpWorker implements DynamicWorker<DoubleWorkPacket, Integer> {
+        private void sortPartition(double[] data, int from, int to, WorkQueue<DoubleWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -1605,8 +1555,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortUp(double[] data, int from, int to,
-                WorkQueue<DoubleWorkPacket> wq) {
+        private void qsortUp(double[] data, int from, int to, WorkQueue<DoubleWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -1681,8 +1630,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new DoubleSortUpWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new DoubleSortUpWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new DoubleSortUpWorker(), numWorkers);
             }
 
             mw.submit(new DoubleWorkPacket(data, from, to));
@@ -1696,10 +1644,8 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
     /**
      * internal class.
      */
-    private class DoubleSortDownWorker implements
-            DynamicWorker<DoubleWorkPacket, Integer> {
-        private void sortPartition(double[] data, int from, int to,
-                WorkQueue<DoubleWorkPacket> wq) {
+    private class DoubleSortDownWorker implements DynamicWorker<DoubleWorkPacket, Integer> {
+        private void sortPartition(double[] data, int from, int to, WorkQueue<DoubleWorkPacket> wq) {
             final int size = to - from;
             if (size > 1) {
                 if (size > PAR_THRESHOLD)
@@ -1710,8 +1656,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
 
         }
 
-        private void qsortDown(double[] data, int from, int to,
-                WorkQueue<DoubleWorkPacket> wq) {
+        private void qsortDown(double[] data, int from, int to, WorkQueue<DoubleWorkPacket> wq) {
             // if the length of the array section is small, use an insertion
             // sort
             if (to - from < IS_THRESHOLD) {
@@ -1786,8 +1731,7 @@ public class ParallelQuickSorterWorkStealing extends QuickSorter {
             if (numWorkers == 0) {
                 mw = MasterWorkerFactory.newDynamic(new DoubleSortDownWorker());
             } else {
-                mw = MasterWorkerFactory.newDynamic(new DoubleSortDownWorker(),
-                        numWorkers);
+                mw = MasterWorkerFactory.newDynamic(new DoubleSortDownWorker(), numWorkers);
             }
 
             mw.submit(new DoubleWorkPacket(data, from, to));

@@ -23,80 +23,80 @@ package org.amino.alg.scan;
  *
  */
 public abstract class AbstractScanner implements Scanner {
-	/**
-	 * {@inheritDoc}
-	 */
-	public int binarySearch(byte[] a, byte v) {
-		return binarySearch(a,0,a.length,v);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int binarySearch(byte[] a, byte v) {
+        return binarySearch(a, 0, a.length, v);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int[] findAll(byte[] a, byte v) {
-		return findAll(a,v,0,a.length);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int[] findAll(byte[] a, byte v) {
+        return findAll(a, v, 0, a.length);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int[] findAll(byte[] a, byte[] v) {
-		return findAll(a,v,0,a.length);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int[] findAll(byte[] a, byte[] v) {
+        return findAll(a, v, 0, a.length);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int findAny(byte[] a, byte v) {
-		return findAny(a,v,0,a.length);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int findAny(byte[] a, byte v) {
+        return findAny(a, v, 0, a.length);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int findAny(byte[] a, byte[] v) {
-		return findAny(a,v,0,a.length);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int findAny(byte[] a, byte[] v) {
+        return findAny(a, v, 0, a.length);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int findFirst(byte[] a, byte v) {
-		return findNext(a,v,0);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int findFirst(byte[] a, byte v) {
+        return findNext(a, v, 0);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int findFirst(byte[] a, byte[] v) {
-		return findNext(a,v,0);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int findFirst(byte[] a, byte[] v) {
+        return findNext(a, v, 0);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int findLast(byte[] a, byte v) {
-		return findPrevious(a,v,a.length);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int findLast(byte[] a, byte v) {
+        return findPrevious(a, v, a.length);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int findLast(byte[] a, byte[] v) {
-		return findPrevious(a,v,a.length);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int findLast(byte[] a, byte[] v) {
+        return findPrevious(a, v, a.length);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int replaceAll(byte[] a, byte v, byte r) {
-		return replaceAll(a,v,r,0,a.length);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int replaceAll(byte[] a, byte v, byte r) {
+        return replaceAll(a, v, r, 0, a.length);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int replaceAll(byte[] a, byte[] v, byte[] r) {
-		return replaceAll(a,v,r,0,a.length);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int replaceAll(byte[] a, byte[] v, byte[] r) {
+        return replaceAll(a, v, r, 0, a.length);
+    }
 }

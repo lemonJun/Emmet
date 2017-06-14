@@ -24,74 +24,75 @@ package org.amino.alg.parallelprefix;
  * @see ParallelPrefix
  */
 public interface BinaryOp<T> {
-	/**
-	 * Transform two bytes to one.
-	 * 
-	 * @param a op one
-	 * @param b op two
-	 * @return retsult
-	 */
-	byte transform(byte a,byte b);
-	
-	/**
-	 * Transform two bytes to one.
-	 * 
-	 * @param a op one
-	 * @param b op two
-	 * @return retsult
-	 */
-	char transform(char a,char b);
-	/**
-	 * Transform two bytes to one.
-	 * 
-	 * @param a op one
-	 * @param b op two
-	 * @return retsult
-	 */
-	short transform(short a,short b);
-	
-	/**
-	 * Transform two bytes to one.
-	 * 
-	 * @param a op one
-	 * @param b op two
-	 * @return retsult
-	 */
-	int transform(int a,int b);
-	
-	/**
-	 * Transform two bytes to one.
-	 * 
-	 * @param a op one
-	 * @param b op two
-	 * @return retsult
-	 */
-	long transform(long a,long b);
-	
-	/**
-	 * Transform two bytes to one.
-	 * 
-	 * @param a op one
-	 * @param b op two
-	 * @return retsult
-	 */
-	float transform(float a,float b);
-	
-	/**
-	 * Transform two bytes to one.
-	 * 
-	 * @param a op one
-	 * @param b op two
-	 * @return retsult
-	 */
-	double transform(double a,double b);
-	
-	/**
-	 * Transform two bytes to one.
-	 * 
-	 * @param a op one
-	 * @param b op two
-	 * @return retsult
-	 */
-	T transform(T a, T b);
+    /**
+     * Transform two bytes to one.
+     * 
+     * @param a op one
+     * @param b op two
+     * @return retsult
+     */
+    byte transform(byte a, byte b);
+
+    /**
+     * Transform two bytes to one.
+     * 
+     * @param a op one
+     * @param b op two
+     * @return retsult
+     */
+    char transform(char a, char b);
+
+    /**
+     * Transform two bytes to one.
+     * 
+     * @param a op one
+     * @param b op two
+     * @return retsult
+     */
+    short transform(short a, short b);
+
+    /**
+     * Transform two bytes to one.
+     * 
+     * @param a op one
+     * @param b op two
+     * @return retsult
+     */
+    int transform(int a, int b);
+
+    /**
+     * Transform two bytes to one.
+     * 
+     * @param a op one
+     * @param b op two
+     * @return retsult
+     */
+    long transform(long a, long b);
+
+    /**
+     * Transform two bytes to one.
+     * 
+     * @param a op one
+     * @param b op two
+     * @return retsult
+     */
+    float transform(float a, float b);
+
+    /**
+     * Transform two bytes to one.
+     * 
+     * @param a op one
+     * @param b op two
+     * @return retsult
+     */
+    double transform(double a, double b);
+
+    /**
+     * Transform two bytes to one.
+     * 
+     * @param a op one
+     * @param b op two
+     * @return retsult
+     */
+    T transform(T a, T b);
 }

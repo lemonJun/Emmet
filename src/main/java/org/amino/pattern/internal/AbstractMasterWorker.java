@@ -37,7 +37,7 @@ import java.util.concurrent.locks.ReentrantLock;
  *            result type.
  */
 abstract class AbstractMasterWorker<S, T> implements MasterWorker<S, T> {
-//    private final boolean debug = false;
+    //    private final boolean debug = false;
 
     /**
      * @author ganzhi
@@ -105,7 +105,7 @@ abstract class AbstractMasterWorker<S, T> implements MasterWorker<S, T> {
      * 
      */
     protected static class WorkerPool {
-		//        private static final boolean DEBUG = false;
+        //        private static final boolean DEBUG = false;
 
         private Thread[] threads;
         private Map<Thread, Integer> threadMap;
@@ -113,7 +113,7 @@ abstract class AbstractMasterWorker<S, T> implements MasterWorker<S, T> {
         private final int nworkers;
 
         private static final int CREATED = 0, STARTED = 1, WORKING = 2,
-                WAITING = 3, COMPLETE = 4, NUM_STATES = 5;
+                        WAITING = 3, COMPLETE = 4, NUM_STATES = 5;
 
         private final Lock lock = new ReentrantLock();
 
@@ -609,8 +609,7 @@ abstract class AbstractMasterWorker<S, T> implements MasterWorker<S, T> {
     /**
      * {@inheritDoc}
      */
-    public boolean execute(long timeout, TimeUnit unit)
-            throws TimeoutException, ExecutionException, InterruptedException {
+    public boolean execute(long timeout, TimeUnit unit) throws TimeoutException, ExecutionException, InterruptedException {
         if (!execute())
             return false;
         return waitForCompletion(timeout, unit);

@@ -16,7 +16,6 @@
 
 package org.amino.ds.graph;
 
-
 /**
  * Edge in the graph.
  *

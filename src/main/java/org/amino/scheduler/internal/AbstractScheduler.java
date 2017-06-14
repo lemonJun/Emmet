@@ -27,259 +27,257 @@ import java.util.concurrent.locks.ReentrantLock;
  * Abstract class for Amino schedulers.
  * 
  */
-public abstract class AbstractScheduler extends AbstractExecutorService
-		implements Scheduler {
+public abstract class AbstractScheduler extends AbstractExecutorService implements Scheduler {
 
-	/**
-	 * Get work item identified by id.
-	 * 
-	 * @param id
-	 *            id for work item
-	 * @return Runnable method
-	 */
-	protected abstract Runnable getWork(int id);
+    /**
+     * Get work item identified by id.
+     * 
+     * @param id
+     *            id for work item
+     * @return Runnable method
+     */
+    protected abstract Runnable getWork(int id);
 
-	private volatile int waitingWorkers;
-	/**
-	 * lock for synchronization.
-	 */
-	Object newWork = new Object();
+    private volatile int waitingWorkers;
+    /**
+     * lock for synchronization.
+     */
+    Object newWork = new Object();
 
-	/**
-	 * Wait for new workload.
-	 * 
-	 * @param id
-	 *            thread id
-	 */
-	protected void waitNewWork(int id) {
-		synchronized (newWork) {
-			if (!isShutdown)
-				try {
-					waitingWorkers++;
-					newWork.wait();
-					waitingWorkers--;
-				} catch (InterruptedException e) {
-					return;
-				}
-		}
-	}
+    /**
+     * Wait for new workload.
+     * 
+     * @param id
+     *            thread id
+     */
+    protected void waitNewWork(int id) {
+        synchronized (newWork) {
+            if (!isShutdown)
+                try {
+                    waitingWorkers++;
+                    newWork.wait();
+                    waitingWorkers--;
+                } catch (InterruptedException e) {
+                    return;
+                }
+        }
+    }
 
-	/**
-	 * Wakeup waiting workers when new workload arrived.
-	 */
-	protected void signalNewWork() {
-		if (waitingWorkers > 0)
-			synchronized (newWork) {
-				newWork.notifyAll();
-			}
-	}
+    /**
+     * Wakeup waiting workers when new workload arrived.
+     */
+    protected void signalNewWork() {
+        if (waitingWorkers > 0)
+            synchronized (newWork) {
+                newWork.notifyAll();
+            }
+    }
 
-	private volatile int activeWorkers;
-	private final ReentrantLock activeLock = new ReentrantLock();
-	private final Condition termination = activeLock.newCondition();
+    private volatile int activeWorkers;
+    private final ReentrantLock activeLock = new ReentrantLock();
+    private final Condition termination = activeLock.newCondition();
 
-	/**
-	 * @author ganzhi
-	 * 
-	 */
-	protected final class WorkThread extends Thread {
-		private final int id;
+    /**
+     * @author ganzhi
+     * 
+     */
+    protected final class WorkThread extends Thread {
+        private final int id;
 
-		/**
-		 * 
-		 * @param id
-		 *            Set identifying integer id for this work thread.
-		 */
-		public WorkThread(int id) {
-			this.id = id;
-		}
+        /**
+         * 
+         * @param id
+         *            Set identifying integer id for this work thread.
+         */
+        public WorkThread(int id) {
+            this.id = id;
+        }
 
-		/**
-		 * {@inheritDoc}
-		 */
-		@Override
-		public void run() {
-			try {
-				while (true) {
-					if (isShutdownNow)
-						break;
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public void run() {
+            try {
+                while (true) {
+                    if (isShutdownNow)
+                        break;
 
-					Runnable work = getWork(id);
-					if (work != null)
-						work.run();
-					else if (isShutdown)
-						break;
-					else
-						waitNewWork(id);
-				}
-			} finally {
-				try {
-					activeLock.lock();
-					activeWorkers--;
-					termination.signal();
-				} finally {
-					activeLock.unlock();
-				}
-			}
-		}
-	}
+                    Runnable work = getWork(id);
+                    if (work != null)
+                        work.run();
+                    else if (isShutdown)
+                        break;
+                    else
+                        waitNewWork(id);
+                }
+            } finally {
+                try {
+                    activeLock.lock();
+                    activeWorkers--;
+                    termination.signal();
+                } finally {
+                    activeLock.unlock();
+                }
+            }
+        }
+    }
 
-	private Thread[] threads;
+    private Thread[] threads;
 
-	/**
-	 * 
-	 * @param numWorkers
-	 *            maximum number of worker threads to create.
-	 */
-	public AbstractScheduler(int numWorkers) {
-		this.numWorkers = numWorkers;
+    /**
+     * 
+     * @param numWorkers
+     *            maximum number of worker threads to create.
+     */
+    public AbstractScheduler(int numWorkers) {
+        this.numWorkers = numWorkers;
 
-		threads = new Thread[numWorkers];
-		activeWorkers = 0;
-		waitingWorkers = 0;
-		for (int i = 0; i < numWorkers; i++) {
-			threads[i] = new WorkThread(i);
-		}
-	}
+        threads = new Thread[numWorkers];
+        activeWorkers = 0;
+        waitingWorkers = 0;
+        for (int i = 0; i < numWorkers; i++) {
+            threads[i] = new WorkThread(i);
+        }
+    }
 
-	private int numWorkers;
+    private int numWorkers;
 
-	/**
-	 * start to execute all workers.
-	 */
-	protected void startWorkers() {
-		activeWorkers = numWorkers;
-		for (int i = 0; i < numWorkers; i++) {
-			threads[i].start();
-		}
-	}
+    /**
+     * start to execute all workers.
+     */
+    protected void startWorkers() {
+        activeWorkers = numWorkers;
+        for (int i = 0; i < numWorkers; i++) {
+            threads[i].start();
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int numWorkers() {
-		return numWorkers;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int numWorkers() {
+        return numWorkers;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isTerminated() {
-		return activeWorkers == 0;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isTerminated() {
+        return activeWorkers == 0;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean awaitTermination(long timeout, TimeUnit unit)
-			throws InterruptedException {
-		if (isTerminated())
-			return true;
+    /**
+     * {@inheritDoc}
+     */
+    public boolean awaitTermination(long timeout, TimeUnit unit) throws InterruptedException {
+        if (isTerminated())
+            return true;
 
-		long nanos = unit.toNanos(timeout);
-		try {
-			activeLock.lock();
-			do {
-				if (nanos <= 0)
-					return false;
-				nanos = termination.awaitNanos(nanos);
-				if (isTerminated())
-					return true;
-			} while (true);
-		} finally {
-			activeLock.unlock();
-		}
-	}
+        long nanos = unit.toNanos(timeout);
+        try {
+            activeLock.lock();
+            do {
+                if (nanos <= 0)
+                    return false;
+                nanos = termination.awaitNanos(nanos);
+                if (isTerminated())
+                    return true;
+            } while (true);
+        } finally {
+            activeLock.unlock();
+        }
+    }
 
-	private volatile boolean isShutdown = false;
+    private volatile boolean isShutdown = false;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isShutdown() {
-		return isShutdown;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isShutdown() {
+        return isShutdown;
+    }
 
-	private void interruptWorkers() {
-		for (Thread t : threads)
-			t.interrupt();
-	}
+    private void interruptWorkers() {
+        for (Thread t : threads)
+            t.interrupt();
+    }
 
-	/**
-	 * 
-	 */
-	public void shutdown() {
-		isShutdown = true;
-		signalNewWork();
-	}
+    /**
+     * 
+     */
+    public void shutdown() {
+        isShutdown = true;
+        signalNewWork();
+    }
 
-	private volatile boolean isShutdownNow = false;
+    private volatile boolean isShutdownNow = false;
 
-	/**
-	 * 
-	 * @return List of remaining work items that have not yet finished running.
-	 */
-	protected abstract List<Runnable> getOutstandingWork();
+    /**
+     * 
+     * @return List of remaining work items that have not yet finished running.
+     */
+    protected abstract List<Runnable> getOutstandingWork();
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public List<Runnable> shutdownNow() {
-		isShutdown = true;
-		isShutdownNow = true;
-		interruptWorkers();
-		return getOutstandingWork();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public List<Runnable> shutdownNow() {
+        isShutdown = true;
+        isShutdownNow = true;
+        interruptWorkers();
+        return getOutstandingWork();
+    }
 
-	private RejectedExecutionHandler handler;
+    private RejectedExecutionHandler handler;
 
-	public RejectedExecutionHandler getRejectedExecutionHandler() {
-		return handler;
-	}
+    public RejectedExecutionHandler getRejectedExecutionHandler() {
+        return handler;
+    }
 
-	public void setRejectedExecutionHandler(RejectedExecutionHandler handler) {
-		this.handler = handler;
-	}
+    public void setRejectedExecutionHandler(RejectedExecutionHandler handler) {
+        this.handler = handler;
+    }
 
-	/**
-	 * Submit a new work item.
-	 * 
-	 * @param command
-	 *            work item to run
-	 * @throws InterruptedException 
-	 */
-	protected abstract void addWork(Runnable command) throws InterruptedException;
+    /**
+     * Submit a new work item.
+     * 
+     * @param command
+     *            work item to run
+     * @throws InterruptedException 
+     */
+    protected abstract void addWork(Runnable command) throws InterruptedException;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void execute(Runnable command) {
-		if (!isShutdown) {
-			try {
-				addWork(command);
-			} catch (InterruptedException e) {
-				handler.rejectedExecution(command, null);
-			}
-			signalNewWork();
-		} else if (handler != null)
-			handler.rejectedExecution(command, null);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void execute(Runnable command) {
+        if (!isShutdown) {
+            try {
+                addWork(command);
+            } catch (InterruptedException e) {
+                handler.rejectedExecution(command, null);
+            }
+            signalNewWork();
+        } else if (handler != null)
+            handler.rejectedExecution(command, null);
+    }
 
-	private static int defaultNumberOfWorkers;
+    private static int defaultNumberOfWorkers;
 
-	static {
-		defaultNumberOfWorkers = Runtime.getRuntime().availableProcessors();
-	}
+    static {
+        defaultNumberOfWorkers = Runtime.getRuntime().availableProcessors();
+    }
 
-	/**
-	 * 
-	 * @return default number of worker threads.
-	 */
-	public static int defaultNumberOfWorkers() {
-		return defaultNumberOfWorkers;
-	}
+    /**
+     * 
+     * @return default number of worker threads.
+     */
+    public static int defaultNumberOfWorkers() {
+        return defaultNumberOfWorkers;
+    }
 
-	public static void setNumberOfWorkers(int workers) {
-		defaultNumberOfWorkers = workers;
-	}
+    public static void setNumberOfWorkers(int workers) {
+        defaultNumberOfWorkers = workers;
+    }
 }

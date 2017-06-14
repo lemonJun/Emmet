@@ -130,11 +130,11 @@ public abstract class AbstractGraph<E> implements Graph<E> {
          * our contention manager policy here... abort my self
          */
         return i != RETRY_COUNT;
-//        if (i == RETRY_COUNT) {
-//            return false;
-//        } else {
-//            return true;
-//        }
+        //        if (i == RETRY_COUNT) {
+        //            return false;
+        //        } else {
+        //            return true;
+        //        }
     }
 
     /**
@@ -161,11 +161,11 @@ public abstract class AbstractGraph<E> implements Graph<E> {
          * availabe API in java can safely abort the other thread.
          */
         return i != RETRY_COUNT;
-//        if (i == RETRY_COUNT) {
-//            return false;
-//        } else {
-//            return true;
-//        }
+        //        if (i == RETRY_COUNT) {
+        //            return false;
+        //        } else {
+        //            return true;
+        //        }
     }
 
     /**
@@ -384,14 +384,13 @@ public abstract class AbstractGraph<E> implements Graph<E> {
     /**
      * {@inheritDoc}
      */
-    @SuppressWarnings( { "unchecked", "hiding" })
+    @SuppressWarnings({ "unchecked", "hiding" })
     public <E> E[] toArray(E[] a) {
         E[] array = (E[]) toArray();
         int size = array.length;
 
         if (a.length < size()) {
-            a = (E[]) java.lang.reflect.Array.newInstance(a.getClass()
-                    .getComponentType(), size);
+            a = (E[]) java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
         }
 
         System.arraycopy(array, 0, a, 0, size);
@@ -486,8 +485,7 @@ public abstract class AbstractGraph<E> implements Graph<E> {
             // System.out.println("size = " + linkedNodes.size());
             for (int i = 0, len = linkedNodes.size(); i < len; ++i) {
                 adj = linkedNodes.get(i);
-                System.out.printf("%6s(w:%6f)", adj.getNode().getValue(), adj
-                        .getWeight());
+                System.out.printf("%6s(w:%6f)", adj.getNode().getValue(), adj.getWeight());
             }
         }
 
@@ -598,4 +596,3 @@ public abstract class AbstractGraph<E> implements Graph<E> {
      */
     public abstract Graph<E> clone() throws CloneNotSupportedException;
 }
-

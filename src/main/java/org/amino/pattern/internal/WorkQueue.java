@@ -25,19 +25,19 @@ import java.util.concurrent.TimeUnit;
  * @param <S> input type.
  */
 public interface WorkQueue<S> {
-	/**
-	 * Submit a work item to the work queue.
-	 * @param w work item.
-	 * @return key identifying submitted work item.
-	 */
-	MasterWorker.ResultKey submit (S w);
+    /**
+     * Submit a work item to the work queue.
+     * @param w work item.
+     * @return key identifying submitted work item.
+     */
+    MasterWorker.ResultKey submit(S w);
 
-	/**
-	 * Submit a work item to the work queue.
-	 * @param w Work item.
-	 * @param timeout Time out value.
-	 * @param unit    Time unit.
-	 * @return key identifying submitted work item.
-	 */
-	MasterWorker.ResultKey submit (S w, long timeout, TimeUnit unit);
+    /**
+     * Submit a work item to the work queue.
+     * @param w Work item.
+     * @param timeout Time out value.
+     * @param unit    Time unit.
+     * @return key identifying submitted work item.
+     */
+    MasterWorker.ResultKey submit(S w, long timeout, TimeUnit unit);
 }

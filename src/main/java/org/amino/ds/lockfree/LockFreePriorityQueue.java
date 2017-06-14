@@ -59,8 +59,7 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
         public Node() {
             this.data = new AtomicMarkableReference<E>(null, false);
             this.prev = null;
-            this.next = new ArrayList<AtomicMarkableReference<Node<E>>>(
-                    MAXLEVEL);
+            this.next = new ArrayList<AtomicMarkableReference<Node<E>>>(MAXLEVEL);
             this.key = null;
             this.validLevel = -1;
             // FIXME level not initialized here
@@ -74,8 +73,7 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
          */
         public Node(int l, E d) {
             this.data = new AtomicMarkableReference<E>(d, false);
-            this.next = new ArrayList<AtomicMarkableReference<Node<E>>>(
-                    MAXLEVEL);
+            this.next = new ArrayList<AtomicMarkableReference<Node<E>>>(MAXLEVEL);
             this.level = l;
             this.key = d;
 
@@ -182,8 +180,8 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
      */
     Node<E> tail = new Node<E>(); // FIXME why use default access level here
     //REVIEW what is validLevel of tail?
-    
-   /**
+
+    /**
      * Random number generator.
      */
     // FIXME why use default access level here
@@ -238,8 +236,8 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
      * {@inheritDoc}
      */
     public boolean offer(E e) {
-    	if (e == null)
-			throw new NullPointerException();
+        if (e == null)
+            throw new NullPointerException();
         return add(e);
     }
 
@@ -354,8 +352,7 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
 
         // while ((n2 != tail) &&
         // (compare(n2.data.getReference(),nk.data.getReference()) < 0)) {
-        while ((compare(n2.data.getReference(), nk.data.getReference()) < 0)
-                && (n2 != tail)) {
+        while ((compare(n2.data.getReference(), nk.data.getReference()) < 0) && (n2 != tail)) {
             n1 = n2;
             tn2 = readNext(n1, ll);
             n1 = tn2.n1;
@@ -377,8 +374,7 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
             do {
                 tempn1 = n.next.get(i);
                 n2 = tempn1.getReference();
-            } while (!tempn1.compareAndSet(n2, n2, false, true)
-                    && !tempn1.isMarked());
+            } while (!tempn1.compareAndSet(n2, n2, false, true) && !tempn1.isMarked());
         }
 
         // Get the previous pointer
@@ -465,10 +461,8 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
             n2 = tn2.n2;
             n1 = tn2.n1;
 
-            if ((compare(d, n2.data.getReference()) == 0)
-                    && (!n2.data.isMarked())) {
-                if (n2.data.compareAndSet(n2.data.getReference(), d, false,
-                        false)) {
+            if ((compare(d, n2.data.getReference()) == 0) && (!n2.data.isMarked())) {
+                if (n2.data.compareAndSet(n2.data.getReference(), d, false, false)) {
                     return true;
                 } else {
                     continue;
@@ -480,8 +474,7 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
                 kk++;
                 newN.validLevel = 0;
             } else {
-                newN.next.set(0,
-                        new AtomicMarkableReference<Node<E>>(n2, false));
+                newN.next.set(0, new AtomicMarkableReference<Node<E>>(n2, false));
             }
             if (n1.next.get(0).compareAndSet(n2, newN, false, false)) {
                 break;
@@ -499,12 +492,10 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
                 n1 = tn3.n1;
 
                 if (kk == 0) {
-                    newN.next.add(new AtomicMarkableReference<Node<E>>(n2,
-                            false));
+                    newN.next.add(new AtomicMarkableReference<Node<E>>(n2, false));
                     kk++;
                 } else {
-                    newN.next.set(i, new AtomicMarkableReference<Node<E>>(n2,
-                            false));
+                    newN.next.set(i, new AtomicMarkableReference<Node<E>>(n2, false));
                 }
                 if (newN.data.isMarked())
                     break;
@@ -549,8 +540,7 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
 
             val = n1.data.getReference();
             if (!n1.data.isMarked()) {
-                if (n1.data.compareAndSet(n1.data.getReference(), n1.data
-                        .getReference(), false, true)) {
+                if (n1.data.compareAndSet(n1.data.getReference(), n1.data.getReference(), false, true)) {
                     n1.prev = prev;
                     break;
                 } else {
@@ -567,8 +557,7 @@ public class LockFreePriorityQueue<E> extends AbstractQueue<E> {
             do {
                 tempn1 = n1.next.get(i);
                 n2 = tempn1.getReference();
-            } while (!tempn1.compareAndSet(n2, n2, false, true)
-                    && !tempn1.isMarked()); // REVIEW different from paper
+            } while (!tempn1.compareAndSet(n2, n2, false, true) && !tempn1.isMarked()); // REVIEW different from paper
         }
 
         prev = head;

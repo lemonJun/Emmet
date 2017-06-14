@@ -69,14 +69,12 @@ public class LockFreeBSTree<T, V> {
     /**
      * Present the max value in the tree.
      */
-    private final Node<T, V> maxDummyNode = new ThreadNode<T, V>(
-            new Node<T, V>());
+    private final Node<T, V> maxDummyNode = new ThreadNode<T, V>(new Node<T, V>());
 
     /**
      * Present the min value in the tree.
      */
-    private final Node<T, V> minDummyNode = new ThreadNode<T, V>(
-            new Node<T, V>());
+    private final Node<T, V> minDummyNode = new ThreadNode<T, V>(new Node<T, V>());
 
     /**
      * Internal node definition of tree.
@@ -99,12 +97,9 @@ public class LockFreeBSTree<T, V> {
 
         static {
             try {
-                VALUE_OFFSET = UNSAFE.objectFieldOffset(Node.class
-                        .getDeclaredField("value"));
-                LEFT_OFFSET = UNSAFE.objectFieldOffset(Node.class
-                        .getDeclaredField("left"));
-                RIGHT_OFFSET = UNSAFE.objectFieldOffset(Node.class
-                        .getDeclaredField("right"));
+                VALUE_OFFSET = UNSAFE.objectFieldOffset(Node.class.getDeclaredField("value"));
+                LEFT_OFFSET = UNSAFE.objectFieldOffset(Node.class.getDeclaredField("left"));
+                RIGHT_OFFSET = UNSAFE.objectFieldOffset(Node.class.getDeclaredField("right"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -205,8 +200,7 @@ public class LockFreeBSTree<T, V> {
         Node<T, V> c;
         retry: while (true) {
             Node<T, V> p = root;
-            Node<T, V> n = (Node<T, V>) MultiCAS.mcasRead(root,
-                    Node.LEFT_OFFSET);
+            Node<T, V> n = (Node<T, V>) MultiCAS.mcasRead(root, Node.LEFT_OFFSET);
 
             // empty tree
             if (null == n) {
@@ -284,8 +278,7 @@ public class LockFreeBSTree<T, V> {
          * to detect when it has read from a defunct node and take appropriate
          * action, such as retrying its access from the tree root.
          */
-        return n.isThread() ? null : (V) MultiCAS
-                .mcasRead(n, Node.VALUE_OFFSET);
+        return n.isThread() ? null : (V) MultiCAS.mcasRead(n, Node.VALUE_OFFSET);
     }
 
     /**
@@ -327,8 +320,7 @@ public class LockFreeBSTree<T, V> {
                 if (null == n) {
                     node.left = minDummyNode;
                     node.right = maxDummyNode;
-                    if (!UNSAFE.compareAndSwapObject(p, Node.LEFT_OFFSET, n,
-                            node)) {
+                    if (!UNSAFE.compareAndSwapObject(p, Node.LEFT_OFFSET, n, node)) {
                         continue retry;
                     } else {
                         return null;
@@ -341,8 +333,7 @@ public class LockFreeBSTree<T, V> {
                         if (oldValue == null) {
                             continue retry;
                         }
-                    } while (!UNSAFE.compareAndSwapObject(n, Node.VALUE_OFFSET,
-                            oldValue, value));
+                    } while (!UNSAFE.compareAndSwapObject(n, Node.VALUE_OFFSET, oldValue, value));
                     return oldValue;
                 }
 
@@ -363,23 +354,17 @@ public class LockFreeBSTree<T, V> {
                  * inserted.
                  */
                 if (((Comparable) p.key).compareTo((Comparable) key) < 0) {
-                    if ((n != maxDummyNode)
-                            && ((Comparable) n.unthread().key)
-                                    .compareTo((Comparable) key) < 0)
+                    if ((n != maxDummyNode) && ((Comparable) n.unthread().key).compareTo((Comparable) key) < 0)
                         continue retry;
                     node.left = p.thread();
                     node.right = n;
                 } else {
-                    if ((n != minDummyNode)
-                            && ((Comparable) n.unthread().key)
-                                    .compareTo((Comparable) key) > 0)
+                    if ((n != minDummyNode) && ((Comparable) n.unthread().key).compareTo((Comparable) key) > 0)
                         continue retry;
                     node.left = n;
                     node.right = p.thread();
                 }
-            } while (!UNSAFE.compareAndSwapObject(p, ((Comparable) p.key)
-                    .compareTo((Comparable) key) < 0 ? Node.RIGHT_OFFSET
-                    : Node.LEFT_OFFSET, n, node));
+            } while (!UNSAFE.compareAndSwapObject(p, ((Comparable) p.key).compareTo((Comparable) key) < 0 ? Node.RIGHT_OFFSET : Node.LEFT_OFFSET, n, node));
             return null;
         }
     }
@@ -442,16 +427,14 @@ public class LockFreeBSTree<T, V> {
 
             /* Read contents of node: retry if node is garbage */
             Node<T, V> dl = (Node<T, V>) MultiCAS.mcasRead(d, Node.LEFT_OFFSET);
-            Node<T, V> dr = (Node<T, V>) MultiCAS
-                    .mcasRead(d, Node.RIGHT_OFFSET);
+            Node<T, V> dr = (Node<T, V>) MultiCAS.mcasRead(d, Node.RIGHT_OFFSET);
             V dv = (V) MultiCAS.mcasRead(d, Node.VALUE_OFFSET);
 
             if ((dl == null) || (dr == null) || (dv == null))
                 continue retry;
 
             /* deep into the left branch */
-            if (((p == root) || (((Comparable) p.key)
-                    .compareTo((Comparable) d.key) > 0))) {
+            if (((p == root) || (((Comparable) p.key).compareTo((Comparable) d.key) > 0))) {
                 if (!dl.isThread() && !dr.isThread()) {
                     /* Find predecessor, and its parent (pred, ppred) */
                     pred = d;
@@ -459,8 +442,7 @@ public class LockFreeBSTree<T, V> {
                     while (!cpred.isThread()) {
                         ppred = pred;
                         pred = cpred;
-                        cpred = (Node<T, V>) MultiCAS.mcasRead(pred,
-                                Node.RIGHT_OFFSET);
+                        cpred = (Node<T, V>) MultiCAS.mcasRead(pred, Node.RIGHT_OFFSET);
                         if (cpred == null)
                             continue retry;
                     }
@@ -471,8 +453,7 @@ public class LockFreeBSTree<T, V> {
                     while (!csucc.isThread()) {
                         psucc = succ;
                         succ = csucc;
-                        csucc = (Node<T, V>) MultiCAS.mcasRead(succ,
-                                Node.LEFT_OFFSET);
+                        csucc = (Node<T, V>) MultiCAS.mcasRead(succ, Node.LEFT_OFFSET);
                         if (csucc == null)
                             continue retry;
                     }
@@ -518,8 +499,7 @@ public class LockFreeBSTree<T, V> {
                             continue retry;
                         }
                     } else {
-                        succR = (Node<T, V>) MultiCAS.mcasRead(succ,
-                                Node.RIGHT_OFFSET);
+                        succR = (Node<T, V>) MultiCAS.mcasRead(succ, Node.RIGHT_OFFSET);
                         obj[6] = succ;
                         offset[6] = Node.RIGHT_OFFSET;
                         oldValue[6] = succR;
@@ -531,8 +511,7 @@ public class LockFreeBSTree<T, V> {
                         oldValue[7] = succ;
                         newValue[7] = succR.isThread() ? succ.thread() : succR;
 
-                        if (!MultiCAS.mcas(8, obj, offset, oldValue,
-                                newValue)) {
+                        if (!MultiCAS.mcas(8, obj, offset, oldValue, newValue)) {
                             continue retry;
                         }
                     }
@@ -544,8 +523,7 @@ public class LockFreeBSTree<T, V> {
                     while (!csucc.isThread()) {
                         psucc = succ;
                         succ = csucc;
-                        csucc = (Node<T, V>) MultiCAS.mcasRead(succ,
-                                Node.LEFT_OFFSET);
+                        csucc = (Node<T, V>) MultiCAS.mcasRead(succ, Node.LEFT_OFFSET);
                         if (csucc == null)
                             continue retry;
                     }
@@ -592,8 +570,7 @@ public class LockFreeBSTree<T, V> {
                     while (!cpred.isThread()) {
                         ppred = pred;
                         pred = cpred;
-                        cpred = (Node<T, V>) MultiCAS.mcasRead(pred,
-                                Node.RIGHT_OFFSET);
+                        cpred = (Node<T, V>) MultiCAS.mcasRead(pred, Node.RIGHT_OFFSET);
                         if (cpred == null)
                             continue retry;
                     }
@@ -677,8 +654,7 @@ public class LockFreeBSTree<T, V> {
                     while (!cpred.isThread()) {
                         ppred = pred;
                         pred = cpred;
-                        cpred = (Node<T, V>) MultiCAS.mcasRead(pred,
-                                Node.RIGHT_OFFSET);
+                        cpred = (Node<T, V>) MultiCAS.mcasRead(pred, Node.RIGHT_OFFSET);
                         if (cpred == null)
                             continue retry;
                     }
@@ -689,8 +665,7 @@ public class LockFreeBSTree<T, V> {
                     while (!csucc.isThread()) {
                         psucc = succ;
                         succ = csucc;
-                        csucc = (Node<T, V>) MultiCAS.mcasRead(succ,
-                                Node.LEFT_OFFSET);
+                        csucc = (Node<T, V>) MultiCAS.mcasRead(succ, Node.LEFT_OFFSET);
                         if (csucc == null)
                             continue retry;
                     }
@@ -736,8 +711,7 @@ public class LockFreeBSTree<T, V> {
                             continue retry;
                         }
                     } else {
-                        predL = (Node<T, V>) MultiCAS.mcasRead(pred,
-                                Node.LEFT_OFFSET);
+                        predL = (Node<T, V>) MultiCAS.mcasRead(pred, Node.LEFT_OFFSET);
                         obj[6] = pred;
                         offset[6] = Node.LEFT_OFFSET;
                         oldValue[6] = predL;
@@ -754,8 +728,7 @@ public class LockFreeBSTree<T, V> {
                         }
                         newValue[7] = predL.isThread() ? pred.thread() : predL;
 
-                        if (!MultiCAS.mcas(8, obj, offset, oldValue,
-                                newValue)) {
+                        if (!MultiCAS.mcas(8, obj, offset, oldValue, newValue)) {
                             continue retry;
                         }
                     }
@@ -769,8 +742,7 @@ public class LockFreeBSTree<T, V> {
                     while (!csucc.isThread()) {
                         psucc = succ;
                         succ = csucc;
-                        csucc = (Node<T, V>) MultiCAS.mcasRead(succ,
-                                Node.LEFT_OFFSET);
+                        csucc = (Node<T, V>) MultiCAS.mcasRead(succ, Node.LEFT_OFFSET);
                         if (csucc == null)
                             continue retry;
                     }
@@ -818,8 +790,7 @@ public class LockFreeBSTree<T, V> {
                     while (!cpred.isThread()) {
                         ppred = pred;
                         pred = cpred;
-                        cpred = (Node<T, V>) MultiCAS.mcasRead(pred,
-                                Node.RIGHT_OFFSET);
+                        cpred = (Node<T, V>) MultiCAS.mcasRead(pred, Node.RIGHT_OFFSET);
                         if (cpred == null)
                             continue retry;
                     }

@@ -30,95 +30,94 @@ import org.amino.utility.FastRandom;
  * 
  */
 public class WorkStealingScheduler extends AbstractScheduler {
-	private Deque<Runnable>[] workQ;
-	private boolean randomStealing;
+    private Deque<Runnable>[] workQ;
+    private boolean randomStealing;
 
-	/**
-	 * 
-	 */
-	public WorkStealingScheduler() {
-		this(defaultNumberOfWorkers());
-	}
+    /**
+     * 
+     */
+    public WorkStealingScheduler() {
+        this(defaultNumberOfWorkers());
+    }
 
-	/**
-	 * 
-	 * @param numWorkers
-	 *            number of worker threads to create.
-	 */
-	public WorkStealingScheduler(int numWorkers) {
-		this(numWorkers, false);
-	}
+    /**
+     * 
+     * @param numWorkers
+     *            number of worker threads to create.
+     */
+    public WorkStealingScheduler(int numWorkers) {
+        this(numWorkers, false);
+    }
 
-	/**
-	 * 
-	 * @param numWorkers
-	 *            number of worker threads to create.
-	 * @param doRandom
-	 *            randomly select thread for stealing work.
-	 */
-	@SuppressWarnings("unchecked")
-	public WorkStealingScheduler(int numWorkers, boolean doRandom) {
-		super(numWorkers);
-		workQ = new Deque[numWorkers];
-		for (int i = 0; i < numWorkers(); i++)
-			workQ[i] = new LockFreeDeque<Runnable>();
-		randomStealing = doRandom;
-		startWorkers();
-	}
+    /**
+     * 
+     * @param numWorkers
+     *            number of worker threads to create.
+     * @param doRandom
+     *            randomly select thread for stealing work.
+     */
+    @SuppressWarnings("unchecked")
+    public WorkStealingScheduler(int numWorkers, boolean doRandom) {
+        super(numWorkers);
+        workQ = new Deque[numWorkers];
+        for (int i = 0; i < numWorkers(); i++)
+            workQ[i] = new LockFreeDeque<Runnable>();
+        randomStealing = doRandom;
+        startWorkers();
+    }
 
-	private int now = 0;
+    private int now = 0;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected void addWork(Runnable command) {
-		workQ[now].add(command);
-		now = (now + 1) % numWorkers();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void addWork(Runnable command) {
+        workQ[now].add(command);
+        now = (now + 1) % numWorkers();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected List<Runnable> getOutstandingWork() {
-		List<Runnable> result = new ArrayList<Runnable>();
-		int nworkers = numWorkers();
-		for (int i = 0; i < nworkers; i++) {
-			while (true) {
-				Runnable r = workQ[i].poll();
-				if (r == null)
-					break;
-				result.add(r);
-			}
-		}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected List<Runnable> getOutstandingWork() {
+        List<Runnable> result = new ArrayList<Runnable>();
+        int nworkers = numWorkers();
+        for (int i = 0; i < nworkers; i++) {
+            while (true) {
+                Runnable r = workQ[i].poll();
+                if (r == null)
+                    break;
+                result.add(r);
+            }
+        }
 
-		return result;
-	}
+        return result;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected Runnable getWork(int id) {
-		Runnable r = workQ[id].poll();
-		if (r != null)
-			return r;
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected Runnable getWork(int id) {
+        Runnable r = workQ[id].poll();
+        if (r != null)
+            return r;
 
-		// Choose other queues at random to steal work
-		int nworkers = numWorkers();
-		for (int i = (id + 1) % nworkers; i != id; i = (i + 1) % nworkers) {
-			if (randomStealing)
-				r = workQ[FastRandom.nextInt(nworkers)].pollLast();
+        // Choose other queues at random to steal work
+        int nworkers = numWorkers();
+        for (int i = (id + 1) % nworkers; i != id; i = (i + 1) % nworkers) {
+            if (randomStealing)
+                r = workQ[FastRandom.nextInt(nworkers)].pollLast();
 
-			else
-				r = workQ[i].pollLast();
-			if (r != null)
-				return r;
-		}
+            else
+                r = workQ[i].pollLast();
+            if (r != null)
+                return r;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
 }
-

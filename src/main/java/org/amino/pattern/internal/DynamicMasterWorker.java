@@ -40,7 +40,7 @@ import org.amino.scheduler.internal.AbstractScheduler;
  * 
  */
 class DynamicMasterWorker<S, T> extends AbstractMasterWorker<S, T> {
-//    private final boolean debug = false;
+    //    private final boolean debug = false;
 
     /**
      * Working queue.
@@ -199,7 +199,7 @@ class DynamicMasterWorker<S, T> extends AbstractMasterWorker<S, T> {
         this(r, AbstractScheduler.defaultNumberOfWorkers());
     }
 
-//    private Map<Thread, Integer> threadMap;
+    //    private Map<Thread, Integer> threadMap;
 
     /**
      * 

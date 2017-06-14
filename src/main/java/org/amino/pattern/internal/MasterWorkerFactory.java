@@ -23,7 +23,7 @@ package org.amino.pattern.internal;
  * 
  */
 public final class MasterWorkerFactory {
-    
+
     /**
      * Utility classes should not have a public or default constructor.
      */
@@ -57,8 +57,7 @@ public final class MasterWorkerFactory {
      *            number of workers (threads)
      * @return StaticMasterWorker
      */
-    public static <X, Y> MasterWorker<X, Y> newStatic(Doable<X, Y> r,
-            int numWorkers) {
+    public static <X, Y> MasterWorker<X, Y> newStatic(Doable<X, Y> r, int numWorkers) {
         return new StaticMasterWorker<X, Y>(r, numWorkers);
     }
 
@@ -88,8 +87,7 @@ public final class MasterWorkerFactory {
      *            number of workers
      * @return DynamicMasterWorker
      */
-    public static <X, Y> MasterWorker<X, Y> newDynamic(DynamicWorker<X, Y> r,
-            int numWorkers) {
+    public static <X, Y> MasterWorker<X, Y> newDynamic(DynamicWorker<X, Y> r, int numWorkers) {
         return new DynamicMasterWorker<X, Y>(r, numWorkers);
     }
 }

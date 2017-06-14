@@ -482,6 +482,5 @@ public interface Sorter {
      *            comparator used to do comparison
      * @see java.util.Collections#sort(List, Comparator)
      */
-    <T extends Comparable<T>> void sort(List<T> a, int from, int to,
-            Comparator<T> c);
+    <T extends Comparable<T>> void sort(List<T> a, int from, int to, Comparator<T> c);
 }

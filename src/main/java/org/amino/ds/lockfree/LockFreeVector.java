@@ -98,8 +98,7 @@ public class LockFreeVector<E> extends AbstractList<E> {
          * @param newV
          *            new operand
          */
-        public WriteDescriptor(AtomicReferenceArray<E> addr, int addrInd,
-                E oldV, E newV) {
+        public WriteDescriptor(AtomicReferenceArray<E> addr, int addrInd, E oldV, E newV) {
             this.addr = addr;
             this.addrInd = addrInd;
             this.oldV = oldV;
@@ -176,8 +175,7 @@ public class LockFreeVector<E> extends AbstractList<E> {
      */
     private AtomicReference<Descriptor<E>> descriptor;
 
-    private static final int ZERO_NUM_FIRST = Integer
-            .numberOfLeadingZeros(FIRST_BUCKET_SIZE);;
+    private static final int ZERO_NUM_FIRST = Integer.numberOfLeadingZeros(FIRST_BUCKET_SIZE);;
 
     /**
      * Create a new lock-free vector.
@@ -185,8 +183,7 @@ public class LockFreeVector<E> extends AbstractList<E> {
     public LockFreeVector() {
         buckets = new AtomicReferenceArray<AtomicReferenceArray<E>>(N_BUCKET);
         buckets.set(0, new AtomicReferenceArray<E>(FIRST_BUCKET_SIZE));
-        descriptor = new AtomicReference<Descriptor<E>>(new Descriptor<E>(0,
-                null));
+        descriptor = new AtomicReference<Descriptor<E>>(new Descriptor<E>(0, null));
     }
 
     /**
@@ -214,16 +211,14 @@ public class LockFreeVector<E> extends AbstractList<E> {
                 if (DEBUG)
                     System.out.println("New Length is:" + newLen);
 
-                buckets.compareAndSet(bucketInd, null,
-                        new AtomicReferenceArray<E>(newLen));
+                buckets.compareAndSet(bucketInd, null, new AtomicReferenceArray<E>(newLen));
             }
 
             // Get rid of leading 1 from pos to get idx, which is internal index
             // inside selected bucket
             int idx = (MARK_FIRST_BIT >>> zeroNumPos) ^ pos;
 
-            newd = new Descriptor<E>(desc.size + 1, new WriteDescriptor<E>(
-                    buckets.get(bucketInd), idx, null, e));
+            newd = new Descriptor<E>(desc.size + 1, new WriteDescriptor<E>(buckets.get(bucketInd), idx, null, e));
         } while (!descriptor.compareAndSet(desc, newd));
         descriptor.get().completeWrite();
     }
@@ -243,8 +238,7 @@ public class LockFreeVector<E> extends AbstractList<E> {
             desc.completeWrite();
 
             int pos = desc.size + FIRST_BUCKET_SIZE - 1;
-            int bucketInd = Integer.numberOfLeadingZeros(FIRST_BUCKET_SIZE)
-                    - Integer.numberOfLeadingZeros(pos);
+            int bucketInd = Integer.numberOfLeadingZeros(FIRST_BUCKET_SIZE) - Integer.numberOfLeadingZeros(pos);
             int idx = Integer.highestOneBit(pos) ^ pos;
             elem = buckets.get(bucketInd).get(idx);
             newd = new Descriptor<E>(desc.size - 1, null);
@@ -282,8 +276,7 @@ public class LockFreeVector<E> extends AbstractList<E> {
      */
     public E set(int index, E e) {
         int pos = index + FIRST_BUCKET_SIZE;
-        int bucketInd = Integer.numberOfLeadingZeros(FIRST_BUCKET_SIZE)
-                - Integer.numberOfLeadingZeros(pos);
+        int bucketInd = Integer.numberOfLeadingZeros(FIRST_BUCKET_SIZE) - Integer.numberOfLeadingZeros(pos);
         int idx = Integer.highestOneBit(pos) ^ pos;
         AtomicReferenceArray<E> bucket = buckets.get(bucketInd);
         while (true) {
@@ -302,18 +295,15 @@ public class LockFreeVector<E> extends AbstractList<E> {
     public void reserve(int newSize) {
         int size = descriptor.get().size;
         int pos = size + FIRST_BUCKET_SIZE - 1;
-        int i = Integer.numberOfLeadingZeros(FIRST_BUCKET_SIZE)
-                - Integer.numberOfLeadingZeros(pos);
+        int i = Integer.numberOfLeadingZeros(FIRST_BUCKET_SIZE) - Integer.numberOfLeadingZeros(pos);
         if (i < 1)
             i = 1;
 
         int initialSize = buckets.get(i - 1).length();
-        while (i < Integer.numberOfLeadingZeros(FIRST_BUCKET_SIZE)
-                - Integer.numberOfLeadingZeros(newSize + FIRST_BUCKET_SIZE - 1)) {
+        while (i < Integer.numberOfLeadingZeros(FIRST_BUCKET_SIZE) - Integer.numberOfLeadingZeros(newSize + FIRST_BUCKET_SIZE - 1)) {
             i++;
             initialSize *= FIRST_BUCKET_SIZE;
-            buckets.compareAndSet(i, null, new AtomicReferenceArray<E>(
-                    initialSize));
+            buckets.compareAndSet(i, null, new AtomicReferenceArray<E>(initialSize));
         }
     }
 

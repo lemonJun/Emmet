@@ -76,8 +76,7 @@ public class ParallelScanner extends DefaultScanner {
 
                     threadPool[i] = new Thread() {
                         public void run() {
-                            System.arraycopy(srcArray, 0, resultArray,
-                                    currentIndex, srcArray.length);
+                            System.arraycopy(srcArray, 0, resultArray, currentIndex, srcArray.length);
                         }
                     };
                     index += srcArray.length;
@@ -92,7 +91,7 @@ public class ParallelScanner extends DefaultScanner {
                     if (null != threadPool[i])
                         threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
         }
 
@@ -101,8 +100,7 @@ public class ParallelScanner extends DefaultScanner {
             if (null != input[i]) {
 
                 int[] srcArray = input[i];
-                System.arraycopy(srcArray, 0, resultArray, currentIndex,
-                        srcArray.length);
+                System.arraycopy(srcArray, 0, resultArray, currentIndex, srcArray.length);
                 currentIndex += srcArray.length;
             }
         }
@@ -138,8 +136,7 @@ public class ParallelScanner extends DefaultScanner {
             final int threadId = i;
             threadPool[i] = new Thread() {
                 public void run() {
-                    tempResults[threadId] = serialScanner.findAll(a, v,
-                            startIndex, endIndex);
+                    tempResults[threadId] = serialScanner.findAll(a, v, startIndex, endIndex);
                 }
             };
             start = end;
@@ -150,7 +147,7 @@ public class ParallelScanner extends DefaultScanner {
             for (int i = 0; i < threadPool.length; ++i)
                 threadPool[i].join();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         org.amino.Runtime.releaseThreads(numThreads);
@@ -187,8 +184,7 @@ public class ParallelScanner extends DefaultScanner {
      * @return index where a call to findNext would return the next valid search
      *         string's index, starting at endIndex-(v.length-1).
      */
-    private int findPreviousEndIndex(final byte[] srcArray, final byte[] v,
-            int endIndex) {
+    private int findPreviousEndIndex(final byte[] srcArray, final byte[] v, int endIndex) {
         final DefaultScanner serialScanner = new DefaultScanner();
 
         int windowSize = 2 * v.length - 2;
@@ -199,8 +195,7 @@ public class ParallelScanner extends DefaultScanner {
         if (searchStart < 0)
             searchStart = 0;
 
-        while ((prevIndex = serialScanner.findPrevious(srcArray, v,
-                searchStart, searchEnd)) >= 0) {
+        while ((prevIndex = serialScanner.findPrevious(srcArray, v, searchStart, searchEnd)) >= 0) {
             searchStart = prevIndex - (v.length - 1);
             searchEnd = searchStart + windowSize;
             noOverlap = false;
@@ -220,8 +215,7 @@ public class ParallelScanner extends DefaultScanner {
             // search short at
             // endIndex+ v.length-1 and will return -1, so endIndex will be
             // returned.
-            curIndex = serialScanner.findNext(srcArray, v, searchStart,
-                    endIndex + v.length - 1);
+            curIndex = serialScanner.findNext(srcArray, v, searchStart, endIndex + v.length - 1);
         } while (curIndex > 0 && curIndex + v.length < endIndex);
         if (curIndex < 0)
             return endIndex;
@@ -256,11 +250,9 @@ public class ParallelScanner extends DefaultScanner {
 
             threadPool[i] = new Thread() {
                 public void run() {
-                    int continuingIndex = threadId == 0 ? startIndex
-                            : findPreviousEndIndex(a, v, startIndex);
+                    int continuingIndex = threadId == 0 ? startIndex : findPreviousEndIndex(a, v, startIndex);
 
-                    tempResults[threadId] = serialScanner.findAll(a, v,
-                            continuingIndex, endIndex);
+                    tempResults[threadId] = serialScanner.findAll(a, v, continuingIndex, endIndex);
                 }
             };
             start += chunkSize;
@@ -271,7 +263,7 @@ public class ParallelScanner extends DefaultScanner {
             for (int i = 0; i < threadPool.length; ++i)
                 threadPool[i].join();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         org.amino.Runtime.releaseThreads(numThreads);
@@ -280,8 +272,8 @@ public class ParallelScanner extends DefaultScanner {
     }
 
     /**
-	 *
-	 */
+    *
+    */
     private class BoxedInteger {
         BoxedInteger(int x) {
             value = x;
@@ -317,8 +309,7 @@ public class ParallelScanner extends DefaultScanner {
                     // Periodically check to see if another thread has already
                     // found an answer
                     final int chunkletSize = MINIMUM_PROBLEM_SIZE;
-                    int numberChunklets = (endIndex - startIndex)
-                            / chunkletSize;
+                    int numberChunklets = (endIndex - startIndex) / chunkletSize;
                     int chunkletStart = startIndex;
 
                     for (int j = 0; j < numberChunklets; ++j) {
@@ -330,8 +321,7 @@ public class ParallelScanner extends DefaultScanner {
                         if (chunkletStop > endIndex)
                             chunkletStop = endIndex;
 
-                        int result = serialScanner.findAny(a, v, chunkletStart,
-                                chunkletStop);
+                        int result = serialScanner.findAny(a, v, chunkletStart, chunkletStop);
 
                         chunkletStart = chunkletStop;
 
@@ -353,7 +343,7 @@ public class ParallelScanner extends DefaultScanner {
             for (int i = 0; i < threadPool.length; ++i)
                 threadPool[i].join();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         org.amino.Runtime.releaseThreads(numThreads);
@@ -386,13 +376,11 @@ public class ParallelScanner extends DefaultScanner {
             final int threadId = i;
             threadPool[i] = new Thread() {
                 public void run() {
-                    int continuingIndex = threadId == 0 ? startIndex
-                            : findPreviousEndIndex(a, v, startIndex);
+                    int continuingIndex = threadId == 0 ? startIndex : findPreviousEndIndex(a, v, startIndex);
                     // Periodically check to see if another thread has already
                     // found an answer
                     final int chunkletSize = MINIMUM_PROBLEM_SIZE;
-                    int numberChunklets = (endIndex - continuingIndex)
-                            / chunkletSize;
+                    int numberChunklets = (endIndex - continuingIndex) / chunkletSize;
                     int chunkletStart = continuingIndex;
 
                     for (int j = 0; j < numberChunklets; ++j) {
@@ -400,13 +388,11 @@ public class ParallelScanner extends DefaultScanner {
                             break; // another thread successfully found an
                                    // element
                         }
-                        int chunkletStop = chunkletStart + chunkletSize
-                                + v.length;
+                        int chunkletStop = chunkletStart + chunkletSize + v.length;
                         if (chunkletStop > endIndex)
                             chunkletStop = endIndex;
 
-                        int result = serialScanner.findAny(a, v, chunkletStart,
-                                chunkletStop);
+                        int result = serialScanner.findAny(a, v, chunkletStart, chunkletStop);
 
                         chunkletStart = chunkletStop;
 
@@ -428,7 +414,7 @@ public class ParallelScanner extends DefaultScanner {
             for (int i = 0; i < threadPool.length; ++i)
                 threadPool[i].join();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         org.amino.Runtime.releaseThreads(numThreads);
@@ -464,8 +450,7 @@ public class ParallelScanner extends DefaultScanner {
             final int threadId = i;
             threadPool[i] = new Thread() {
                 public void run() {
-                    tempResults[threadId] = serialScanner.findNext(a, v,
-                            startIndex, endIndex);
+                    tempResults[threadId] = serialScanner.findNext(a, v, startIndex, endIndex);
                 }
             };
             start = end;
@@ -476,7 +461,7 @@ public class ParallelScanner extends DefaultScanner {
             for (int i = 0; i < threadPool.length; ++i)
                 threadPool[i].join();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         org.amino.Runtime.releaseThreads(numThreads);
@@ -515,10 +500,8 @@ public class ParallelScanner extends DefaultScanner {
             final int endIndex = end;
             threadPool[i] = new Thread() {
                 public void run() {
-                    int continuingIndex = threadId == 0 ? startIndex
-                            : findPreviousEndIndex(a, v, startIndex);
-                    tempResults[threadId] = serialScanner.findNext(a, v,
-                            continuingIndex, endIndex);
+                    int continuingIndex = threadId == 0 ? startIndex : findPreviousEndIndex(a, v, startIndex);
+                    tempResults[threadId] = serialScanner.findNext(a, v, continuingIndex, endIndex);
                 }
             };
             start = end;
@@ -529,7 +512,7 @@ public class ParallelScanner extends DefaultScanner {
             try {
                 threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
         org.amino.Runtime.releaseThreads(numThreads);
 
@@ -568,8 +551,7 @@ public class ParallelScanner extends DefaultScanner {
             final int endIndex = end;
             threadPool[i] = new Thread() {
                 public void run() {
-                    tempResults[threadId] = serialScanner.findPrevious(a, v,
-                            startIndex, endIndex);
+                    tempResults[threadId] = serialScanner.findPrevious(a, v, startIndex, endIndex);
                 }
             };
             start = end;
@@ -580,7 +562,7 @@ public class ParallelScanner extends DefaultScanner {
             for (int i = 0; i < threadPool.length; ++i)
                 threadPool[i].join();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         org.amino.Runtime.releaseThreads(numThreads);
@@ -626,10 +608,8 @@ public class ParallelScanner extends DefaultScanner {
             final int threadId = i;
             threadPool[i] = new Thread() {
                 public void run() {
-                    int continuingIndex = threadId == 0 ? startIndex
-                            : findPreviousEndIndex(a, v, startIndex);
-                    tempResults[threadId] = serialScanner.findPrevious(a, v,
-                            continuingIndex, endIndex);
+                    int continuingIndex = threadId == 0 ? startIndex : findPreviousEndIndex(a, v, startIndex);
+                    tempResults[threadId] = serialScanner.findPrevious(a, v, continuingIndex, endIndex);
                 }
             };
             start = end;
@@ -640,7 +620,7 @@ public class ParallelScanner extends DefaultScanner {
             for (int i = 0; i < threadPool.length; ++i)
                 threadPool[i].join();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         org.amino.Runtime.releaseThreads(numThreads);
@@ -655,8 +635,7 @@ public class ParallelScanner extends DefaultScanner {
     /**
      * {@inheritDoc}
      */
-    public int replaceAll(final byte[] a, final byte v, final byte r, int from,
-            int to) {
+    public int replaceAll(final byte[] a, final byte v, final byte r, int from, int to) {
         final int range = to - from;
         if (range < MINIMUM_PROBLEM_SIZE)
             return super.replaceAll(a, v, r, from, to);
@@ -678,8 +657,7 @@ public class ParallelScanner extends DefaultScanner {
             final int threadId = i;
             threadPool[i] = new Thread() {
                 public void run() {
-                    tempResults[threadId] = serialScanner.replaceAll(a, v, r,
-                            startIndex, endIndex);
+                    tempResults[threadId] = serialScanner.replaceAll(a, v, r, startIndex, endIndex);
                 }
             };
             start = end;
@@ -690,7 +668,7 @@ public class ParallelScanner extends DefaultScanner {
             for (int i = 0; i < threadPool.length; ++i)
                 threadPool[i].join();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         org.amino.Runtime.releaseThreads(numThreads);
@@ -703,8 +681,7 @@ public class ParallelScanner extends DefaultScanner {
     /**
      * {@inheritDoc}
      */
-    public int replaceAll(final byte[] a, final byte[] v, final byte[] r,
-            int from, int to) {
+    public int replaceAll(final byte[] a, final byte[] v, final byte[] r, int from, int to) {
         final int range = to - from;
         if (range < MINIMUM_PROBLEM_SIZE)
             return super.replaceAll(a, v, r, from, to);
@@ -727,10 +704,8 @@ public class ParallelScanner extends DefaultScanner {
             final int threadId = i;
             threadPool[i] = new Thread() {
                 public void run() {
-                    int continuingIndex = threadId == 0 ? startIndex
-                            : findPreviousEndIndex(a, v, startIndex);
-                    tempResults[threadId] = serialScanner.replaceAll(a, v, r,
-                            continuingIndex, endIndex);
+                    int continuingIndex = threadId == 0 ? startIndex : findPreviousEndIndex(a, v, startIndex);
+                    tempResults[threadId] = serialScanner.replaceAll(a, v, r, continuingIndex, endIndex);
                 }
             };
             start = end;
@@ -741,7 +716,7 @@ public class ParallelScanner extends DefaultScanner {
             for (int i = 0; i < threadPool.length; ++i)
                 threadPool[i].join();
         } catch (Exception e) {
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         org.amino.Runtime.releaseThreads(numThreads);

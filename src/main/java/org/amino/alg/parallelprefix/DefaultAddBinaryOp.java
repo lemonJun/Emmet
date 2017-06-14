@@ -29,60 +29,60 @@ package org.amino.alg.parallelprefix;
  * 
  */
 public abstract class DefaultAddBinaryOp<T> implements BinaryOp<T> {
-	/**
-	  * {@inheritDoc}
-	  */
-	public byte transform(byte a, byte b) {
-		return (byte) (a + b);
-	}
+    /**
+      * {@inheritDoc}
+      */
+    public byte transform(byte a, byte b) {
+        return (byte) (a + b);
+    }
 
-	/**
-	  * {@inheritDoc}
-	  */
-	public char transform(char a, char b) {
-		return (char) (a + b);
-	}
+    /**
+      * {@inheritDoc}
+      */
+    public char transform(char a, char b) {
+        return (char) (a + b);
+    }
 
-	/**
-	  * {@inheritDoc}
-	  */
-	public short transform(short a, short b) {
-		return (short) (a + b);
-	}
+    /**
+      * {@inheritDoc}
+      */
+    public short transform(short a, short b) {
+        return (short) (a + b);
+    }
 
-	/**
-	  * {@inheritDoc}
-	  */
-	public int transform(int a, int b) {
-		return a + b;
-	}
+    /**
+      * {@inheritDoc}
+      */
+    public int transform(int a, int b) {
+        return a + b;
+    }
 
-	/**
-	  * {@inheritDoc}
-	  */
-	public long transform(long a, long b) {
-		return a + b;
-	}
+    /**
+      * {@inheritDoc}
+      */
+    public long transform(long a, long b) {
+        return a + b;
+    }
 
-	/**
-	  * {@inheritDoc}
-	  */
-	public float transform(float a, float b) {
-		return a + b;
-	}
+    /**
+      * {@inheritDoc}
+      */
+    public float transform(float a, float b) {
+        return a + b;
+    }
 
-	/**
-	  * {@inheritDoc}
-	  */
-	public double transform(double a, double b) {
-		return a + b;
-	}
+    /**
+      * {@inheritDoc}
+      */
+    public double transform(double a, double b) {
+        return a + b;
+    }
 
-	/**
-	  * {@inheritDoc}
-	  */
-	public T transform(T a, T b) {
-		assert (false);
-		return null;
-	} // extend if used
+    /**
+      * {@inheritDoc}
+      */
+    public T transform(T a, T b) {
+        assert (false);
+        return null;
+    } // extend if used
 }

@@ -136,8 +136,7 @@ public interface MasterWorker<S, T> {
      *             If any of the worker threads encounted some runtime
      *             exception.
      */
-    boolean execute(long timeout, TimeUnit unit) throws TimeoutException,
-            ExecutionException, InterruptedException;
+    boolean execute(long timeout, TimeUnit unit) throws TimeoutException, ExecutionException, InterruptedException;
 
     /**
      * Begin processing of the work items submitted. If the master/worker is

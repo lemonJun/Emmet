@@ -252,9 +252,7 @@ public class QuickSorter extends DefaultSorter {
 
     protected static int ninther(int[] data, int first, int mid, int last) {
         int s = (last - first + 1) / 8;
-        return median(data, median(data, first, first + s, first + s * 2),
-                median(data, mid - s, mid, mid + s), median(data, last - 2 * s,
-                        last - s, last));
+        return median(data, median(data, first, first + s, first + s * 2), median(data, mid - s, mid, mid + s), median(data, last - 2 * s, last - s, last));
     }
 
     /**
@@ -270,7 +268,8 @@ public class QuickSorter extends DefaultSorter {
      * @return index of a pivot element
      */
     protected int selectPivot(int[] a, int fromIndex, int toIndex) {
-        final int first = fromIndex, last = toIndex - 1, mid = (fromIndex + toIndex) / 2;
+        final int first = fromIndex, last = toIndex - 1,
+                        mid = (fromIndex + toIndex) / 2;
         final int size = toIndex - fromIndex;
 
         // The ideal pivot element is the median of the list elements.
@@ -280,39 +279,39 @@ public class QuickSorter extends DefaultSorter {
 
         switch (PIVOT_ALG) {
 
-        // (1) Choose the middle element
-        case 1:
-            return mid;
+            // (1) Choose the middle element
+            case 1:
+                return mid;
 
             // (2) Choose a random element
-        case 2:
-            return Math.abs(rand.nextInt()) % size + first;
+            case 2:
+                return Math.abs(rand.nextInt()) % size + first;
 
             // (3) Compute the median of the first, middle and last element
-        case 3:
-            return median(a, first, mid, last);
+            case 3:
+                return median(a, first, mid, last);
 
             // (4) Compute the "ninther" - the median of the median of three
             // samples of
             // elements chosen uniformly from the array.
-        case 4:
-            return ninther(a, first, mid, last);
+            case 4:
+                return ninther(a, first, mid, last);
 
             // (5) Choose dynamically among algorithms 1, 3 and 4 (following the
             // technique
             // in Bentley & McIlroy, "Engineering a sort function"
-        case 5:
-            if (size > 100) {
-                if (size > 1000)
-                    return ninther(a, first, mid, last);
-                else
-                    return median(a, first, mid, last);
-            } else
-                return mid;
+            case 5:
+                if (size > 100) {
+                    if (size > 1000)
+                        return ninther(a, first, mid, last);
+                    else
+                        return median(a, first, mid, last);
+                } else
+                    return mid;
 
-            // default: illegal option
-        default:
-            return 0;
+                // default: illegal option
+            default:
+                return 0;
 
         }
     }
@@ -330,7 +329,8 @@ public class QuickSorter extends DefaultSorter {
      * @return index of a pivot element
      */
     protected int selectPivot(byte[] a, int fromIndex, int toIndex) {
-        final int first = fromIndex, last = toIndex - 1, mid = (fromIndex + toIndex) / 2;
+        final int first = fromIndex, last = toIndex - 1,
+                        mid = (fromIndex + toIndex) / 2;
         return median(a, first, mid, last);
     }
 
@@ -347,7 +347,8 @@ public class QuickSorter extends DefaultSorter {
      * @return index of a pivot element
      */
     protected int selectPivot(char[] a, int fromIndex, int toIndex) {
-        final int first = fromIndex, last = toIndex - 1, mid = (fromIndex + toIndex) / 2;
+        final int first = fromIndex, last = toIndex - 1,
+                        mid = (fromIndex + toIndex) / 2;
         return median(a, first, mid, last);
     }
 
@@ -364,7 +365,8 @@ public class QuickSorter extends DefaultSorter {
      * @return index of a pivot element
      */
     protected int selectPivot(short[] a, int fromIndex, int toIndex) {
-        final int first = fromIndex, last = toIndex - 1, mid = (fromIndex + toIndex) / 2;
+        final int first = fromIndex, last = toIndex - 1,
+                        mid = (fromIndex + toIndex) / 2;
         return median(a, first, mid, last);
     }
 
@@ -381,7 +383,8 @@ public class QuickSorter extends DefaultSorter {
      * @return index of a pivot element
      */
     protected int selectPivot(long[] a, int fromIndex, int toIndex) {
-        final int first = fromIndex, last = toIndex - 1, mid = (fromIndex + toIndex) / 2;
+        final int first = fromIndex, last = toIndex - 1,
+                        mid = (fromIndex + toIndex) / 2;
         return median(a, first, mid, last);
     }
 
@@ -398,7 +401,8 @@ public class QuickSorter extends DefaultSorter {
      * @return index of a pivot element
      */
     protected int selectPivot(float[] a, int fromIndex, int toIndex) {
-        final int first = fromIndex, last = toIndex - 1, mid = (fromIndex + toIndex) / 2;
+        final int first = fromIndex, last = toIndex - 1,
+                        mid = (fromIndex + toIndex) / 2;
         return median(a, first, mid, last);
     }
 
@@ -415,7 +419,8 @@ public class QuickSorter extends DefaultSorter {
      * @return index of a pivot element
      */
     protected int selectPivot(double[] a, int fromIndex, int toIndex) {
-        final int first = fromIndex, last = toIndex - 1, mid = (fromIndex + toIndex) / 2;
+        final int first = fromIndex, last = toIndex - 1,
+                        mid = (fromIndex + toIndex) / 2;
         return median(a, first, mid, last);
     }
 

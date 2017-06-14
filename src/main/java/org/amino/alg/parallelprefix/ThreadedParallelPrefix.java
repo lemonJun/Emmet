@@ -129,8 +129,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
          *            reduction operator
          * @return array of partial reduced results
          */
-        public int[] reduce(final int[] inputArray, final int[] reducedArray,
-                final BinaryOp<T> op) {
+        public int[] reduce(final int[] inputArray, final int[] reducedArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             final int[] partialReduction = new int[numThreads];
             int chunkSize = inputArray.length / numThreads;
@@ -149,8 +148,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                         int result = inputArray[currentStart];
                         reducedArray[currentStart] = result;
                         for (int i = currentStart + 1; i <= currentEnd; ++i) {
-                            reducedArray[i] = op.transform(reducedArray[i - 1],
-                                    inputArray[i]);
+                            reducedArray[i] = op.transform(reducedArray[i - 1], inputArray[i]);
                         }
                         partialReduction[threadId] = reducedArray[currentEnd];
                     };
@@ -164,7 +162,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 0; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             return partialReduction;
         }
@@ -181,8 +179,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
          * @param op
          *            modifying function
          */
-        public void modify(final int[] partialReduction,
-                final int[] outputArray, final BinaryOp<T> op) {
+        public void modify(final int[] partialReduction, final int[] outputArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
 
             Thread[] threadPool = new Thread[numThreads];
@@ -200,8 +197,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 threadPool[i] = new Thread() {
                     public void run() {
                         for (int i = currentStart; i <= currentEnd; ++i) {
-                            outputArray[i] = op
-                                    .transform(outputArray[i], value);
+                            outputArray[i] = op.transform(outputArray[i], value);
                         }
                     };
                 };
@@ -214,7 +210,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 1; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
         }
@@ -230,8 +226,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
          *            reduction operator
          * @return array of partial reduced results
          */
-        public float[] reduce(final float[] inputArray,
-                final float[] reducedArray, final BinaryOp<T> op) {
+        public float[] reduce(final float[] inputArray, final float[] reducedArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             final float[] partialReduction = new float[numThreads];
             int chunkSize = inputArray.length / numThreads;
@@ -249,8 +244,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                         float result = inputArray[currentStart];
                         reducedArray[currentStart] = result;
                         for (int i = currentStart + 1; i <= currentEnd; ++i) {
-                            reducedArray[i] = op.transform(reducedArray[i - 1],
-                                    inputArray[i]);
+                            reducedArray[i] = op.transform(reducedArray[i - 1], inputArray[i]);
                         }
                         partialReduction[threadId] = reducedArray[currentEnd];
                     };
@@ -264,7 +258,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 0; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
             return partialReduction;
@@ -282,8 +276,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
          * @param op
          *            modifying function
          */
-        public void modify(final float[] partialReduction,
-                final float[] outputArray, final BinaryOp<T> op) {
+        public void modify(final float[] partialReduction, final float[] outputArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             Thread[] threadPool = new Thread[numThreads];
             int chunkSize = outputArray.length / numThreads;
@@ -300,8 +293,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 threadPool[i] = new Thread() {
                     public void run() {
                         for (int i = currentStart; i <= currentEnd; ++i) {
-                            outputArray[i] = op
-                                    .transform(outputArray[i], value);
+                            outputArray[i] = op.transform(outputArray[i], value);
                         }
                     };
                 };
@@ -314,7 +306,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 1; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
         }
@@ -322,8 +314,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #reduce(int[], int[], BinaryOp)
          */
-        private double[] reduce(final double[] inputArray,
-                final double[] reducedArray, final BinaryOp<T> op) {
+        private double[] reduce(final double[] inputArray, final double[] reducedArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             final double[] partialReduction = new double[numThreads];
             int chunkSize = inputArray.length / numThreads;
@@ -341,8 +332,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                         double result = inputArray[currentStart];
                         reducedArray[currentStart] = result;
                         for (int i = currentStart + 1; i <= currentEnd; ++i) {
-                            reducedArray[i] = op.transform(reducedArray[i - 1],
-                                    inputArray[i]);
+                            reducedArray[i] = op.transform(reducedArray[i - 1], inputArray[i]);
                         }
                         partialReduction[threadId] = reducedArray[currentEnd];
                     };
@@ -356,7 +346,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 0; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
             return partialReduction;
@@ -365,8 +355,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #modify(int[], int[], BinaryOp)
          */
-        private void modify(final double[] partialReduction,
-                final double[] outputArray, final BinaryOp<T> op) {
+        private void modify(final double[] partialReduction, final double[] outputArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             Thread[] threadPool = new Thread[numThreads];
             int chunkSize = outputArray.length / numThreads;
@@ -383,8 +372,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 threadPool[i] = new Thread() {
                     public void run() {
                         for (int i = currentStart; i <= currentEnd; ++i) {
-                            outputArray[i] = op
-                                    .transform(outputArray[i], value);
+                            outputArray[i] = op.transform(outputArray[i], value);
                         }
                     };
                 };
@@ -397,7 +385,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 1; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
         }
@@ -405,8 +393,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #reduce(int[], int[], BinaryOp)
          */
-        private char[] reduce(final char[] inputArray,
-                final char[] reducedArray, final BinaryOp<T> op) {
+        private char[] reduce(final char[] inputArray, final char[] reducedArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             final char[] partialReduction = new char[numThreads];
             int chunkSize = inputArray.length / numThreads;
@@ -424,8 +411,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                         char result = inputArray[currentStart];
                         reducedArray[currentStart] = result;
                         for (int i = currentStart + 1; i <= currentEnd; ++i) {
-                            reducedArray[i] = op.transform(reducedArray[i - 1],
-                                    inputArray[i]);
+                            reducedArray[i] = op.transform(reducedArray[i - 1], inputArray[i]);
                         }
                         partialReduction[threadId] = reducedArray[currentEnd];
                     };
@@ -439,7 +425,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 0; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
             return partialReduction;
@@ -448,8 +434,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #modify(int[], int[], BinaryOp)
          */
-        private void modify(final char[] partialReduction,
-                final char[] outputArray, final BinaryOp<T> op) {
+        private void modify(final char[] partialReduction, final char[] outputArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             Thread[] threadPool = new Thread[numThreads];
             int chunkSize = outputArray.length / numThreads;
@@ -466,8 +451,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 threadPool[i] = new Thread() {
                     public void run() {
                         for (int i = currentStart; i <= currentEnd; ++i) {
-                            outputArray[i] = op
-                                    .transform(outputArray[i], value);
+                            outputArray[i] = op.transform(outputArray[i], value);
                         }
                     };
                 };
@@ -480,7 +464,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 1; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
         }
@@ -488,8 +472,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #reduce(int[], int[], BinaryOp)
          */
-        private byte[] reduce(final byte[] inputArray,
-                final byte[] reducedArray, final BinaryOp<T> op) {
+        private byte[] reduce(final byte[] inputArray, final byte[] reducedArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             final byte[] partialReduction = new byte[numThreads];
             int chunkSize = inputArray.length / numThreads;
@@ -507,8 +490,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                         byte result = inputArray[currentStart];
                         reducedArray[currentStart] = result;
                         for (int i = currentStart + 1; i <= currentEnd; ++i) {
-                            reducedArray[i] = op.transform(reducedArray[i - 1],
-                                    inputArray[i]);
+                            reducedArray[i] = op.transform(reducedArray[i - 1], inputArray[i]);
                         }
                         partialReduction[threadId] = reducedArray[currentEnd];
                     };
@@ -522,7 +504,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 0; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
             return partialReduction;
@@ -531,8 +513,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #modify(int[], int[], BinaryOp)
          */
-        private void modify(final byte[] partialReduction,
-                final byte[] outputArray, final BinaryOp<T> op) {
+        private void modify(final byte[] partialReduction, final byte[] outputArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             Thread[] threadPool = new Thread[numThreads];
             int chunkSize = outputArray.length / numThreads;
@@ -549,8 +530,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 threadPool[i] = new Thread() {
                     public void run() {
                         for (int i = currentStart; i <= currentEnd; ++i) {
-                            outputArray[i] = op
-                                    .transform(outputArray[i], value);
+                            outputArray[i] = op.transform(outputArray[i], value);
                         }
                     };
                 };
@@ -563,7 +543,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 1; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
         }
@@ -571,8 +551,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #reduce(int[], int[], BinaryOp)
          */
-        private long[] reduce(final long[] inputArray,
-                final long[] reducedArray, final BinaryOp<T> op) {
+        private long[] reduce(final long[] inputArray, final long[] reducedArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             final long[] partialReduction = new long[numThreads];
             int chunkSize = inputArray.length / numThreads;
@@ -590,8 +569,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                         long result = inputArray[currentStart];
                         reducedArray[currentStart] = result;
                         for (int i = currentStart + 1; i <= currentEnd; ++i) {
-                            reducedArray[i] = op.transform(reducedArray[i - 1],
-                                    inputArray[i]);
+                            reducedArray[i] = op.transform(reducedArray[i - 1], inputArray[i]);
                         }
                         partialReduction[threadId] = reducedArray[currentEnd];
                     };
@@ -605,7 +583,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 0; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
             return partialReduction;
@@ -614,8 +592,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #modify(int[], int[], BinaryOp)
          */
-        private void modify(final long[] partialReduction,
-                final long[] outputArray, final BinaryOp<T> op) {
+        private void modify(final long[] partialReduction, final long[] outputArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             Thread[] threadPool = new Thread[numThreads];
             int chunkSize = outputArray.length / numThreads;
@@ -632,8 +609,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 threadPool[i] = new Thread() {
                     public void run() {
                         for (int i = currentStart; i <= currentEnd; ++i) {
-                            outputArray[i] = op
-                                    .transform(outputArray[i], value);
+                            outputArray[i] = op.transform(outputArray[i], value);
                         }
                     };
                 };
@@ -646,7 +622,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 1; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
         }
@@ -654,8 +630,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #reduce(int[], int[], BinaryOp)
          */
-        private short[] reduce(final short[] inputArray,
-                final short[] reducedArray, final BinaryOp<T> op) {
+        private short[] reduce(final short[] inputArray, final short[] reducedArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             final short[] partialReduction = new short[numThreads];
             int chunkSize = inputArray.length / numThreads;
@@ -673,8 +648,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                         short result = inputArray[currentStart];
                         reducedArray[currentStart] = result;
                         for (int i = currentStart + 1; i <= currentEnd; ++i) {
-                            reducedArray[i] = op.transform(reducedArray[i - 1],
-                                    inputArray[i]);
+                            reducedArray[i] = op.transform(reducedArray[i - 1], inputArray[i]);
                         }
                         partialReduction[threadId] = reducedArray[currentEnd];
                     };
@@ -688,7 +662,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 0; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
             return partialReduction;
@@ -697,8 +671,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #modify(int[], int[], BinaryOp)
          */
-        private void modify(final short[] partialReduction,
-                final short[] outputArray, final BinaryOp<T> op) {
+        private void modify(final short[] partialReduction, final short[] outputArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             Thread[] threadPool = new Thread[numThreads];
             int chunkSize = outputArray.length / numThreads;
@@ -715,8 +688,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 threadPool[i] = new Thread() {
                     public void run() {
                         for (int i = currentStart; i <= currentEnd; ++i) {
-                            outputArray[i] = op
-                                    .transform(outputArray[i], value);
+                            outputArray[i] = op.transform(outputArray[i], value);
                         }
                     };
                 };
@@ -729,7 +701,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 1; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
         }
@@ -738,8 +710,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
          * @see #reduce(int[], int[], BinaryOp)
          */
         @SuppressWarnings("unchecked")
-        private T[] reduce(final T[] inputArray, final T[] reducedArray,
-                final BinaryOp<T> op) {
+        private T[] reduce(final T[] inputArray, final T[] reducedArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             final T[] partialReduction = (T[]) new Object[numThreads]; // Very
             // annoying!
@@ -758,8 +729,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                         T result = inputArray[currentStart];
                         reducedArray[currentStart] = result;
                         for (int i = currentStart + 1; i <= currentEnd; ++i) {
-                            reducedArray[i] = op.transform(reducedArray[i - 1],
-                                    inputArray[i]);
+                            reducedArray[i] = op.transform(reducedArray[i - 1], inputArray[i]);
                         }
                         partialReduction[threadId] = reducedArray[currentEnd];
                     };
@@ -773,7 +743,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 0; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
             return partialReduction;
@@ -782,8 +752,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         /**
          * @see #modify(int[], int[], BinaryOp)
          */
-        private void modify(final T[] partialReduction, final T[] outputArray,
-                final BinaryOp<T> op) {
+        private void modify(final T[] partialReduction, final T[] outputArray, final BinaryOp<T> op) {
             int numThreads = org.amino.Runtime.reserveThreads(numOfThreads);
             Thread[] threadPool = new Thread[numThreads];
             int chunkSize = outputArray.length / numThreads;
@@ -800,8 +769,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 threadPool[i] = new Thread() {
                     public void run() {
                         for (int i = currentStart; i <= currentEnd; ++i) {
-                            outputArray[i] = op
-                                    .transform(outputArray[i], value);
+                            outputArray[i] = op.transform(outputArray[i], value);
                         }
                     };
                 };
@@ -814,7 +782,7 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
                 for (int i = 1; i < numThreads; ++i)
                     threadPool[i].join();
             } catch (Exception e) {
-            	e.printStackTrace();
+                e.printStackTrace();
             }
             org.amino.Runtime.releaseThreads(numThreads);
         }
@@ -836,12 +804,12 @@ public class ThreadedParallelPrefix<T> extends AbstractParallelPrefix<T> {
         PartialReduction pr = new PartialReduction(numThreads);
         int[] partialReduction = pr.reduce(inputArray, outputArray, op);
 
-		// if (false) {
-		// System.out.println("Partial Reduction:");
-		// for (int i = 0; i < partialReduction.length; ++i) {
-		// System.out.print("p[" + i + "]=" + partialReduction[i] + " ");
-		// }
-		//        }
+        // if (false) {
+        // System.out.println("Partial Reduction:");
+        // for (int i = 0; i < partialReduction.length; ++i) {
+        // System.out.print("p[" + i + "]=" + partialReduction[i] + " ");
+        // }
+        //        }
 
         scan(partialReduction, partialReduction, op);
         pr.modify(partialReduction, outputArray, op);

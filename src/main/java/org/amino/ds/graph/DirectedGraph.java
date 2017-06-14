@@ -32,57 +32,57 @@ import java.util.Collection;
  */
 public interface DirectedGraph<E> extends Graph<E> {
 
-	/**
-	 * Get weighted edges started with start node.
-	 * 
-	 * @param start
-	 *            start node
-	 * @return collection of weighted edges started with start node
-	 */
-	Collection<AdjacentNode<E>> getWeightDestinations(Node<E> start);
+    /**
+     * Get weighted edges started with start node.
+     * 
+     * @param start
+     *            start node
+     * @return collection of weighted edges started with start node
+     */
+    Collection<AdjacentNode<E>> getWeightDestinations(Node<E> start);
 
-	/**
-	 * Get nodes started with start node.
-	 * 
-	 * @param start
-	 *            start node
-	 * @return collection of nodes started with start node
-	 */
-	Collection<Node<E>> getDestinations(Node<E> start);
+    /**
+     * Get nodes started with start node.
+     * 
+     * @param start
+     *            start node
+     * @return collection of nodes started with start node
+     */
+    Collection<Node<E>> getDestinations(Node<E> start);
 
-	/**
-	 * Get nodes end with end node.
-	 * 
-	 * @param end
-	 *            end node
-	 * @return collection of nodes ended with end node
-	 */
-	Collection<Node<E>> getSources(Node<E> end);
+    /**
+     * Get nodes end with end node.
+     * 
+     * @param end
+     *            end node
+     * @return collection of nodes ended with end node
+     */
+    Collection<Node<E>> getSources(Node<E> end);
 
-	/**
-	 * Get weighted edges ended with end node.
-	 * 
-	 * @param end
-	 *            end node
-	 * @return collection of weighted edges ended with end node
-	 */
-	Collection<AdjacentNode<E>> getWeightSources(Node<E> end);
+    /**
+     * Get weighted edges ended with end node.
+     * 
+     * @param end
+     *            end node
+     * @return collection of weighted edges ended with end node
+     */
+    Collection<AdjacentNode<E>> getWeightSources(Node<E> end);
 
-	/**
-	 * Get edges ended with end node.
-	 * 
-	 * @param node
-	 *            end node
-	 * @return collection of edges ended with node
-	 */
-	Collection<Edge<E>> getIncoming(Node<E> node);
+    /**
+     * Get edges ended with end node.
+     * 
+     * @param node
+     *            end node
+     * @return collection of edges ended with node
+     */
+    Collection<Edge<E>> getIncoming(Node<E> node);
 
-	/**
-	 * Get edges started with start node.
-	 * 
-	 * @param node
-	 *            start node
-	 * @return collection of edges started with start node
-	 */
-	Collection<Edge<E>> getOutgoing(Node<E> node);
+    /**
+     * Get edges started with start node.
+     * 
+     * @param node
+     *            start node
+     * @return collection of edges started with start node
+     */
+    Collection<Edge<E>> getOutgoing(Node<E> node);
 }

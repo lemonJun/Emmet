@@ -25,92 +25,92 @@ package org.amino.ds.graph;
  *            type of element in node
  */
 public class Node<E> implements Comparable<Node<E>> {
-	private E value;
+    private E value;
 
-	/**
-	 * used to compare two node.
-	 */
-	private int compare;
+    /**
+     * used to compare two node.
+     */
+    private int compare;
 
-	/**
-	 * Constructs a graph node, with specified element e.
-	 * 
-	 * @param e
-	 *            element in node
-	 */
-	public Node(E e) {
-		value = e;
-	}
+    /**
+     * Constructs a graph node, with specified element e.
+     * 
+     * @param e
+     *            element in node
+     */
+    public Node(E e) {
+        value = e;
+    }
 
-	/**
-	 * @return the value of this node
-	 */
-	public E getValue() {
-		return value;
-	}
+    /**
+     * @return the value of this node
+     */
+    public E getValue() {
+        return value;
+    }
 
-	/**
-	 * set the value of this node.
-	 * 
-	 * @param value
-	 *            the value to be set
-	 */
-	public void setValue(E value) {
-		this.value = value;
-	}
+    /**
+     * set the value of this node.
+     * 
+     * @param value
+     *            the value to be set
+     */
+    public void setValue(E value) {
+        this.value = value;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int compareTo(Node<E> o) {
-		if (compare > o.compare)
-			return 1;
-		else if (compare == o.compare)
-			return 0;
-		else
-			return -1;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int compareTo(Node<E> o) {
+        if (compare > o.compare)
+            return 1;
+        else if (compare == o.compare)
+            return 0;
+        else
+            return -1;
+    }
 
-	/**
-	 * Get the value used to compare.
-	 * 
-	 * @return the compare that is used to compare two nodes
-	 */
-	int getCompare() {
-		return compare;
-	}
+    /**
+     * Get the value used to compare.
+     * 
+     * @return the compare that is used to compare two nodes
+     */
+    int getCompare() {
+        return compare;
+    }
 
-	/**
-	 * Set the value used to compare.
-	 * 
-	 * @param compareV
-	 *            set the value of this node. This value is used by compareTo()
-	 *            method.
-	 */
-	void setCompare(int compareV) {
-		this.compare = compareV;
-	}
+    /**
+     * Set the value used to compare.
+     * 
+     * @param compareV
+     *            set the value of this node. This value is used by compareTo()
+     *            method.
+     */
+    void setCompare(int compareV) {
+        this.compare = compareV;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public int hashCode() {
-		return value.hashCode();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public int hashCode() {
+        return value.hashCode();
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean equals(Object n) {
-		if (!(n instanceof Node))
-			return false;
-		return this.value.equals(((Node) n).value);
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean equals(Object n) {
+        if (!(n instanceof Node))
+            return false;
+        return this.value.equals(((Node) n).value);
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public String toString() {
-		return value.toString();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public String toString() {
+        return value.toString();
+    }
 }

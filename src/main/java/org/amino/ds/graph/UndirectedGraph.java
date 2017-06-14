@@ -76,8 +76,7 @@ public class UndirectedGraph<E> extends AbstractGraph<E> {
      * {@inheritDoc}
      */
     public boolean addEdge(Edge<E> edge) {
-        return addEdge(edge.getStart().getValue(), edge.getEnd().getValue(),
-                edge.getWeight());
+        return addEdge(edge.getStart().getValue(), edge.getEnd().getValue(), edge.getWeight());
     }
 
     /**
@@ -137,7 +136,7 @@ public class UndirectedGraph<E> extends AbstractGraph<E> {
     public boolean removeNode(Node<E> node) {
         Collection<AdjacentNode<E>> lns = getLinkedNodes(node);
         Iterator<AdjacentNode<E>> iter = lns.iterator();
-		//        Node<E> cur;
+        //        Node<E> cur;
 
         while (iter.hasNext()) {
             Node<E> adj = iter.next().getNode();
@@ -176,16 +175,14 @@ public class UndirectedGraph<E> extends AbstractGraph<E> {
         while (iter.hasNext()) {
             Node<E> n = iter.next();
 
-            AdjacentList<E> list = (AdjacentList<E>) ((AbstractGraph<E>) g).mainList
-                    .get(n.getValue());
+            AdjacentList<E> list = (AdjacentList<E>) ((AbstractGraph<E>) g).mainList.get(n.getValue());
 
             Collection<AdjacentNode<E>> adj = getLinkedNodes(n);
             Iterator<AdjacentNode<E>> adjIter = adj.iterator();
             while (adjIter.hasNext()) {
                 AdjacentNode<E> adjNode = adjIter.next();
 
-                Node<E> node = ((AbstractGraph<E>) g).mainList.get(
-                        adjNode.getNode().getValue()).getHeadNode();
+                Node<E> node = ((AbstractGraph<E>) g).mainList.get(adjNode.getNode().getValue()).getHeadNode();
                 list.addEdge(node, adjNode.getWeight());
             }
         }

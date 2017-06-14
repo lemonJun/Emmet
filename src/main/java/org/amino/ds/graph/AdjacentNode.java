@@ -25,55 +25,55 @@ package org.amino.ds.graph;
  *            Type of elements contained in AdjacentNode
  */
 public class AdjacentNode<E> {
-	private final Node<E> node;
-	private final double weight;
+    private final Node<E> node;
+    private final double weight;
 
-	/**
-	 * @return the "node" of this adjacent node, adjacent to head node
-	 */
-	public Node<E> getNode() {
-		return node;
-	}
+    /**
+     * @return the "node" of this adjacent node, adjacent to head node
+     */
+    public Node<E> getNode() {
+        return node;
+    }
 
-	/**
-	 * @return weight of this adjacent node, namely, weight of the edge from
-	 *         head node to this node
-	 */
-	public double getWeight() {
-		return weight;
-	}
+    /**
+     * @return weight of this adjacent node, namely, weight of the edge from
+     *         head node to this node
+     */
+    public double getWeight() {
+        return weight;
+    }
 
-	/**
-	 * Constructs an adjacent node, with specified node and weight.
-	 * 
-	 * @param node
-	 *            the node
-	 * @param weight
-	 *            weight of the node
-	 */
-	public AdjacentNode(Node<E> node, double weight) {
-		this.node = node;
-		this.weight = weight;
-	}
+    /**
+     * Constructs an adjacent node, with specified node and weight.
+     * 
+     * @param node
+     *            the node
+     * @param weight
+     *            weight of the node
+     */
+    public AdjacentNode(Node<E> node, double weight) {
+        this.node = node;
+        this.weight = weight;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@SuppressWarnings("unchecked")
-	public boolean equals(Object o) {
-		if (!(o instanceof AdjacentNode))
-			return false;
-		AdjacentNode adj = (AdjacentNode) o;
-		return node.equals(adj.node) && weight == adj.weight;
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("unchecked")
+    public boolean equals(Object o) {
+        if (!(o instanceof AdjacentNode))
+            return false;
+        AdjacentNode adj = (AdjacentNode) o;
+        return node.equals(adj.node) && weight == adj.weight;
 
-	}
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String toString() {
-		return node.toString();
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return node.toString();
+    }
 
 }

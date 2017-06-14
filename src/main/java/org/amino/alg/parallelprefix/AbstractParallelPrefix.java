@@ -22,84 +22,87 @@ package org.amino.alg.parallelprefix;
  */
 public abstract class AbstractParallelPrefix<T> implements ParallelPrefix<T> {
 
+    /**
+     * {@inheritDoc}
+     */
+    public void scan(int[] array, int[] outputArray, BinaryOp<T> op) {
+        outputArray[0] = array[0];
+        for (int i = 1; i < array.length; ++i) {
+            outputArray[i] = op.transform(outputArray[i - 1], array[i]);
+        }
+    }
 
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public void scan(int[] array,int[] outputArray, BinaryOp<T> op){
-		outputArray[0] = array[0];
-		for(int i = 1; i < array.length;++i){
-			outputArray[i] = op.transform(outputArray[i-1],array[i]);
-		}
-	}
-	/**
-	 * {@inheritDoc}
-	 */
-	public void scan(char[] array,char[] outputArray, BinaryOp<T> op){
-		outputArray[0] = array[0];
-		for(int i = 1; i < array.length;++i){
-			outputArray[i] = op.transform(outputArray[i-1],array[i]);
-		}
-	}
-	/**
-	 * {@inheritDoc}
-	 */
-	public void scan(byte[] array,byte[] outputArray, BinaryOp<T> op){
-		outputArray[0] = array[0];
-		for(int i = 1; i < array.length;++i){
-			outputArray[i] = op.transform(outputArray[i-1],array[i]);
-		}
-	}
-	/**
-	 * {@inheritDoc}
-	 */
-	public void scan(long[] array,long[] outputArray, BinaryOp<T> op){
-		outputArray[0] = array[0];
-		for(int i = 1; i < array.length;++i){
-			outputArray[i] = op.transform(outputArray[i-1],array[i]);
-		}
-	}
-	/**
-	 * {@inheritDoc}
-	 */
-	public void scan(float[] array,float[] outputArray, BinaryOp<T> op){
-		outputArray[0] = array[0];
-		for(int i = 1; i < array.length;++i){
-			outputArray[i] = op.transform(outputArray[i-1],array[i]);
-		}
-	}
-	/**
-	 * {@inheritDoc}
-	 */
-	public void scan(double[] array,double[] outputArray, BinaryOp<T> op){
-		// scan serial (slow) implementation.
-		outputArray[0] = array[0];
-		for(int i = 1; i < array.length;++i){
-			outputArray[i] = op.transform(outputArray[i-1],array[i]);
-		}
-	}
-	/**
-	 * {@inheritDoc}
-	 */
-	public void scan(short[] array,short[] outputArray, BinaryOp<T> op){
-		// scan serial (slow) implementation.
-		outputArray[0] = array[0];
-		for(int i = 1; i < array.length;++i){
-			outputArray[i] = op.transform(outputArray[i-1],array[i]);
-		}
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 */
-	public void scan(T[] array,T[] outputArray, BinaryOp<T> op){
-		// scan serial (slow) implementation.
-		outputArray[0] = array[0];
-		for(int i = 1; i < array.length;++i){
-			outputArray[i] = op.transform(outputArray[i-1],array[i]);
-		}
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void scan(char[] array, char[] outputArray, BinaryOp<T> op) {
+        outputArray[0] = array[0];
+        for (int i = 1; i < array.length; ++i) {
+            outputArray[i] = op.transform(outputArray[i - 1], array[i]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void scan(byte[] array, byte[] outputArray, BinaryOp<T> op) {
+        outputArray[0] = array[0];
+        for (int i = 1; i < array.length; ++i) {
+            outputArray[i] = op.transform(outputArray[i - 1], array[i]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void scan(long[] array, long[] outputArray, BinaryOp<T> op) {
+        outputArray[0] = array[0];
+        for (int i = 1; i < array.length; ++i) {
+            outputArray[i] = op.transform(outputArray[i - 1], array[i]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void scan(float[] array, float[] outputArray, BinaryOp<T> op) {
+        outputArray[0] = array[0];
+        for (int i = 1; i < array.length; ++i) {
+            outputArray[i] = op.transform(outputArray[i - 1], array[i]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void scan(double[] array, double[] outputArray, BinaryOp<T> op) {
+        // scan serial (slow) implementation.
+        outputArray[0] = array[0];
+        for (int i = 1; i < array.length; ++i) {
+            outputArray[i] = op.transform(outputArray[i - 1], array[i]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void scan(short[] array, short[] outputArray, BinaryOp<T> op) {
+        // scan serial (slow) implementation.
+        outputArray[0] = array[0];
+        for (int i = 1; i < array.length; ++i) {
+            outputArray[i] = op.transform(outputArray[i - 1], array[i]);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void scan(T[] array, T[] outputArray, BinaryOp<T> op) {
+        // scan serial (slow) implementation.
+        outputArray[0] = array[0];
+        for (int i = 1; i < array.length; ++i) {
+            outputArray[i] = op.transform(outputArray[i - 1], array[i]);
+        }
+    }
 
 }
-

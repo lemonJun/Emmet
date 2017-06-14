@@ -131,8 +131,7 @@ final class MultiCAS {
 
         static {
             try {
-                STATUS_OFFSET = UNSAFE.objectFieldOffset(MCASDesc.class
-                        .getDeclaredField("status"));
+                STATUS_OFFSET = UNSAFE.objectFieldOffset(MCASDesc.class.getDeclaredField("status"));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -154,8 +153,7 @@ final class MultiCAS {
          * @param n
          *            New values.
          */
-        public MCASDesc(int nAddr, Object[] obj, long[] offset, Object[] e,
-                Object[] n) {
+        public MCASDesc(int nAddr, Object[] obj, long[] offset, Object[] e, Object[] n) {
             this.numOfAddr = nAddr;
             this.obj = obj;
             this.offset = offset;
@@ -237,8 +235,7 @@ final class MultiCAS {
      *            array of new value
      * @return true if mcas is successful, otherwise false
      */
-    static boolean mcas(int nAddr, Object[] obj, long[] offset, Object[] e,
-            Object[] n) {
+    static boolean mcas(int nAddr, Object[] obj, long[] offset, Object[] e, Object[] n) {
         /* Generate a new mcas descriptor. */
         MCASDesc d = new MCASDesc(nAddr, obj, offset, e, n);
         // System.out.println("before sort address");
@@ -259,7 +256,7 @@ final class MultiCAS {
          * order . If addresses are not ordered then a recursive loop may be
          * entered.
          */
-//        addressSort(d, nAddr);
+        //        addressSort(d, nAddr);
 
         // System.out.println("after sort address");
         // for (int i = 0; i < N; i++) {
@@ -400,14 +397,12 @@ final class MultiCAS {
         }
 
         /* decision point */
-        UNSAFE.compareAndSwapObject(d, MCASDesc.STATUS_OFFSET,
-                Status.UNDECIDED, desired);
+        UNSAFE.compareAndSwapObject(d, MCASDesc.STATUS_OFFSET, Status.UNDECIDED, desired);
 
         /* PHASE 2: Release each location that we hold */
         success = (d.status == Status.SUCCESSFUL);
         for (int i = 0; i < nAddr; ++i) {
-            UNSAFE.compareAndSwapObject(d.obj[i], d.offset[i], d,
-                    success ? d.n[i] : d.e[i]);
+            UNSAFE.compareAndSwapObject(d.obj[i], d.offset[i], d, success ? d.n[i] : d.e[i]);
         }
         return success;
     }
@@ -493,8 +488,7 @@ final class MultiCAS {
      */
     static Object ccasRead(Object obj, long offset) {
         Object v;
-        for (v = UNSAFE.getObject(obj, offset); isCCASDesc(v); v = UNSAFE
-                .getObject(obj, offset)) {
+        for (v = UNSAFE.getObject(obj, offset); isCCASDesc(v); v = UNSAFE.getObject(obj, offset)) {
             ccasHelp((CCASDesc) v);
         }
         return v;

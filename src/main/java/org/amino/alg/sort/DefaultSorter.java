@@ -323,8 +323,7 @@ public class DefaultSorter extends AbstractSorter {
      *            is the end index of array to be sorted
      * 
      */
-    public <T extends Comparable<T>> void sort(T[] a, int from, int to,
-            Comparator<T> c) {
+    public <T extends Comparable<T>> void sort(T[] a, int from, int to, Comparator<T> c) {
         Arrays.sort(a, from, to, c);
     }
 
@@ -364,8 +363,7 @@ public class DefaultSorter extends AbstractSorter {
      *            is the end index of array to be sorted
      * 
      */
-    public <T extends Comparable<T>> void sort(List<T> a, int from, int to,
-            Comparator<T> c) {
+    public <T extends Comparable<T>> void sort(List<T> a, int from, int to, Comparator<T> c) {
         List<T> aa = a.subList(from, to);
         Collections.sort(aa, c);
         ListIterator<T> ali = a.listIterator(to);

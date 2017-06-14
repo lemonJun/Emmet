@@ -42,8 +42,7 @@ final class UnsafeWrapper {
             f.setAccessible(true);
             return (Unsafe) f.get(null);
         } catch (Exception e) {
-            throw new RuntimeException(
-                    "Error  when accessing to sun.misc.Unsafe", e);
+            throw new RuntimeException("Error  when accessing to sun.misc.Unsafe", e);
         }
     }
 }

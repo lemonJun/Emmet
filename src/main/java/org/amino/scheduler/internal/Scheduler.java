@@ -28,21 +28,21 @@ import java.util.concurrent.RejectedExecutionHandler;
  */
 public interface Scheduler extends ExecutorService {
 
-	/**
-	 * Get number of workers.
-	 * @return number of workers.
-	 */
-	int numWorkers();
+    /**
+     * Get number of workers.
+     * @return number of workers.
+     */
+    int numWorkers();
 
-	/**
-	 * Get handler used for rejected executions.
-	 * @return handler for rejected executions.
-	 */
-	RejectedExecutionHandler getRejectedExecutionHandler();
+    /**
+     * Get handler used for rejected executions.
+     * @return handler for rejected executions.
+     */
+    RejectedExecutionHandler getRejectedExecutionHandler();
 
-	/**
-	 * Set handler.
-	 * @param handler Rejected execution handler.
-	 */
-	void setRejectedExecutionHandler(RejectedExecutionHandler handler);
+    /**
+     * Set handler.
+     * @param handler Rejected execution handler.
+     */
+    void setRejectedExecutionHandler(RejectedExecutionHandler handler);
 }
