@@ -15,7 +15,7 @@ public class ConLinkedhashmapTest {
         //        test002();
 
     }
-
+    
     private static void test001() {
         EvictionListener<String, String> listener = new EvictionListener<String, String>() {
             @Override
@@ -49,7 +49,8 @@ public class ConLinkedhashmapTest {
     */
     private static void test002() {
 
-        ConcurrentLinkedHashMap<Integer, Integer> map = new ConcurrentLinkedHashMap.Builder<Integer, Integer>().maximumWeightedCapacity(2).weigher(Weighers.singleton()).build();
+        ConcurrentLinkedHashMap<Integer, Integer> map = new ConcurrentLinkedHashMap.Builder<Integer, Integer>()//
+                        .maximumWeightedCapacity(2).weigher(Weighers.singleton()).build();
 
         map.put(1, 1);
         map.put(2, 2);
