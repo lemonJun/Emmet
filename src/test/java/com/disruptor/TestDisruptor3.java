@@ -10,7 +10,7 @@ import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.EventHandlerGroup;
 import com.lmax.disruptor.dsl.ProducerType;
 
-public class Demo3 {
+public class TestDisruptor3 {
     public static void main(String[] args) throws InterruptedException {
         long beginTime = System.currentTimeMillis();
 

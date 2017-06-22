@@ -10,7 +10,7 @@ import com.lmax.disruptor.SequenceBarrier;
 import com.lmax.disruptor.WorkHandler;
 import com.lmax.disruptor.WorkerPool;
 
-public class Demo2 {
+public class TestDisruptor2 {
     public static void main(String[] args) throws InterruptedException {
         int BUFFER_SIZE = 1024;
         int THREAD_NUMBERS = 4;

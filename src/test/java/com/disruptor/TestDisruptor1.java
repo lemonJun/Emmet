@@ -12,7 +12,7 @@ import com.lmax.disruptor.RingBuffer;
 import com.lmax.disruptor.SequenceBarrier;
 import com.lmax.disruptor.YieldingWaitStrategy;
 
-public class Demo1 {
+public class TestDisruptor1 {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
         int BUFFER_SIZE = 1024;
         int THREAD_NUMBERS = 4;
