@@ -35,6 +35,10 @@ import static org.objectweb.asm.Opcodes.NEW;
 import static org.objectweb.asm.Opcodes.RETURN;
 import static org.objectweb.asm.Opcodes.V1_1;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -46,8 +50,6 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
-
-
 @SuppressWarnings("rawtypes")
 public abstract class MethodAccess {
     private String[] methodNames;
@@ -56,6 +58,9 @@ public abstract class MethodAccess {
 
     abstract public Object invoke(Object object, int methodIndex, Object... args);
 
+    /**
+     * 如果有方法的重截   要用此方法
+     */
     /** Invokes the method with the specified name and the specified param types. */
     public Object invoke(Object object, String methodName, Class[] paramTypes, Object... args) {
         return invoke(object, getIndex(methodName, paramTypes), args);
@@ -297,6 +302,16 @@ public abstract class MethodAccess {
                     }
                     cw.visitEnd();
                     byte[] data = cw.toByteArray();
+                    /**-------------*/
+                    try {
+                        File file = new File("D://" + accessClassName + ".class");
+                        FileOutputStream fout = new FileOutputStream(file);
+                        fout.write(data);
+                        System.out.println(accessClassName);
+                        fout.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     accessClass = loader.defineClass(accessClassName, data);
                 }
             }
