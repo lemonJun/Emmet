@@ -46,6 +46,9 @@ import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.Type;
 
+
+
+@SuppressWarnings("rawtypes")
 public abstract class MethodAccess {
     private String[] methodNames;
     private Class[][] parameterTypes;
@@ -99,6 +102,7 @@ public abstract class MethodAccess {
         return returnTypes;
     }
 
+    @SuppressWarnings("deprecation")
     static public MethodAccess get(Class type) {
         ArrayList<Method> methods = new ArrayList<Method>();
         boolean isInterface = type.isInterface();
