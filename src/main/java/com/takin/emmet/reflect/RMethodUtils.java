@@ -15,7 +15,7 @@ public class RMethodUtils {
             throw new NoSuchMethodException("class == null");
         }
         try {
-            logger.info(String.format("class:%s method:%s args:%s ", currentClass.getName(), methodName, parameterTypes.toString()));
+            logger.info(String.format("class:%s method:%s  ", currentClass.getName(), methodName));
             Method method = currentClass.getMethod(methodName, parameterTypes);
             if (method != null) {
                 return method;
