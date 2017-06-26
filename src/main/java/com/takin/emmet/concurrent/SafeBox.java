@@ -14,7 +14,7 @@ public class SafeBox<V> {
             return value == null;
         }
     };
-    
+
     private V value;
 
     public V get() throws InterruptedException {
