@@ -1,5 +1,6 @@
 package com.concurrent;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.util.concurrent.RateLimiter;
@@ -11,16 +12,20 @@ public class TimeWheelTest {
     public static void main(String[] args) {
 
         HashedWheelTimer timer = new HashedWheelTimer();
-        RateLimiter limit = RateLimiter.create(8.0d);
+        RateLimiter limit = RateLimiter.create(1.0d);
 
-        while (true) {
+        Random random = new Random();
+
+        for (int i = 0; i < 2; i++) {
             limit.acquire();
+            int delay = random.nextInt(20);
+            System.out.println("new:" + System.currentTimeMillis() / 1000 + " delay " + delay);
             timer.newTimeout(new TimerTask() {
                 @Override
                 public void run(Timeout timeout) throws Exception {
-                    System.out.println(Thread.currentThread().getName() + "--" + System.currentTimeMillis());
+                    System.out.println(Thread.currentThread().getName() + "--" + System.currentTimeMillis() / 1000);
                 }
-            }, 5, TimeUnit.SECONDS);
+            }, delay, TimeUnit.SECONDS);
         }
     }
 
