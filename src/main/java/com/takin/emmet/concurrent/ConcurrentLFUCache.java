@@ -144,9 +144,9 @@ public class ConcurrentLFUCache<K, V> implements Cache<K, V> {
         if (!markAndSweepLock.tryLock())
             return;
         try {
-            long lowHitCount = this.lowHitCount;
+            //            long lowHitCount = this.lowHitCount;
             isCleaning = true;
-            this.lowHitCount = lowHitCount; // volatile write to make isCleaning visible
+            //            this.lowHitCount = lowHitCount; // volatile write to make isCleaning visible
 
             int sz = stats.size.get();
             if (sz <= upperWaterMark) {
