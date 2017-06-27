@@ -10,6 +10,7 @@ public class TimeLimiterTest {
 
     public static void main(String[] args) throws Exception {
         TimeLimiter timeLimiter = new SimpleTimeLimiter();
+        //        timeLimiter.newProxy(target, interfaceType, timeoutDuration, timeoutUnit);
         timeLimiter.callWithTimeout(buildTask(), 5, TimeUnit.SECONDS, false);
     }
 
