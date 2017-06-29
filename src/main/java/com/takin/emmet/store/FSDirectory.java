@@ -41,6 +41,7 @@ public class FSDirectory extends Directory {
      * This should be a WeakHashMap, so that entries can be GC'd, but that would
      * require Java 1.2.  Instead we use refcounts...
      */
+    @SuppressWarnings("rawtypes")
     private static final Hashtable DIRECTORIES = new Hashtable();
 
     private static boolean disableLocks = false;
@@ -69,6 +70,7 @@ public class FSDirectory extends Directory {
     public static final String LOCK_DIR = System.getProperty("org.apache.lucene.lockDir", System.getProperty("java.io.tmpdir"));
 
     /** The default class which implements filesystem-based directories. */
+    @SuppressWarnings("rawtypes")
     private static Class IMPL;
     static {
         try {
@@ -120,6 +122,7 @@ public class FSDirectory extends Directory {
      * @param file the path to the directory.
      * @param create if true, create, or erase any existing contents.
      * @return the FSDirectory for the named file.  */
+    @SuppressWarnings("unchecked")
     public static FSDirectory getDirectory(File file, boolean create) throws IOException {
         file = new File(file.getCanonicalPath());
         FSDirectory dir;
@@ -182,10 +185,12 @@ public class FSDirectory extends Directory {
             throw new IOException(directory + " not a directory");
 
         String[] files = directory.list(new IndexFileNameFilter()); // clear old files
-        for (int i = 0; i < files.length; i++) {
-            File file = new File(directory, files[i]);
-            if (!file.delete())
-                throw new IOException("Cannot delete " + files[i]);
+        if (files != null) {
+            for (int i = 0; i < files.length; i++) {
+                File file = new File(directory, files[i]);
+                if (!file.delete())
+                    throw new IOException("Cannot delete " + files[i]);
+            }
         }
 
         String lockPrefix = getLockPrefix().toString(); // clear old locks

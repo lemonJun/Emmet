@@ -12,58 +12,60 @@
  *
  */
 
-package com.esotericsoftware.reflectasm.benchmark;
+package com.reflectasm.benchmark;
 
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 
-import com.esotericsoftware.reflectasm.MethodAccess;
+import com.reflectasm.FieldAccess;
 
-public class MethodAccessBenchmark extends Benchmark {
-    public MethodAccessBenchmark() throws Exception {
-        int count = 100000;
+public class FieldAccessBenchmark extends Benchmark {
+    public FieldAccessBenchmark() throws Exception {
+        int count = 1000000;
         Object[] dontCompileMeAway = new Object[count];
-        Object[] args = new Object[0];
 
-        MethodAccess access = MethodAccess.get(SomeClass.class);
+        FieldAccess access = FieldAccess.get(SomeClass.class);
         SomeClass someObject = new SomeClass();
-        int index = access.getIndex("getName");
+        int index = access.getIndex("name");
 
-        Method method = SomeClass.class.getMethod("getName");
-        // method.setAccessible(true); // Improves reflection a bit.
+        Field field = SomeClass.class.getField("name");
 
         for (int i = 0; i < 100; i++) {
-            for (int ii = 0; ii < count; ii++)
-                dontCompileMeAway[ii] = access.invoke(someObject, index, args);
-            for (int ii = 0; ii < count; ii++)
-                dontCompileMeAway[ii] = method.invoke(someObject, args);
+            for (int ii = 0; ii < count; ii++) {
+                access.set(someObject, index, "first");
+                dontCompileMeAway[ii] = access.get(someObject, index);
+            }
+            for (int ii = 0; ii < count; ii++) {
+                field.set(someObject, "first");
+                dontCompileMeAway[ii] = field.get(someObject);
+            }
         }
         warmup = false;
 
         for (int i = 0; i < 100; i++) {
             start();
-            for (int ii = 0; ii < count; ii++)
-                dontCompileMeAway[ii] = access.invoke(someObject, index, args);
-            end("MethodAccess");
+            for (int ii = 0; ii < count; ii++) {
+                access.set(someObject, index, "first");
+                dontCompileMeAway[ii] = access.get(someObject, index);
+            }
+            end("FieldAccess");
         }
         for (int i = 0; i < 100; i++) {
             start();
-            for (int ii = 0; ii < count; ii++)
-                dontCompileMeAway[ii] = method.invoke(someObject, args);
+            for (int ii = 0; ii < count; ii++) {
+                field.set(someObject, "first");
+                dontCompileMeAway[ii] = field.get(someObject);
+            }
             end("Reflection");
         }
 
-        chart("Method Call");
+        chart("Field Set/Get");
     }
 
     static public class SomeClass {
-        private String name = "something";
-
-        public String getName() {
-            return name;
-        }
+        public String name;
     }
 
     public static void main(String[] args) throws Exception {
-        new MethodAccessBenchmark();
+        new FieldAccessBenchmark();
     }
 }

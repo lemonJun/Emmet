@@ -12,7 +12,7 @@
  *
  */
 
-package com.esotericsoftware.reflectasm.benchmark;
+package com.reflectasm.benchmark;
 
 import java.util.ArrayList;
 import java.util.Collections;

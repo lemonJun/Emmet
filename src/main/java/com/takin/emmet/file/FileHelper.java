@@ -121,6 +121,9 @@ public class FileHelper {
      */
     private static void getFiles(File f, List<File> fileList, String... extension) {
         File[] files = f.listFiles();
+        if (files == null || files.length == 0) {
+            return;
+        }
         for (int i = 0; i < files.length; i++) {
             if (files[i].isDirectory()) {
                 getFiles(files[i], fileList, extension);

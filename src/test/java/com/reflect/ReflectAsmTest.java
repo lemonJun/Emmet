@@ -1,6 +1,6 @@
 package com.reflect;
 
-import com.esotericsoftware.reflectasm.MethodAccess;
+import com.reflectasm.MethodAccess;
 
 public class ReflectAsmTest {
     public static void main(String[] args) {

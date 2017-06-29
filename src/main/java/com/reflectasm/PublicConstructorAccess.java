@@ -12,7 +12,7 @@
  *
  */
 
-package com.esotericsoftware.reflectasm;
+package com.reflectasm;
 
 public abstract class PublicConstructorAccess extends ConstructorAccess {
 

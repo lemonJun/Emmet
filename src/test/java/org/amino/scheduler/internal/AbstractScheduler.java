@@ -256,11 +256,13 @@ public abstract class AbstractScheduler extends AbstractExecutorService implemen
             try {
                 addWork(command);
             } catch (InterruptedException e) {
-                handler.rejectedExecution(command, null);
+                //                handler.rejectedExecution(command, null);
             }
             signalNewWork();
-        } else if (handler != null)
-            handler.rejectedExecution(command, null);
+        } else if (handler != null) {
+            
+        }
+        //            handler.rejectedExecution(command, null);
     }
 
     private static int defaultNumberOfWorkers;

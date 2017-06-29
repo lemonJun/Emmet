@@ -12,53 +12,40 @@
  *
  */
 
-package com.esotericsoftware.reflectasm.benchmark;
+package com.reflectasm.benchmark;
 
-import java.lang.reflect.Field;
+import com.reflectasm.ConstructorAccess;
 
-import com.esotericsoftware.reflectasm.FieldAccess;
-
-public class FieldAccessBenchmark extends Benchmark {
-    public FieldAccessBenchmark() throws Exception {
+public class ConstructorAccessBenchmark extends Benchmark {
+    public ConstructorAccessBenchmark() throws Exception {
         int count = 1000000;
         Object[] dontCompileMeAway = new Object[count];
 
-        FieldAccess access = FieldAccess.get(SomeClass.class);
-        SomeClass someObject = new SomeClass();
-        int index = access.getIndex("name");
+        Class type = SomeClass.class;
+        ConstructorAccess<SomeClass> access = ConstructorAccess.get(type);
 
-        Field field = SomeClass.class.getField("name");
-
-        for (int i = 0; i < 100; i++) {
-            for (int ii = 0; ii < count; ii++) {
-                access.set(someObject, index, "first");
-                dontCompileMeAway[ii] = access.get(someObject, index);
-            }
-            for (int ii = 0; ii < count; ii++) {
-                field.set(someObject, "first");
-                dontCompileMeAway[ii] = field.get(someObject);
-            }
-        }
+        for (int i = 0; i < 100; i++)
+            for (int ii = 0; ii < count; ii++)
+                dontCompileMeAway[ii] = access.newInstance();
+        for (int i = 0; i < 100; i++)
+            for (int ii = 0; ii < count; ii++)
+                dontCompileMeAway[ii] = type.newInstance();
         warmup = false;
 
         for (int i = 0; i < 100; i++) {
             start();
-            for (int ii = 0; ii < count; ii++) {
-                access.set(someObject, index, "first");
-                dontCompileMeAway[ii] = access.get(someObject, index);
-            }
-            end("FieldAccess");
+            for (int ii = 0; ii < count; ii++)
+                dontCompileMeAway[ii] = access.newInstance();
+            end("ConstructorAccess");
         }
         for (int i = 0; i < 100; i++) {
             start();
-            for (int ii = 0; ii < count; ii++) {
-                field.set(someObject, "first");
-                dontCompileMeAway[ii] = field.get(someObject);
-            }
+            for (int ii = 0; ii < count; ii++)
+                dontCompileMeAway[ii] = type.newInstance();
             end("Reflection");
         }
 
-        chart("Field Set/Get");
+        chart("Constructor");
     }
 
     static public class SomeClass {
@@ -66,6 +53,6 @@ public class FieldAccessBenchmark extends Benchmark {
     }
 
     public static void main(String[] args) throws Exception {
-        new FieldAccessBenchmark();
+        new ConstructorAccessBenchmark();
     }
 }

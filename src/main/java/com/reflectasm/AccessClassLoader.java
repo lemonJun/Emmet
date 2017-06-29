@@ -12,13 +12,14 @@
  *
  */
 
-package com.esotericsoftware.reflectasm;
+package com.reflectasm;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
 import java.security.ProtectionDomain;
 import java.util.WeakHashMap;
 
+@SuppressWarnings({ "unchecked", "rawtypes" })
 class AccessClassLoader extends ClassLoader {
     // Weak-references to class loaders, to avoid perm gen memory leaks, for example in app servers/web containters if the
     // reflectasm library (including this class) is loaded outside the deployed applications (WAR/EAR) using ReflectASM/Kryo (exts,
@@ -137,10 +138,12 @@ class AccessClassLoader extends ClassLoader {
         // DCL on volatile
         if (defineClassMethod == null) {
             synchronized (accessClassLoaders) {
-                defineClassMethod = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] { String.class, byte[].class, int.class, int.class, ProtectionDomain.class });
-                try {
-                    defineClassMethod.setAccessible(true);
-                } catch (Exception ignored) {
+                if (defineClassMethod == null) {
+                    defineClassMethod = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] { String.class, byte[].class, int.class, int.class, ProtectionDomain.class });
+                    try {
+                        defineClassMethod.setAccessible(true);
+                    } catch (Exception ignored) {
+                    }
                 }
             }
         }

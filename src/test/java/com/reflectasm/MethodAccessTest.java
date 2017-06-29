@@ -12,10 +12,12 @@
  *
  */
 
-package com.esotericsoftware.reflectasm;
+package com.reflectasm;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import com.reflectasm.MethodAccess;
 
 import junit.framework.TestCase;
 

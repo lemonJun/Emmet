@@ -12,7 +12,7 @@
  *
  */
 
-package com.esotericsoftware.reflectasm;
+package com.reflectasm;
 
 import static org.objectweb.asm.Opcodes.ACC_PUBLIC;
 import static org.objectweb.asm.Opcodes.ACC_SUPER;

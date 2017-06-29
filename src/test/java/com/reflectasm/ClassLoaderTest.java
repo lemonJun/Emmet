@@ -12,11 +12,13 @@
  *
  */
 
-package com.esotericsoftware.reflectasm;
+package com.reflectasm;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+
+import com.reflectasm.FieldAccess;
 
 import junit.framework.TestCase;
 

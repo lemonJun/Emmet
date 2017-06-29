@@ -12,7 +12,9 @@
  *
  */
 
-package com.esotericsoftware.reflectasm;
+package com.reflectasm;
+
+import com.reflectasm.ConstructorAccess;
 
 import junit.framework.TestCase;
 

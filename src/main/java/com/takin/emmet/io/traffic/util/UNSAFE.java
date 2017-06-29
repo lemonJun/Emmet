@@ -16,18 +16,15 @@
 
 package com.takin.emmet.io.traffic.util;
 
-import sun.misc.Unsafe;
-
 import java.lang.reflect.Field;
 import java.nio.ByteOrder;
 import java.security.AccessController;
 import java.security.PrivilegedAction;
 import java.security.PrivilegedExceptionAction;
 
-/**
- *
- * @author cuiyi
- */
+import sun.misc.Unsafe;
+
+@SuppressWarnings("restriction")
 public abstract class UNSAFE {
 
     private static final Unsafe unsafe;
@@ -764,7 +761,7 @@ public abstract class UNSAFE {
 
     public static Object getObject(Object object, long offset) {
         assertReferenceAligned(offset);
-        return UNSAFE.getObject(object, offset);
+        return unsafe.getObject(object, offset);
     }
 
 }
