@@ -1,7 +1,10 @@
 package com.takin.emmet.generics.context;
 
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Holds types hierarchy resolved generics information.

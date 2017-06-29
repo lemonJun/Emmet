@@ -1,5 +1,7 @@
 package com.takin.emmet.store;
 
+import java.io.File;
+
 /**
  * Copyright 2004 The Apache Software Foundation
  *
@@ -17,7 +19,6 @@ package com.takin.emmet.store;
  */
 
 import java.io.IOException;
-import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;

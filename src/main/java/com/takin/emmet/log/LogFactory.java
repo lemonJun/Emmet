@@ -9,15 +9,14 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Properties;
+import java.util.Set;
 
 import com.google.common.collect.Maps;
 import com.takin.emmet.collection.CollectionUtil;
 import com.takin.emmet.log.factory.Resource;
 import com.takin.emmet.log.factory.RollLogFactory;
 import com.takin.emmet.log.log.RollLog;
-
-import java.util.Properties;
-import java.util.Set;
 
 public class LogFactory {
 

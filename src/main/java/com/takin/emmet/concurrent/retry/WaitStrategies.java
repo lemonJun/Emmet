@@ -16,15 +16,16 @@
 
 package com.takin.emmet.concurrent.retry;
 
-import com.google.common.base.Function;
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-
-import javax.annotation.Nonnull;
-import javax.annotation.concurrent.Immutable;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nonnull;
+import javax.annotation.concurrent.Immutable;
+
+import com.google.common.base.Function;
+import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 
 /**
  * Factory class for instances of {@link WaitStrategy}.

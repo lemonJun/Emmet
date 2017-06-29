@@ -16,10 +16,10 @@
 
 package com.takin.emmet.concurrent.retry;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import javax.annotation.Nonnull;
 import javax.annotation.concurrent.Immutable;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * An exception indicating that none of the attempts of the {@link Retryer}

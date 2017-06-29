@@ -1,7 +1,12 @@
 package com.takin.emmet.reflect;
 
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Robert HG (254963746@qq.com) on 5/18/15.
