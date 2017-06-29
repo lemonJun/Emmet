@@ -4,9 +4,9 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import com.google.common.util.concurrent.RateLimiter;
-import com.takin.emmet.algo.HashedWheelTimer;
-import com.takin.emmet.algo.Timeout;
-import com.takin.emmet.algo.TimerTask;
+import com.takin.emmet.wheeltimer.HashedWheelTimer;
+import com.takin.emmet.wheeltimer.Timeout;
+import com.takin.emmet.wheeltimer.TimerTask;
 
 public class TimeWheelTest {
     public static void main(String[] args) {
