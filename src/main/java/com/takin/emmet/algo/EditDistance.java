@@ -2,7 +2,7 @@ package com.takin.emmet.algo;
 
 public class EditDistance {
     public static void main(String[] args) {
-        String s = "abc", t = "ac";
+        String s = "abc", t = "addc";
         int d = getEditDistance(s, t);
         System.out.println(d);
     }

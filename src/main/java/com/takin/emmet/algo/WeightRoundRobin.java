@@ -26,7 +26,7 @@ public class WeightRoundRobin {
             return greaterCommonDivisor(b, a % b);
         }
     }
-
+    
     /* 
      * 得到list中所有权重的最大公约数，实际上是两两取最大公约数d，然后得到的d 
      * 与下一个权重取最大公约数，直至遍历完 
