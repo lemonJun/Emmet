@@ -26,7 +26,7 @@ public class Dp2 {
     public static void stoneMerge(int[] data) {
 
     }
-
+    
     /**
      * 加分二叉树问题：
      * n个节点的二叉树中序遍历为(1,2,3....n),其中1,2,3...n为节点编号，每个节点都有一个分数(正整数),第i个节点的分数为di,
