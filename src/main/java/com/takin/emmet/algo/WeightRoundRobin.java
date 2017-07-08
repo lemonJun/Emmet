@@ -95,7 +95,7 @@ public class WeightRoundRobin {
         WeightRoundRobin weightRoundRobin = new WeightRoundRobin();
         weightRoundRobin.init();
 
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 15; i++) {
             Server server = weightRoundRobin.getServer();
             System.out.println("server " + server.getIp() + " weight=" + server.getWeight());
         }

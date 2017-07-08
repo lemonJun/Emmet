@@ -1,4 +1,4 @@
-package com.takin.emmet.algo.first;
+package com.takin.emmet.algo;
 
 public class InsertSort {
 

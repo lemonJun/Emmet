@@ -3,7 +3,7 @@
  *
  * Copyright 2012-2013 (C) SINODATA CO., LTD. All Rights Reserved.
  */
-package com.takin.emmet.algo.first;
+package com.takin.emmet.algo;
 
 import java.util.Random;
 
