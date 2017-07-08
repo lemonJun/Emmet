@@ -1,98 +1,87 @@
 package com.algo;
 
-import com.algo.Elem.Node;
-
+/**
+ * 你有两个用链表代表的整数，其中每个节点包含一个数字。数字存储按照在原来整数中相反的顺序，使得第一个数字位于链表的开头。
+ * 写出一个函数将两个整数相加，用链表形式返回和
+ *
+ *
+ * @author Administrator
+ * @version 1.0
+ * @date  2017年7月8日 下午7:37:45
+ * @see 
+ * @since
+ */
 public class LinkedAdd {
-    
-    public Node add(Elem e1, Elem e2) {
-        Node pre = e1.getNode();
-        Node qre = e2.getNode();
-        Node p = pre.next;
-        Node q = qre.next;
-        Node result = p;
-        while (p != null && q != null) {
-            if (p.exp < q.exp) {
-                pre = p;
-                p = p.next;
-            } else if (p.exp > q.exp) {
-                Node temp = q.next;
-                pre.next = q;
-                q.next = p;
-                q = temp;
-            } else {
-                p.coef = p.coef + q.coef;
-                if (p.coef == 0) {
-                    pre.next = p.next;
-                    p = pre.next;
-                } else {
-                    pre = p;
-                    p = p.next;
-                }
-                qre.next = q.next;
-                q = qre.next;
-            }
-        }
-        if (q != null) {
-            pre.next = q;
-        }
-        return result;
-    }
 
     public static void main(String[] args) {
-        Elem node1 = new Elem();
-        node1.insert(7, 0);
-        node1.insert(12, 3);
-        node1.insert(2, 8);
-        node1.insert(5, 12);
+        ListNode list1_11 = new ListNode(3);
+        ListNode list1_12 = new ListNode(1);
+        ListNode list1_13 = new ListNode(5);
+        list1_11.next = list1_12;
+        list1_12.next = list1_13;
+        ListNode list2_11 = new ListNode(5);
+        ListNode list2_12 = new ListNode(9);
+        ListNode list2_13 = new ListNode(2);
+        list2_11.next = list2_12;
+        list2_12.next = list2_13;
 
-        Elem node2 = new Elem();
-        node2.insert(4, 1);
-        node2.insert(6, 3);
-        node2.insert(2, 8);
-        node2.insert(5, 20);
-        node2.insert(7, 28);
-        LinkedAdd l = new LinkedAdd();
-        Node node = l.add(node1, node2);
+        ListNode node = new LinkedAdd().addLists(list1_11, list2_11);
         while (node != null) {
-            System.out.println("coef:" + node.coef + "      exp:" + node.exp);
+            System.out.print(node.val + "->");
             node = node.next;
+        }
+    }
+
+    public ListNode addLists(ListNode list1, ListNode list2) {
+        // write your code here  
+        if (list1 == null) {
+            return list2;
+        }
+        if (list2 == null)
+            return list1;
+        ListNode dummy = new ListNode(0);
+        ListNode node = dummy;
+        int carry = 0;
+        while (list1 != null && list2 != null) {
+            int sum = carry + list1.val + list2.val;
+            if (sum > 9) {
+                node.next = new ListNode(sum % 10);
+                carry = 1;
+            } else {
+                node.next = new ListNode(sum);
+                carry = 0;
+            }
+            node = node.next;
+            list1 = list1.next;
+            list2 = list2.next;
+        }
+        if (list1 != null) {
+            node.next = new ListNode(list1.val + carry);
+            list1 = list1.next;
+            node = node.next;
+            node.next = list1;
+            return dummy.next;
+        } else if (list2 != null) {
+            node.next = new ListNode(list2.val + carry);
+            list2 = list2.next;
+            node = node.next;
+            node.next = list2;
+            return dummy.next;
+        } else {
+            if (carry == 1) {
+                node.next = new ListNode(1);
+            }
+            return dummy.next;
         }
     }
 }
 
-class Elem {
-    public class Node {
-        public int coef;//系数  
-        public int exp;//指数  
-        public Node next = null;//下一个节点  
+class ListNode {
+    int val;
+    ListNode next;
 
-        public Node() {
-            coef = 0;
-            exp = 0;
-        }
-
-        public Node(int coef, int exp) {
-            this.coef = coef;
-            this.exp = exp;
-        }
-    }
-
-    public Node first = new Node();
-
-    public void insert(int coef, int exp) {//添加节点  
-        Node node = new Node(coef, exp);
-        if (first == null) {
-            first.next = node;
-        } else {
-            Node temp = first;
-            while (temp.next != null) {
-                temp = temp.next;
-            }
-            temp.next = node;
-        }
-    }
-
-    public Node getNode() {
-        return first;
+    ListNode(int x) {
+        val = x;
+        next = null;
     }
 }
