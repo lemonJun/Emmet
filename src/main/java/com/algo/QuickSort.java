@@ -1,5 +1,15 @@
 package com.algo;
 
+/**
+ * 找一个分界点   左边小于右边
+ * http://www.cnblogs.com/coderising/p/5708801.html
+ * 
+ * @author Administrator
+ * @version 1.0
+ * @date  2017年7月9日 上午9:52:56
+ * @see 
+ * @since
+ */
 public class QuickSort {
 
     public static void sort(int[] data, int left, int right) {

@@ -1,4 +1,4 @@
-package com.algo.first;
+package com.algo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,6 @@ public class MinHeap {
             } else {
                 break;
             }
-
         }
         list.set(index, i_value);
     }

@@ -1,4 +1,4 @@
-package com.algo;
+package com.algo.first;
 
 import java.util.ArrayList;
 import java.util.List;
