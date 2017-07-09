@@ -14,7 +14,6 @@ public class Permutation2 {
         } else {
             for (int i = 0; i < str.length(); i++) {
                 if (result.indexOf(str.charAt(i)) < 0) { //返回指定字符在此字符串中第一次出现处的索引。
-                    //System.out.println("字母："+str.charAt(i));
                     permutation1(str, result + str.charAt(i), len);
                 }
             }
@@ -23,8 +22,7 @@ public class Permutation2 {
 
     public static void combination1() {
         /*全组合：
-         * 思路是利用二进制的特性，每次加1即可遍历所有位的不同情况，很好理解
-        代码同上
+         * 思路是利用二进制的特性，每次加1即可遍历所有位的不同情况，很好理解代码同上
             */
         String arr[] = { "a", "b", "c" };
         int all = arr.length;
@@ -43,7 +41,7 @@ public class Permutation2 {
     public static void main(String args[]) throws Exception {
         String s = "abc";
         String result = "";
-        //        permutation1(s, result, s.length());
-        combination1();
+        permutation1(s, result, s.length());
+        //        combination1();
     }
 }
