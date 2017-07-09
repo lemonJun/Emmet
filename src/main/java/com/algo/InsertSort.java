@@ -1,5 +1,6 @@
 package com.algo;
 
+//向有序集合中  在正确的位置  插入数据
 public class InsertSort {
 
     /**
@@ -17,18 +18,18 @@ public class InsertSort {
                 j = j - 1;
             }
             data[j + 1] = key;
+
             for (int ii : data) {
                 System.out.print(ii + " ");
             }
             System.out.println();
         }
-
         return data;
     }
 
     public static void main(String[] args) {
 
-        int[] data = { 6, 3, 2, 5, 16, 23, 12, 8, 10, 9 };
+        int[] data = { 75, 99, 67, 69, 100 };
         int[] retVal = run(data);
         for (int i : retVal) {
             System.out.print(i + " ");
