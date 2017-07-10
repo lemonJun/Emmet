@@ -21,9 +21,6 @@ public class MinimumPath {
     }
 
     public int getMin(int[][] map, int n, int m) {
-        print(map, n, m);
-        System.out.println("-------");
-
         // write code here  
         int[][] dp = new int[n][m];
         for (int i = 0; i < n; i++) {
@@ -31,23 +28,18 @@ public class MinimumPath {
                 dp[i][0] += map[j][0];
             }
         }
-        print(dp, n, m);
-        System.out.println("-------");
         for (int i = 0; i < m; i++) {
             for (int j = 0; j <= i; j++) {
                 dp[0][i] += map[0][j];
             }
         }
-        print(dp, n, m);
-        System.out.println("-------");
 
         for (int i = 1; i < n; i++) {
             for (int j = 1; j < m; j++) {
                 dp[i][j] = min(dp[i][j - 1] + map[i][j], dp[i - 1][j] + map[i][j]);
             }
         }
-        print(dp, n, m);
-
+        
         return dp[n - 1][m - 1];
     }
 
