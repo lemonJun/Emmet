@@ -1,8 +1,5 @@
 package com.takin.emmet.bytes;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-
 public class EndianUtility {
 
     /**

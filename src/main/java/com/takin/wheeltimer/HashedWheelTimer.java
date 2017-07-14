@@ -3,7 +3,17 @@ package com.takin.wheeltimer;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
@@ -97,7 +107,6 @@ public class HashedWheelTimer implements ScheduledExecutorService {
                 long deadline = System.nanoTime();
 
                 while (true) {
-                    // TODO: consider extracting processing until deadline for test purposes
                     Set<Registration<?>> registrations = wheel[cursor];
 
                     for (Registration r : registrations) {

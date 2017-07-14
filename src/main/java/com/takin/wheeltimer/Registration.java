@@ -1,6 +1,10 @@
 package com.takin.wheeltimer;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 interface Registration<T> extends ScheduledFuture<T>, Runnable {
 
