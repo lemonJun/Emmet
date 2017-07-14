@@ -33,10 +33,6 @@ import java.util.Map;
  */
 public class Reflect {
 
-    // ---------------------------------------------------------------------
-    // Static API used as entrance points to the fluent API
-    // ---------------------------------------------------------------------
-
     /**
      * Wrap a class name.
      * <p>

@@ -8,8 +8,13 @@ import java.lang.reflect.ParameterizedType;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.Map;
+import java.util.Set;
+
+import com.google.common.base.Preconditions;
 
 /**
  * ClassUtils. (Tool, Static, ThreadSafe)
@@ -19,6 +24,78 @@ public class ClassUtils {
     public static final String CLASS_EXTENSION = ".class";
 
     public static final String JAVA_EXTENSION = ".java";
+
+    /**
+     * Return all interfaces that the given class implements as array,
+     * including ones implemented by superclasses.
+     * <p>If the class itself is an interface, it gets returned as sole interface.
+     * @param clazz the class to analyze for interfaces
+     * @return all interfaces that the given object implements as array
+     */
+    public static Class<?>[] getAllInterfacesForClass(Class<?> clazz) {
+        return getAllInterfacesForClass(clazz, null);
+    }
+
+    /**
+     * Return all interfaces that the given class implements as array,
+     * including ones implemented by superclasses.
+     * <p>If the class itself is an interface, it gets returned as sole interface.
+     * @param clazz the class to analyze for interfaces
+     * @param classLoader the ClassLoader that the interfaces need to be visible in
+     * (may be <code>null</code> when accepting all declared interfaces)
+     * @return all interfaces that the given object implements as array
+     */
+    public static Class<?>[] getAllInterfacesForClass(Class<?> clazz, ClassLoader classLoader) {
+        Set<Class> ifcs = getAllInterfacesForClassAsSet(clazz, classLoader);
+        return ifcs.toArray(new Class[ifcs.size()]);
+    }
+
+    /**
+     * Return all interfaces that the given class implements as Set,
+     * including ones implemented by superclasses.
+     * <p>If the class itself is an interface, it gets returned as sole interface.
+     * @param clazz the class to analyze for interfaces
+     * @param classLoader the ClassLoader that the interfaces need to be visible in
+     * (may be <code>null</code> when accepting all declared interfaces)
+     * @return all interfaces that the given object implements as Set
+     */
+    @SuppressWarnings("rawtypes")
+    public static Set<Class> getAllInterfacesForClassAsSet(Class clazz, ClassLoader classLoader) {
+        Preconditions.checkNotNull(clazz, "Class must not be null");
+        if (clazz.isInterface() && isVisible(clazz, classLoader)) {
+            return Collections.singleton(clazz);
+        }
+        Set<Class> interfaces = new LinkedHashSet<Class>();
+        Class sclazz = clazz;
+        while (sclazz != null) {
+            Class<?>[] ifcs = sclazz.getInterfaces();
+            for (Class<?> ifc : ifcs) {
+                interfaces.addAll(getAllInterfacesForClassAsSet(ifc, classLoader));
+            }
+            sclazz = clazz.getSuperclass();
+        }
+        return interfaces;
+    }
+
+    /**
+     * Check whether the given class is visible in the given ClassLoader.
+     * @param clazz the class to check (typically an interface)
+     * @param classLoader the ClassLoader to check against (may be <code>null</code>,
+     * in which case this method will always return <code>true</code>)
+     */
+    public static boolean isVisible(Class<?> clazz, ClassLoader classLoader) {
+        if (classLoader == null) {
+            return true;
+        }
+        try {
+            Class<?> actualClass = classLoader.loadClass(clazz.getName());
+            return (clazz == actualClass);
+            // Else: different interface class found...
+        } catch (ClassNotFoundException ex) {
+            // No interface class found...
+            return false;
+        }
+    }
 
     public static Object newInstance(String name) {
         try {
