@@ -2,7 +2,7 @@ package com.takin.emmet.concurrent;
 
 import java.util.concurrent.Semaphore;
 
-final public class AdjustableSemaphore {
+public final class AdjustableSemaphore {
 
     private final ResizeableSemaphore semaphore;
 
@@ -27,7 +27,7 @@ final public class AdjustableSemaphore {
             delta *= -1;
             this.semaphore.reducePermits(delta);
         }
-
+        
         this.maxPermits = newMax;
     }
 
@@ -48,6 +48,8 @@ final public class AdjustableSemaphore {
     }
 
     private static final class ResizeableSemaphore extends Semaphore {
+
+        private static final long serialVersionUID = 1L;
 
         ResizeableSemaphore(int size) {
             super(size);

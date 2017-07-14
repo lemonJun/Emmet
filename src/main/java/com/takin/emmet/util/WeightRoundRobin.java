@@ -1,4 +1,4 @@
-package com.takin.emmet;
+package com.takin.emmet.util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class WeightRoundRobin {
     private int gcdWeight;
     /**服务器数*/
     private int serverCount;
-    private List<Server> servers = new ArrayList<Server>();
+    private List<Server> servers = new ArrayList<>();
 
     /* 
      * 得到两值的最大公约数 
@@ -26,7 +26,7 @@ public class WeightRoundRobin {
             return greaterCommonDivisor(b, a % b);
         }
     }
-    
+
     /* 
      * 得到list中所有权重的最大公约数，实际上是两两取最大公约数d，然后得到的d 
      * 与下一个权重取最大公约数，直至遍历完 

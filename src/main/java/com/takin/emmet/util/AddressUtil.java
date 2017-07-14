@@ -10,12 +10,16 @@ import java.util.Enumeration;
 
 public class AddressUtil {
 
+    private AddressUtil() {
+
+    }
+    
     public static String getLocalAddress() {
         try {
             // Traversal Network interface to get the first non-loopback and non-private address
             Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
-            ArrayList<String> ipv4Result = new ArrayList<String>();
-            ArrayList<String> ipv6Result = new ArrayList<String>();
+            ArrayList<String> ipv4Result = new ArrayList<>();
+            ArrayList<String> ipv6Result = new ArrayList<>();
             while (enumeration.hasMoreElements()) {
                 final NetworkInterface networkInterface = enumeration.nextElement();
                 final Enumeration<InetAddress> en = networkInterface.getInetAddresses();
@@ -47,9 +51,7 @@ public class AddressUtil {
             //If failed to find,fall back to localhost
             final InetAddress localHost = InetAddress.getLocalHost();
             return normalizeHostAddress(localHost);
-        } catch (SocketException e) {
-            e.printStackTrace();
-        } catch (UnknownHostException e) {
+        } catch (SocketException | UnknownHostException e) {
             e.printStackTrace();
         }
         return null;

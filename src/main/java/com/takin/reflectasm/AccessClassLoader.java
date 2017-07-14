@@ -25,13 +25,13 @@ class AccessClassLoader extends ClassLoader {
     // reflectasm library (including this class) is loaded outside the deployed applications (WAR/EAR) using ReflectASM/Kryo (exts,
     // user classpath, etc).
     // The key is the parent class loader and the value is the AccessClassLoader, both are weak-referenced in the hash table.
-    static private final WeakHashMap<ClassLoader, WeakReference<AccessClassLoader>> accessClassLoaders = new WeakHashMap();
+    private static final WeakHashMap<ClassLoader, WeakReference<AccessClassLoader>> accessClassLoaders = new WeakHashMap();
 
     // Fast-path for classes loaded in the same ClassLoader as this class.
-    static private final ClassLoader selfContextParentClassLoader = getParentClassLoader(AccessClassLoader.class);
-    static private volatile AccessClassLoader selfContextAccessClassLoader = new AccessClassLoader(selfContextParentClassLoader);
+    private static final ClassLoader selfContextParentClassLoader = getParentClassLoader(AccessClassLoader.class);
+    private static volatile AccessClassLoader selfContextAccessClassLoader = new AccessClassLoader(selfContextParentClassLoader);
 
-    static private volatile Method defineClassMethod;
+    private static volatile Method defineClassMethod;
 
     static AccessClassLoader get(Class type) {
         ClassLoader parent = getParentClassLoader(type);
