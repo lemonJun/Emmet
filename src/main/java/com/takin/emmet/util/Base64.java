@@ -54,6 +54,10 @@ import java.util.Arrays;
  */
 public class Base64 {
 
+    private Base64() {
+
+    }
+
     public static final char[] CA = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/".toCharArray();
     public static final int[] IA = new int[256];
     static {
@@ -74,7 +78,7 @@ public class Base64 {
      * @param chars The source array. Length 0 will return an empty array. <code>null</code> will throw an exception.
      * @return The decoded array of bytes. May be of length 0.
      */
-    public final static byte[] decodeFast(char[] chars, int offset, int charsLen) {
+    public static final byte[] decodeFast(char[] chars, int offset, int charsLen) {
         // Check special case
         if (charsLen == 0) {
             return new byte[0];
@@ -129,7 +133,7 @@ public class Base64 {
         return bytes;
     }
 
-    public final static byte[] decodeFast(String chars, int offset, int charsLen) {
+    public static final byte[] decodeFast(String chars, int offset, int charsLen) {
         // Check special case
         if (charsLen == 0) {
             return new byte[0];

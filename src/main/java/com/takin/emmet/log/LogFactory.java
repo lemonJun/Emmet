@@ -25,7 +25,7 @@ public class LogFactory {
 
     private static String config = "log.properties";
 
-    public final static void setConfig(String configPath) {
+    public static final void setConfig(String configPath) {
         LogFactory.config = configPath;
     }
 
@@ -62,15 +62,15 @@ public class LogFactory {
     }
 
     // 返回配置路径
-    public final static File configFile() {
+    public static final File configFile() {
         File file = new File(LogFactory.config);
         if (!file.isAbsolute())
             file = new File(System.getProperty("user.dir"), LogFactory.config);
         return (file);
     }
-
+    
     // 获得Logger
-    public final static Log getLogger(String key) {
+    public static final Log getLogger(String key) {
         return Inner.LOG_FACTORY.logMaps.get(key);
     }
 

@@ -41,11 +41,10 @@ public class FullTextPosting {
      * @return true:有效 false:无效
      */
     public boolean validate() {
-        boolean result = fieldNum > 0 && fieldNum < 256 && //
+        return fieldNum > 0 && fieldNum < 256 && //
                         token != null && token.length() > 0 && //
                         freq > 0 && position > 0 && position < 256;
 
-        return result;
     }
 
     /**

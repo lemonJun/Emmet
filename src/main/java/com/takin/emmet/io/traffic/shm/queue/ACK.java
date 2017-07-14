@@ -20,6 +20,9 @@ package com.takin.emmet.io.traffic.shm.queue;
  * @author cuiyi
  */
 public abstract class ACK {
+    private ACK() {
+        
+    }
 
     public static final int SEGMENT = 0xFFFF;
     public static final int DATA = 0xFFFFFFFF;

@@ -59,8 +59,8 @@ public interface Attempt<V> {
      * @throws IllegalStateException if the call didn't return a result, but threw an exception,
      *                               as indicated by {@link #hasResult()}
      */
-    public V getResult() throws IllegalStateException;
-
+    public V getResult();
+    
     /**
      * Gets the exception thrown by the call
      *
@@ -68,7 +68,7 @@ public interface Attempt<V> {
      * @throws IllegalStateException if the call didn't throw an exception,
      *                               as indicated by {@link #hasException()}
      */
-    public Throwable getExceptionCause() throws IllegalStateException;
+    public Throwable getExceptionCause();
 
     /**
      * The number, starting from 1, of this attempt.

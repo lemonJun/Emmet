@@ -78,10 +78,6 @@ public class EndianUtility {
      * @return 转化后的整数.
      */
     public static int toLittleEndian(int n) {
-        /*return (int) ((n & 0xff000000) >> 24 | 
-        		(n & 0x00ff0000) >> 8 | 
-        		(n & 0x0000ff00) << 8 | 
-        		(n & 0x000000ff) << 24);*/
 
         int m = n & 0x000000ff;
 
@@ -155,66 +151,4 @@ public class EndianUtility {
         return m;
     }
 
-    public static void main(String[] args) {
-        Integer value = 0x1234;
-        System.out.print("0x1234 = ");
-        for (int i = 0; i < 4; i++) {
-            System.out.print("\t");
-            System.out.print((value >> (i * 8)) & 0xFF);
-        }
-        System.out.print("\n");
-        System.out.println("bit=0-31");
-        for (int i = 0; i < 32; i++) {
-            System.out.print((value >> i) & 0x01);
-        }
-        System.out.print("\n");
-
-        System.out.println("value=" + value + ", toLittleEndian=" + toLittleEndian(value));
-
-        System.out.println("当前系统order=" + ByteOrder.nativeOrder());
-
-        ByteBuffer buffer = ByteBuffer.allocate(20);
-
-        // 获取默认的byte顺序
-        ByteOrder order = buffer.order(); // 
-        System.out.println("当前order=" + order);
-
-        buffer.putShort(0, (short) 1);
-        buffer.get(0);
-        System.out.println("此时取出0:" + buffer.get(0));
-        buffer.get(1);
-        System.out.println("此时取出1:" + buffer.get(1));
-
-        buffer.order(ByteOrder.LITTLE_ENDIAN);
-        System.out.println("当前order=" + buffer.order());
-
-        buffer.putShort(0, (short) 1);
-        buffer.get(0);
-        System.out.println("此时取出1:" + buffer.get(0));
-        buffer.get(1);
-        System.out.println("此时取出0:" + buffer.get(1));
-
-        //double float
-        buffer.putDouble(0, 11.1111D);
-        for (int i = 0; i < 8; i++) {
-            System.out.print("\t" + buffer.get(i));
-        }
-        System.out.println();
-
-        buffer.order(ByteOrder.BIG_ENDIAN);
-        buffer.putDouble(0, 11.1111D);
-        for (int i = 0; i < 8; i++) {
-            System.out.print("\t" + buffer.get(i));
-        }
-        System.out.println();
-
-        ByteBuffer buffer2 = ByteBuffer.allocate(20);
-        buffer2.putLong(toLittleEndian(20140306192110L));
-        buffer2.flip();
-        byte[] data = buffer2.array();
-        for (int i = 0; i < 8; ++i) {
-            System.out.print(data[i] + ",");
-        }
-        System.out.println();
-    }
 }

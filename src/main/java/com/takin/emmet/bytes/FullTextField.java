@@ -23,13 +23,9 @@ import java.util.Set;
  */
 public class FullTextField {
 
-    // private int length = 0;
-
     private static final String ENCODING = "UTF-8";
 
-    private final String TOKEN_SPI = "\001";
-
-    // private int currentpositon = 0;
+    private static final String TOKEN_SPI = "\001";
 
     private Map<String, List<FullTextPosting>> tokenset = new HashMap<String, List<FullTextPosting>>();
 
@@ -48,7 +44,7 @@ public class FullTextField {
         if (retval) {
             List<FullTextPosting> poslist = tokenset.get(posting.getToken());
             if (poslist == null) {
-                poslist = new ArrayList<FullTextPosting>();
+                poslist = new ArrayList<>();
                 tokenset.put(posting.getToken(), poslist);
             }
             poslist.add(posting);
@@ -95,7 +91,6 @@ public class FullTextField {
             buf.putShort(currentpos, (short) (buf.position() - currentpos));// 回退到currentpos的位置
             // 写入此token的长度
         }
-        // currentpositon = buf.position();
         buf.flip();
         return buf;
     }

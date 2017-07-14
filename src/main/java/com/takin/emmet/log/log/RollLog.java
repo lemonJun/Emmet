@@ -18,9 +18,7 @@ import com.takin.emmet.log.LogBean;
  */
 public abstract class RollLog implements Log {
 
-    final static String LINE = "\r\n";
-    // 同步�?
-    private String filename;
+    static final String LINE = "\r\n";
     // 日志路径
     private String path;
     // 同步锁 
@@ -28,7 +26,7 @@ public abstract class RollLog implements Log {
 
     volatile OutputStream writer = null;
 
-    public SimpleDateFormat format;
+    private SimpleDateFormat format;
 
     private long bound = 0l;
 
@@ -71,7 +69,7 @@ public abstract class RollLog implements Log {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        filename = updateFile();
+        String filename = updateFile();
         try {
             writer = new FileOutputStream(filename, true);
         } catch (FileNotFoundException e) {

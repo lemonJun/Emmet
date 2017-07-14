@@ -42,9 +42,9 @@ public class AttemptTimeLimiters {
      * @return an {@link AttemptTimeLimiter} impl which has no time limit
      */
     public static <V> AttemptTimeLimiter<V> noTimeLimit() {
-        return new NoAttemptTimeLimit<V>();
+        return new NoAttemptTimeLimit<>();
     }
-
+    
     /**
      * For control over thread management, it is preferable to offer an {@link ExecutorService} through the other
      * factory method, {@link #fixedTimeLimit(long, TimeUnit, ExecutorService)}. See the note on
@@ -57,7 +57,7 @@ public class AttemptTimeLimiters {
      */
     public static <V> AttemptTimeLimiter<V> fixedTimeLimit(long duration, @Nonnull TimeUnit timeUnit) {
         Preconditions.checkNotNull(timeUnit);
-        return new FixedAttemptTimeLimit<V>(duration, timeUnit);
+        return new FixedAttemptTimeLimit<>(duration, timeUnit);
     }
 
     /**
@@ -69,7 +69,7 @@ public class AttemptTimeLimiters {
      */
     public static <V> AttemptTimeLimiter<V> fixedTimeLimit(long duration, @Nonnull TimeUnit timeUnit, @Nonnull ExecutorService executorService) {
         Preconditions.checkNotNull(timeUnit);
-        return new FixedAttemptTimeLimit<V>(duration, timeUnit, executorService);
+        return new FixedAttemptTimeLimit<>(duration, timeUnit, executorService);
     }
 
     @Immutable
