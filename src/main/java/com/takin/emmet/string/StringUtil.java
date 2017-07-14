@@ -547,8 +547,8 @@ public abstract class StringUtil {
      * @param obj
      * @return obj.toString()
      */
-    public static String sNull(Object obj) {
-        return sNull(obj, "");
+    public static String isNull(Object obj) {
+        return isNull(obj, "");
     }
 
     /**
@@ -559,7 +559,7 @@ public abstract class StringUtil {
      *            如果obj==null返回的内容
      * @return obj的toString()操作
      */
-    public static String sNull(Object obj, String defaultValue) {
+    public static String isNull(Object obj, String defaultValue) {
         return obj != null ? obj.toString() : defaultValue;
     }
 
@@ -569,8 +569,8 @@ public abstract class StringUtil {
      * @param obj
      * @return obj.toString()
      */
-    public static String sBlank(Object obj) {
-        return sBlank(obj, "");
+    public static String isBlank(Object obj) {
+        return isBlank(obj, "");
     }
 
     /**
@@ -581,7 +581,7 @@ public abstract class StringUtil {
      *            如果obj==null返回的内容
      * @return obj的toString()操作
      */
-    public static String sBlank(Object obj, String def) {
+    public static String isBlank(Object obj, String def) {
         if (null == obj)
             return def;
         String s = obj.toString();
