@@ -25,8 +25,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.wheeltimer.HashedWheelTimer;
-import com.wheeltimer.WaitStrategy;
+import com.takin.wheeltimer.HashedWheelTimer;
+import com.takin.wheeltimer.WaitStrategy;
 
 public abstract class AbstractTimerTest {
 

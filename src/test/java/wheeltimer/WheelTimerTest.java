@@ -2,7 +2,7 @@ package wheeltimer;
 
 import java.util.concurrent.TimeUnit;
 
-import com.wheeltimer.WheelTimer;
+import com.takin.wheeltimer.WheelTimer;
 
 public class WheelTimerTest {
 

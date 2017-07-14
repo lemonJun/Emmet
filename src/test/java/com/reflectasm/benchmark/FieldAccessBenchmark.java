@@ -16,7 +16,7 @@ package com.reflectasm.benchmark;
 
 import java.lang.reflect.Field;
 
-import com.reflectasm.FieldAccess;
+import com.takin.reflectasm.FieldAccess;
 
 public class FieldAccessBenchmark extends Benchmark {
     public FieldAccessBenchmark() throws Exception {

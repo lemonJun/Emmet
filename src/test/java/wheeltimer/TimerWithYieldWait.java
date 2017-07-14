@@ -1,6 +1,6 @@
 package wheeltimer;
 
-import com.wheeltimer.WaitStrategy;
+import com.takin.wheeltimer.WaitStrategy;
 
 public class TimerWithYieldWait extends AbstractTimerTest {
     @Override

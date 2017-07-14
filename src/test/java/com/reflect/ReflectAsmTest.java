@@ -1,6 +1,6 @@
 package com.reflect;
 
-import com.reflectasm.MethodAccess;
+import com.takin.reflectasm.MethodAccess;
 
 public class ReflectAsmTest {
     public static void main(String[] args) {

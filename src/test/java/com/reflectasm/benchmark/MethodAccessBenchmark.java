@@ -16,7 +16,7 @@ package com.reflectasm.benchmark;
 
 import java.lang.reflect.Method;
 
-import com.reflectasm.MethodAccess;
+import com.takin.reflectasm.MethodAccess;
 
 public class MethodAccessBenchmark extends Benchmark {
     public MethodAccessBenchmark() throws Exception {

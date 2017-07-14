@@ -13,10 +13,10 @@ import java.util.Properties;
 import java.util.Set;
 
 import com.google.common.collect.Maps;
-import com.takin.emmet.collection.CollectionUtil;
 import com.takin.emmet.log.factory.Resource;
 import com.takin.emmet.log.factory.RollLogFactory;
 import com.takin.emmet.log.log.RollLog;
+import com.takin.emmet.util.CollectionUtil;
 
 public class LogFactory {
 

@@ -17,7 +17,7 @@ package com.reflectasm;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import com.reflectasm.MethodAccess;
+import com.takin.reflectasm.MethodAccess;
 
 import junit.framework.TestCase;
 

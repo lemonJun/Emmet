@@ -14,7 +14,7 @@
 
 package com.reflectasm;
 
-import com.reflectasm.FieldAccess;
+import com.takin.reflectasm.FieldAccess;
 
 import junit.framework.TestCase;
 

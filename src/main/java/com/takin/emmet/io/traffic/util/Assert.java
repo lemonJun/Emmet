@@ -16,6 +16,8 @@
 
 package com.takin.emmet.io.traffic.util;
 
+import com.takin.emmet.string.StringUtils;
+
 /**
  * Assertion utility class that assists in validating arguments.
  *

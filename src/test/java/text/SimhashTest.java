@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
 
-import com.simhasher.SimHasher;
+import com.takin.simhasher.SimHasher;
 
 /**
 * @author louxuezheng@hotmail.com

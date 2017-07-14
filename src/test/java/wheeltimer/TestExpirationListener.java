@@ -1,6 +1,6 @@
 package wheeltimer;
 
-import com.wheeltimer.ExpirationListener;
+import com.takin.wheeltimer.ExpirationListener;
 
 public class TestExpirationListener<E> implements ExpirationListener<E> {
     public void expired(E expireObject) {

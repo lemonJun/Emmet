@@ -14,7 +14,7 @@
 
 package com.reflectasm;
 
-import com.reflectasm.ConstructorAccess;
+import com.takin.reflectasm.ConstructorAccess;
 
 import junit.framework.TestCase;
 

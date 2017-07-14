@@ -14,7 +14,7 @@
 
 package com.reflectasm.benchmark;
 
-import com.reflectasm.ConstructorAccess;
+import com.takin.reflectasm.ConstructorAccess;
 
 public class ConstructorAccessBenchmark extends Benchmark {
     public ConstructorAccessBenchmark() throws Exception {
