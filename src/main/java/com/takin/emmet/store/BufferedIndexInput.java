@@ -37,7 +37,7 @@ public abstract class BufferedIndexInput extends IndexInput {
     public void readBytes(byte[] b, int offset, int len) throws IOException {
         if (len < BUFFER_SIZE) {
             for (int i = 0; i < len; i++) // read byte-by-byte
-                b[i + offset] = (byte) readByte();
+                b[i + offset] = readByte();
         } else { // read all-at-once
             long start = getFilePointer();
             seekInternal(start);
@@ -95,6 +95,7 @@ public abstract class BufferedIndexInput extends IndexInput {
      */
     protected abstract void seekInternal(long pos) throws IOException;
 
+    @Override
     public Object clone() {
         BufferedIndexInput clone = (BufferedIndexInput) super.clone();
 

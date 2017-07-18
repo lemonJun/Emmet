@@ -72,25 +72,25 @@ public class ClassUtils {
      * Map with primitive wrapper type as key and corresponding primitive
      * type as value, for example: Integer.class -> int.class.
      */
-    private static final Map<Class<?>, Class<?>> primitiveWrapperTypeMap = new HashMap<Class<?>, Class<?>>(8);
+    private static final Map<Class<?>, Class<?>> primitiveWrapperTypeMap = new HashMap<>(8);
 
     /**
      * Map with primitive type as key and corresponding wrapper
      * type as value, for example: int.class -> Integer.class.
      */
-    private static final Map<Class<?>, Class<?>> primitiveTypeToWrapperMap = new HashMap<Class<?>, Class<?>>(8);
+    private static final Map<Class<?>, Class<?>> primitiveTypeToWrapperMap = new HashMap<>(8);
 
     /**
      * Map with primitive type name as key and corresponding primitive
      * type as value, for example: "int" -> "int.class".
      */
-    private static final Map<String, Class<?>> primitiveTypeNameMap = new HashMap<String, Class<?>>(32);
+    private static final Map<String, Class<?>> primitiveTypeNameMap = new HashMap<>(32);
 
     /**
      * Map with common "java.lang" class name as key and corresponding Class as value.
      * Primarily for efficient deserialization of remote invocations.
      */
-    private static final Map<String, Class<?>> commonClassCache = new HashMap<String, Class<?>>(32);
+    private static final Map<String, Class<?>> commonClassCache = new HashMap<>(32);
 
     static {
         primitiveWrapperTypeMap.put(Boolean.class, boolean.class);
@@ -107,7 +107,7 @@ public class ClassUtils {
             registerCommonClasses(entry.getKey());
         }
 
-        Set<Class<?>> primitiveTypes = new HashSet<Class<?>>(32);
+        Set<Class<?>> primitiveTypes = new HashSet<>(32);
         primitiveTypes.addAll(primitiveWrapperTypeMap.values());
         primitiveTypes.addAll(Arrays.asList(boolean[].class, byte[].class, char[].class, double[].class, float[].class, int[].class, long[].class, short[].class));
         primitiveTypes.add(void.class);
@@ -145,7 +145,7 @@ public class ClassUtils {
         ClassLoader cl = null;
         try {
             cl = Thread.currentThread().getContextClassLoader();
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
             // Cannot access thread context ClassLoader - falling back to system class loader...
         }
         if (cl == null) {
@@ -171,25 +171,6 @@ public class ClassUtils {
         } else {
             return null;
         }
-    }
-
-    /**
-     * Replacement for <code>Class.forName()</code> that also returns Class instances
-     * for primitives (like "int") and array class names (like "String[]").
-     * <p>Always uses the default class loader: that is, preferably the thread context
-     * class loader, or the ClassLoader that loaded the ClassUtils class as fallback.
-     * @param name the name of the Class
-     * @return Class instance for the supplied name
-     * @throws ClassNotFoundException if the class was not found
-     * @throws LinkageError if the class file could not be loaded
-     * @see Class#forName(String, boolean, ClassLoader)
-     * @see #getDefaultClassLoader()
-     * @deprecated as of Spring 3.0, in favor of specifying a ClassLoader explicitly:
-     * see {@link #forName(String, ClassLoader)}
-     */
-    @Deprecated
-    public static Class<?> forName(String name) throws ClassNotFoundException, LinkageError {
-        return forName(name, getDefaultClassLoader());
     }
 
     /**
@@ -307,19 +288,6 @@ public class ClassUtils {
      * and can be loaded. Will return <code>false</code> if either the class or
      * one of its dependencies is not present or cannot be loaded.
      * @param className the name of the class to check
-     * @return whether the specified class is present
-     * @deprecated as of Spring 2.5, in favor of {@link #isPresent(String, ClassLoader)}
-     */
-    @Deprecated
-    public static boolean isPresent(String className) {
-        return isPresent(className, getDefaultClassLoader());
-    }
-
-    /**
-     * Determine whether the {@link Class} identified by the supplied name is present
-     * and can be loaded. Will return <code>false</code> if either the class or
-     * one of its dependencies is not present or cannot be loaded.
-     * @param className the name of the class to check
      * @param classLoader the class loader to use
      * (may be <code>null</code>, which indicates the default class loader)
      * @return whether the specified class is present
@@ -328,7 +296,7 @@ public class ClassUtils {
         try {
             forName(className, classLoader);
             return true;
-        } catch (Throwable ex) {
+        } catch (Exception ex) {
             // Class or one of its dependencies is not present...
             return false;
         }
@@ -1106,7 +1074,6 @@ public class ClassUtils {
                                             // 添加到classes
                                             String newClass = StringUtil.isNullOrEmpty(packageName) ? className : packageName + '.' + className;
                                             if (StringUtil.isNotNullOrEmpty(newClass)) {
-                                                //                                                logger.info("scan Controller:" + className);
                                                 classes.add(Class.forName(newClass));
                                             }
                                         } catch (ClassNotFoundException e) {
@@ -1117,14 +1084,12 @@ public class ClassUtils {
                             }
                         }
                     } catch (IOException e) {
-                        // log.error("在扫描用户定义视图时从jar包获取文件出错");
-                        e.printStackTrace();
                         logger.error("", e);
                     }
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
 
         return classes;
@@ -1143,7 +1108,6 @@ public class ClassUtils {
         File dir = new File(packagePath);
         // 如果不存在或者 也不是目录就直接返回
         if (!dir.exists() || !dir.isDirectory()) {
-            // log.warn("用户定义包名 " + packageName + " 下没有任何文件");
             return;
         }
         // 如果存在 就获取包下的所有文件 包括目录
@@ -1173,9 +1137,7 @@ public class ClassUtils {
                         classes.add(Thread.currentThread().getContextClassLoader().loadClass(newClass));
                     }
                 } catch (ClassNotFoundException e) {
-                    // log.error("添加用户自定义视图类错误 找不到此类的.class文件");
                     logger.info("scan Controller:" + newClass);
-                    e.printStackTrace();
                 }
             }
         }
@@ -1223,7 +1185,6 @@ public class ClassUtils {
             return paramNames;
 
         } catch (NotFoundException e) {
-            e.printStackTrace();
             return new String[0];
         }
     }

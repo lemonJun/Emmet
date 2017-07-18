@@ -1,4 +1,4 @@
-package com.takin.emmet.concurrent;
+package com.concurrent;
 
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
@@ -21,7 +21,6 @@ public class BoundedQueue<T> {
     }
 
     public void put(T item) throws InterruptedException {
-        //        lock.lock();
         if (lock.tryLock()) {
             try {
                 while (isFull()) {
@@ -29,7 +28,6 @@ public class BoundedQueue<T> {
                 }
 
                 array[tail] = item;
-                System.out.println("put-" + item);
 
                 if (++tail == array.length) {
                     tail = 0;
@@ -45,14 +43,12 @@ public class BoundedQueue<T> {
     }
 
     public T take() throws InterruptedException {
-        //        lock.lock();
         if (lock.tryLock()) {
             try {
                 while (isEmpty()) {
                     empty.await();
                 }
                 Object obj = array[head];
-                System.out.println("take-" + obj);
                 if (++head == array.length) {
                     head = 0;
                 }

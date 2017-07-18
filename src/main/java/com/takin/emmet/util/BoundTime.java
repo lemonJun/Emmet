@@ -41,7 +41,7 @@ public class BoundTime {
         return next(-step);
     }
 
-    public final static BoundTime miniteBoundTime() {
+    public static final BoundTime miniteBoundTime() {
         return new BoundTime(Calendar.MINUTE, new Handler() {
             @Override
             public long execute(int type, int step) {
@@ -54,7 +54,7 @@ public class BoundTime {
         });
     }
 
-    public final static BoundTime hourBoundTime() {
+    public static final BoundTime hourBoundTime() {
         return new BoundTime(Calendar.HOUR, new Handler() {
             @Override
             public long execute(int type, int step) {
@@ -68,7 +68,7 @@ public class BoundTime {
         });
     }
 
-    public final static BoundTime dayBoundTime() {
+    public static final BoundTime dayBoundTime() {
         return new BoundTime(Calendar.DAY_OF_YEAR, new Handler() {
             @Override
             public long execute(int type, int step) {

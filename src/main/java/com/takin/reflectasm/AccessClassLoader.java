@@ -84,15 +84,16 @@ class AccessClassLoader extends ClassLoader {
         super(parent);
     }
 
+    @Override
     protected java.lang.Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
         // These classes come from the classloader that loaded AccessClassLoader.
-        if (name.equals(FieldAccess.class.getName()))
+        if (Class.forName(name).isAssignableFrom(FieldAccess.class))
             return FieldAccess.class;
-        if (name.equals(MethodAccess.class.getName()))
+        if (Class.forName(name).isAssignableFrom(MethodAccess.class))
             return MethodAccess.class;
-        if (name.equals(ConstructorAccess.class.getName()))
+        if (Class.forName(name).isAssignableFrom(ConstructorAccess.class))
             return ConstructorAccess.class;
-        if (name.equals(PublicConstructorAccess.class.getName()))
+        if (Class.forName(name).isAssignableFrom(PublicConstructorAccess.class))
             return PublicConstructorAccess.class;
         // All other classes come from the classloader that loaded the type we are accessing.
         return super.loadClass(name, resolve);
@@ -101,7 +102,7 @@ class AccessClassLoader extends ClassLoader {
     Class<?> defineClass(String name, byte[] bytes) throws ClassFormatError {
         try {
             // Attempt to load the access class in the same loader, which makes protected and default access members accessible.
-            return (Class<?>) getDefineClassMethod().invoke(getParent(), new Object[] { name, bytes, Integer.valueOf(0), Integer.valueOf(bytes.length), getClass().getProtectionDomain() });
+            return (Class<?>) getDefineClassMethod().invoke(getParent(), name, bytes, Integer.valueOf(0), Integer.valueOf(bytes.length), getClass().getProtectionDomain());
         } catch (Exception ignored) {
             // continue with the definition in the current loader (won't have access to protected and package-protected members)
         }
@@ -134,15 +135,12 @@ class AccessClassLoader extends ClassLoader {
         return parent;
     }
 
-    private static Method getDefineClassMethod() throws Exception {
+    private static Method getDefineClassMethod() throws NoSuchMethodException {
         if (defineClassMethod == null) {
             synchronized (accessClassLoaders) {
                 if (defineClassMethod == null) {
-                    Method classMethod = ClassLoader.class.getDeclaredMethod("defineClass", new Class[] { String.class, byte[].class, int.class, int.class, ProtectionDomain.class });
-                    try {
-                        classMethod.setAccessible(true);
-                    } catch (Exception ignored) {
-                    }
+                    Method classMethod = ClassLoader.class.getDeclaredMethod("defineClass", String.class, byte[].class, int.class, int.class, ProtectionDomain.class);
+                    classMethod.setAccessible(true);
                     defineClassMethod = classMethod;
                 }
             }

@@ -22,6 +22,10 @@ import com.google.common.collect.Maps;
 
 public class AnnotationUtil {
 
+    private AnnotationUtil() {
+
+    }
+
     /**
      * 获取一个类所拥用的某个注解的集合
      * @param c 
@@ -134,7 +138,7 @@ public class AnnotationUtil {
         return (T) cache.getUnchecked(annotationType);
     }
 
-    private static <T extends Annotation> T generateAnnotationImpl(final Class<T> annotationType) {
+    public static <T extends Annotation> T generateAnnotationImpl(final Class<T> annotationType) {
         final Map<String, Object> members = resolveMembers(annotationType);
         return annotationType.cast(Proxy.newProxyInstance(annotationType.getClassLoader(), new Class<?>[] { annotationType }, new InvocationHandler() {
             @Override
@@ -178,7 +182,7 @@ public class AnnotationUtil {
     }
 
     /** Implements {@link Annotation#hashCode}. */
-    private static int annotationHashCode(Class<? extends Annotation> type, Map<String, Object> members) throws Exception {
+    private static int annotationHashCode(Class<? extends Annotation> type, Map<String, Object> members) {
         int result = 0;
         for (Method method : type.getDeclaredMethods()) {
             String name = method.getName();
@@ -199,7 +203,7 @@ public class AnnotationUtil {
     };
 
     /** Implements {@link Annotation#toString}. */
-    private static String annotationToString(Class<? extends Annotation> type, Map<String, Object> members) throws Exception {
+    private static String annotationToString(Class<? extends Annotation> type, Map<String, Object> members) {
         StringBuilder sb = new StringBuilder().append("@").append(type.getName()).append("(");
         JOINER.appendTo(sb, Maps.transformValues(members, DEEP_TO_STRING_FN));
         return sb.append(")").toString();
@@ -211,17 +215,6 @@ public class AnnotationUtil {
     public static boolean isRetainedAtRuntime(Class<? extends Annotation> annotationType) {
         Retention retention = annotationType.getAnnotation(Retention.class);
         return retention != null && retention.value() == RetentionPolicy.RUNTIME;
-    }
-
-    static boolean containsComponentAnnotation(Annotation[] annotations) {
-        for (Annotation annotation : annotations) {
-            // TODO(user): Should we scope this down to dagger.Component?
-            if (annotation.annotationType().getSimpleName().equals("Component")) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**

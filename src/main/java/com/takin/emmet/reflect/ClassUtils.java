@@ -14,12 +14,17 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Preconditions;
 
 /**
  * ClassUtils. (Tool, Static, ThreadSafe)
  */
 public class ClassUtils {
+
+    private static final Logger logger = LoggerFactory.getLogger(ClassUtils.class);
 
     public static final String CLASS_EXTENSION = ".class";
 
@@ -65,7 +70,7 @@ public class ClassUtils {
         if (clazz.isInterface() && isVisible(clazz, classLoader)) {
             return Collections.singleton(clazz);
         }
-        Set<Class> interfaces = new LinkedHashSet<Class>();
+        Set<Class> interfaces = new LinkedHashSet<>();
         Class sclazz = clazz;
         while (sclazz != null) {
             Class<?>[] ifcs = sclazz.getInterfaces();
@@ -100,9 +105,7 @@ public class ClassUtils {
     public static Object newInstance(String name) {
         try {
             return forName(name).newInstance();
-        } catch (InstantiationException e) {
-            throw new IllegalStateException(e.getMessage(), e);
-        } catch (IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException e) {
             throw new IllegalStateException(e.getMessage(), e);
         }
     }
@@ -355,7 +358,7 @@ public class ClassUtils {
 
     public static void checkBytecode(String name, byte[] bytecode) {
         if (bytecode.length > JIT_LIMIT) {
-            System.err.println("The template bytecode too long, may be affect the JIT compiler. template class: " + name);
+            logger.error("The template bytecode too long, may be affect the JIT compiler. template class: " + name);
         }
     }
 
@@ -372,7 +375,7 @@ public class ClassUtils {
     }
 
     public static <K, V> Map<K, V> toMap(Map.Entry<K, V>[] entries) {
-        Map<K, V> map = new HashMap<K, V>();
+        Map<K, V> map = new HashMap<>();
         if (entries != null && entries.length > 0) {
             for (Map.Entry<K, V> enrty : entries) {
                 map.put(enrty.getKey(), enrty.getValue());

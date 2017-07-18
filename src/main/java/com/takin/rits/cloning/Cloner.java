@@ -34,12 +34,12 @@ import java.util.regex.Pattern;
  */
 public class Cloner {
     private final IInstantiationStrategy instantiationStrategy;
-    private final Set<Class<?>> ignored = new HashSet<Class<?>>();
-    private final Set<Class<?>> ignoredInstanceOf = new HashSet<Class<?>>();
-    private final Set<Class<?>> nullInstead = new HashSet<Class<?>>();
-    private final Map<Class<?>, IFastCloner> fastCloners = new HashMap<Class<?>, IFastCloner>();
-    private final Map<Object, Boolean> ignoredInstances = new IdentityHashMap<Object, Boolean>();
-    private final ConcurrentHashMap<Class<?>, List<Field>> fieldsCache = new ConcurrentHashMap<Class<?>, List<Field>>();
+    private final Set<Class<?>> ignored = new HashSet<>();
+    private final Set<Class<?>> ignoredInstanceOf = new HashSet<>();
+    private final Set<Class<?>> nullInstead = new HashSet<>();
+    private final Map<Class<?>, IFastCloner> fastCloners = new HashMap<>();
+    private final Map<Object, Boolean> ignoredInstances = new IdentityHashMap<>();
+    private final ConcurrentHashMap<Class<?>, List<Field>> fieldsCache = new ConcurrentHashMap<>();
 
     public IDumpCloned getDumpCloned() {
         return dumpCloned;
@@ -145,11 +145,8 @@ public class Cloner {
                 }
             }
             throw new RuntimeException("No such field : " + privateFieldName);
-        } catch (final SecurityException e) {
-            throw new RuntimeException(e);
-        } catch (final IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (final IllegalAccessException e) {
+        } catch (final SecurityException | IllegalArgumentException
+                        | IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
@@ -366,7 +363,7 @@ public class Cloner {
     }
 
     // caches immutables for quick reference
-    private final ConcurrentHashMap<Class<?>, Boolean> immutables = new ConcurrentHashMap<Class<?>, Boolean>();
+    private final ConcurrentHashMap<Class<?>, Boolean> immutables = new ConcurrentHashMap<>();
     private boolean cloneAnonymousParent = true;
 
     /**

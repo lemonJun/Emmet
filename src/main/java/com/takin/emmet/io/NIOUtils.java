@@ -41,8 +41,6 @@ import javax.management.ObjectName;
 /**
  * common utilities
  *
- * @author adyliu (imxylz@gmail.com)
- * @since 1.0
  */
 public class NIOUtils {
 

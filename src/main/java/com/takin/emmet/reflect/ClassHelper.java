@@ -9,9 +9,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @author Robert HG (254963746@qq.com) on 5/18/15.
  */
 public class ClassHelper {
+
+    private ClassHelper() {
+
+    }
 
     public static Class<?> forNameWithThreadContextClassLoader(String name) throws ClassNotFoundException {
         return forName(name, Thread.currentThread().getContextClassLoader());
@@ -33,10 +36,7 @@ public class ClassHelper {
      */
     public static ClassLoader getClassLoader(Class<?> cls) {
         ClassLoader cl = null;
-        try {
-            cl = Thread.currentThread().getContextClassLoader();
-        } catch (Throwable ex) {
-        }
+        cl = Thread.currentThread().getContextClassLoader();
         if (cl == null) {
             cl = cls.getClassLoader();
         }
@@ -94,7 +94,7 @@ public class ClassHelper {
         }
 
         // "java.lang.String[]" style arrays
-        if (name.endsWith(ARRAY_SUFFIX)) {
+        if (null != name && name.endsWith(ARRAY_SUFFIX)) {
             String elementClassName = name.substring(0, name.length() - ARRAY_SUFFIX.length());
             Class<?> elementClass = forName(elementClassName, classLoader);
             return Array.newInstance(elementClass, 0).getClass();
@@ -139,7 +139,7 @@ public class ClassHelper {
         // SHOULD sit in a package, so a length check is worthwhile.
         if (name != null && name.length() <= 8) {
             // Could be a primitive - likely.
-            result = (Class<?>) primitiveTypeNameMap.get(name);
+            result = primitiveTypeNameMap.get(name);
         }
         return result;
     }
@@ -153,13 +153,13 @@ public class ClassHelper {
      * Map with primitive type name as key and corresponding primitive type as
      * value, for example: "int" -> "int.class".
      */
-    private static final Map<String, Class<?>> primitiveTypeNameMap = new HashMap<String, Class<?>>(16);
+    private static final Map<String, Class<?>> primitiveTypeNameMap = new HashMap<>(16);
 
     /**
      * Map with primitive wrapper type as key and corresponding primitive type
      * as value, for example: Integer.class -> int.class.
      */
-    private static final Map<Class<?>, Class<?>> primitiveWrapperTypeMap = new HashMap<Class<?>, Class<?>>(8);
+    private static final Map<Class<?>, Class<?>> primitiveWrapperTypeMap = new HashMap<>(8);
 
     static {
         primitiveWrapperTypeMap.put(Boolean.class, boolean.class);
@@ -171,11 +171,11 @@ public class ClassHelper {
         primitiveWrapperTypeMap.put(Long.class, long.class);
         primitiveWrapperTypeMap.put(Short.class, short.class);
 
-        Set<Class<?>> primitiveTypeNames = new HashSet<Class<?>>(16);
+        Set<Class<?>> primitiveTypeNames = new HashSet<>(16);
         primitiveTypeNames.addAll(primitiveWrapperTypeMap.values());
         primitiveTypeNames.addAll(Arrays.asList(new Class<?>[] { boolean[].class, byte[].class, char[].class, double[].class, float[].class, int[].class, long[].class, short[].class }));
         for (Iterator<Class<?>> it = primitiveTypeNames.iterator(); it.hasNext();) {
-            Class<?> primitiveClass = (Class<?>) it.next();
+            Class<?> primitiveClass = it.next();
             primitiveTypeNameMap.put(primitiveClass.getName(), primitiveClass);
         }
     }

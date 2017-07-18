@@ -8,12 +8,17 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class AddressUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(AddressUtil.class);
 
     private AddressUtil() {
 
     }
-    
+
     public static String getLocalAddress() {
         try {
             // Traversal Network interface to get the first non-loopback and non-private address
@@ -52,7 +57,7 @@ public class AddressUtil {
             final InetAddress localHost = InetAddress.getLocalHost();
             return normalizeHostAddress(localHost);
         } catch (SocketException | UnknownHostException e) {
-            e.printStackTrace();
+            logger.error("", e);
         }
         return null;
     }

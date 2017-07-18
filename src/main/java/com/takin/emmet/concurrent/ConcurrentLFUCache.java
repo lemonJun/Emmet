@@ -28,7 +28,8 @@ public class ConcurrentLFUCache<K, V> implements Cache<K, V> {
     private static final Logger log = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     private final ConcurrentHashMap<Object, CacheEntry<K, V>> map;
-    private final int upperWaterMark, lowerWaterMark;
+    private final int upperWaterMark;
+    private final int lowerWaterMark;
     private final ReentrantLock markAndSweepLock = new ReentrantLock(true);
     private boolean isCleaning = false; // not volatile... piggybacked on other volatile vars
     private final boolean newThreadForCleanup;
@@ -36,7 +37,6 @@ public class ConcurrentLFUCache<K, V> implements Cache<K, V> {
     private final Stats stats = new Stats();
     @SuppressWarnings("unused")
     private final int acceptableWaterMark;
-    private long lowHitCount = 0; // not volatile, only accessed in the cleaning method
     private final EvictionListener<K, V> evictionListener;
     private CleanupThread cleanupThread;
     private final boolean timeDecay;
@@ -144,7 +144,6 @@ public class ConcurrentLFUCache<K, V> implements Cache<K, V> {
         if (!markAndSweepLock.tryLock())
             return;
         try {
-            //            long lowHitCount = this.lowHitCount;
             isCleaning = true;
             //            this.lowHitCount = lowHitCount; // volatile write to make isCleaning visible
 
