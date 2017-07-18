@@ -1011,15 +1011,11 @@ public class ClassUtils {
      * @param pack 包名
      * @return
      */
-    public static Set<Class<?>> getClasses(String pack) {
-        // 第一个class类的集合
+    public static Set<Class<?>> getCurrentPackageClasses(String subpack) {
         Set<Class<?>> classes = new LinkedHashSet<Class<?>>();
-        // 是否循环迭代
         boolean recursive = true;
-        // 获取包的名字 并进行替换
-        String packageName = pack;
+        String packageName = subpack;
         String packageDirName = packageName.replace('.', '/');
-        // 定义一个枚举的集合 并进行循环来处理这个目录下的things
         Enumeration<URL> dirs;
         try {
             dirs = Thread.currentThread().getContextClassLoader().getResources(packageDirName);
