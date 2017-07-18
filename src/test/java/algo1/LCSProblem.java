@@ -32,7 +32,7 @@ public class LCSProblem {
         for (int i = 1; i < x.length; i++) {
             for (int j = 1; j < y.length; j++) {
                 //对应第一个性质  
-                if (x[i] == y[j]) {
+                if (x[i].equals(y[j])) {
                     c[i][j] = c[i - 1][j - 1] + 1;
                     b[i][j] = 1;
                 }

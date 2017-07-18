@@ -419,14 +419,17 @@ public class ConcurrentLFUCache<K, V> implements Cache<K, V> {
     }
 
     private static class CleanupThread extends Thread {
+        @SuppressWarnings("rawtypes")
         private WeakReference<ConcurrentLFUCache> cache;
 
         private boolean stop = false;
 
+        @SuppressWarnings("rawtypes")
         public CleanupThread(ConcurrentLFUCache c) {
             cache = new WeakReference<>(c);
         }
 
+        @SuppressWarnings("rawtypes")
         @Override
         public void run() {
             while (true) {

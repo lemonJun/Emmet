@@ -119,6 +119,7 @@ public class ClassUtils {
                     try {
                         return _forName(pkg + "." + className);
                     } catch (ClassNotFoundException e2) {
+                        continue;
                     }
                 }
             }
@@ -321,7 +322,7 @@ public class ClassUtils {
             } else if (genericClass != null) {
                 return (Class<?>) genericClass;
             }
-        } catch (Throwable e) {
+        } catch (Exception e) {
         }
         if (cls.getSuperclass() != null) {
             return getGenericClass(cls.getSuperclass(), i);

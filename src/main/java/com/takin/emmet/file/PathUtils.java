@@ -179,7 +179,7 @@ public class PathUtils {
             }
         }
 
-        if (illegalPath & path.length() > 0)
+        if (illegalPath && path.length() > 0)
             throwException(url);
         else
             sb.append(path);

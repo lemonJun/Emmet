@@ -14,7 +14,11 @@ import java.security.MessageDigest;
  * @Date 2010-10-26
  * @version v0.1
  */
-public abstract class CodingUtil {
+public class CodingUtil {
+
+    private CodingUtil() {
+
+    }
 
     public static final String UTF8 = "UTF-8";
     public static final String UTF16 = "UTF-16";
@@ -37,7 +41,7 @@ public abstract class CodingUtil {
      * @param origin
      * @return 加密后的结果
      */
-    public static String MD5Encoding(String origin) {
+    public static String md5Encoding(String origin) {
         return MD5.MD5Encoding(origin);
     }
 
@@ -825,7 +829,7 @@ public abstract class CodingUtil {
          * @throws CodingException
          *             if the parameter supplied is not of type byte[]
          */
-        public Object decode(Object pObject) throws CodingException {
+        public Object decode(Object pObject) {
             if (pObject instanceof byte[]) {
                 return decode((byte[]) pObject);
             } else if (pObject instanceof String) {
@@ -993,7 +997,7 @@ public abstract class CodingUtil {
          * @throws EncoderException
          *             if the parameter supplied is not of type byte[]
          */
-        public Object encode(Object pObject) throws CodingException {
+        public Object encode(Object pObject) {
             if (!(pObject instanceof byte[])) {
                 throw new CodingException("Parameter supplied to Base64 encode is not a byte[]");
             }
@@ -1170,7 +1174,7 @@ public abstract class CodingUtil {
          * @throws DecoderException
          *             Thrown if an odd number or illegal of characters is supplied
          */
-        public static byte[] decodeHex(char[] data) throws CodingException {
+        public static byte[] decodeHex(char[] data) {
 
             int len = data.length;
 
@@ -1268,7 +1272,7 @@ public abstract class CodingUtil {
          * @throws DecoderException
          *             Thrown if ch is an illegal hex character
          */
-        protected static int toDigit(char ch, int index) throws CodingException {
+        protected static int toDigit(char ch, int index) {
             int digit = Character.digit(ch, 16);
             if (digit == -1) {
                 throw new CodingException("Illegal hexadecimal charcter " + ch + " at index " + index);
@@ -1305,7 +1309,7 @@ public abstract class CodingUtil {
          *             Thrown if an odd number of characters is supplied to this function
          * @see #decodeHex(char[])
          */
-        public byte[] decode(byte[] array) throws CodingException {
+        public byte[] decode(byte[] array) {
             try {
                 return decodeHex(new String(array, getCharsetName()).toCharArray());
             } catch (UnsupportedEncodingException e) {
@@ -1326,7 +1330,7 @@ public abstract class CodingUtil {
          *             char[]
          * @see #decodeHex(char[])
          */
-        public Object decode(Object object) throws CodingException {
+        public Object decode(Object object) {
             try {
                 char[] charArray = object instanceof String ? ((String) object).toCharArray() : (char[]) object;
                 return decodeHex(charArray);
@@ -1372,13 +1376,11 @@ public abstract class CodingUtil {
          *             Thrown if the given object is not a String or byte[]
          * @see #encodeHex(byte[])
          */
-        public Object encode(Object object) throws CodingException {
+        public Object encode(Object object) {
             try {
                 byte[] byteArray = object instanceof String ? ((String) object).getBytes(getCharsetName()) : (byte[]) object;
                 return encodeHex(byteArray);
-            } catch (ClassCastException e) {
-                throw new CodingException(e.getMessage(), e);
-            } catch (UnsupportedEncodingException e) {
+            } catch (ClassCastException | UnsupportedEncodingException e) {
                 throw new CodingException(e.getMessage(), e);
             }
         }

@@ -87,14 +87,15 @@ public class ClassHelper {
      * @see Class#forName(String, boolean, ClassLoader)
      */
     public static Class<?> forName(String name, ClassLoader classLoader) throws ClassNotFoundException, LinkageError {
-
+        if (null == name)
+            return null;
         Class<?> clazz = resolvePrimitiveClassName(name);
         if (clazz != null) {
             return clazz;
         }
 
         // "java.lang.String[]" style arrays
-        if (null != name && name.endsWith(ARRAY_SUFFIX)) {
+        if (name.endsWith(ARRAY_SUFFIX)) {
             String elementClassName = name.substring(0, name.length() - ARRAY_SUFFIX.length());
             Class<?> elementClass = forName(elementClassName, classLoader);
             return Array.newInstance(elementClass, 0).getClass();

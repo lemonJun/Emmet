@@ -532,6 +532,9 @@ public abstract class FileUtil {
         if (!dir.exists())
             return false;
         File[] fs = dir.listFiles();
+        if (fs == null || fs.length < 1) {
+            return true;
+        }
         for (File f : fs) {
             if (f.isFile())
                 FileUtil.deleteFile(f);
@@ -696,6 +699,9 @@ public abstract class FileUtil {
      */
     public static void cleanAllFolderInSubFolderes(File dir, String name) throws IOException {
         File[] files = dir.listFiles();
+        if (files == null || files.length < 1) {
+            return;
+        }
         for (File d : files) {
             if (d.isDirectory())
                 if (d.getName().equalsIgnoreCase(name))

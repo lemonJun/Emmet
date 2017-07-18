@@ -208,7 +208,7 @@ public class Cloner {
      * @param set a set of classes which will be scanned for static fields
      */
     public void setExtraStaticFields(final Set<Class<?>> set) {
-        registerStaticFields((Class<?>[]) set.toArray());
+        registerStaticFields(set.toArray(new Class<?>[set.size()]));
     }
 
     /**
@@ -315,7 +315,7 @@ public class Cloner {
         if (dumpCloned != null) {
             dumpCloned.startCloning(o.getClass());
         }
-        final Map<Object, Object> clones = new IdentityHashMap<Object, Object>(16);
+        final Map<Object, Object> clones = new IdentityHashMap<>(16);
         try {
             return cloneInternal(o, clones);
         } catch (final IllegalAccessException e) {
@@ -331,7 +331,7 @@ public class Cloner {
         if (dumpCloned != null) {
             dumpCloned.startCloning(o.getClass());
         }
-        final Map<Object, Object> clones = new IdentityHashMap<Object, Object>(16);
+        final Map<Object, Object> clones = new IdentityHashMap<>(16);
         for (final Object dc : dontCloneThese) {
             clones.put(dc, dc);
         }
@@ -548,9 +548,8 @@ public class Cloner {
                     if (destFields.contains(field)) {
                         field.set(dest, fieldObject);
                     }
-                } catch (final IllegalArgumentException e) {
-                    throw new RuntimeException(e);
-                } catch (final IllegalAccessException e) {
+                } catch (final IllegalArgumentException
+                                | IllegalAccessException e) {
                     throw new RuntimeException(e);
                 }
             }
@@ -570,19 +569,20 @@ public class Cloner {
     }
 
     /**
+     * 注意一下，l值可以是此方法内生成的，也可以是fieldsCache返回的   在多线程下可能会有影响
      * reflection utils, override this to choose which fields to clone
      */
     protected List<Field> allFields(final Class<?> c) {
         List<Field> l = fieldsCache.get(c);
         if (l == null) {
-            l = new LinkedList<Field>();
+            l = new LinkedList<>();
             final Field[] fields = c.getDeclaredFields();
             addAll(l, fields);
             Class<?> sc = c;
             while ((sc = sc.getSuperclass()) != Object.class && sc != null) {
                 addAll(l, sc.getDeclaredFields());
             }
-            fieldsCache.putIfAbsent(c, l);
+            l = fieldsCache.putIfAbsent(c, l);
         }
         return l;
     }

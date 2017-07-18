@@ -224,6 +224,7 @@ public final class WaitStrategies {
             this.sleepTime = sleepTime;
         }
 
+        @SuppressWarnings("rawtypes")
         @Override
         public long computeSleepTime(Attempt failedAttempt) {
             return sleepTime;
@@ -244,9 +245,13 @@ public final class WaitStrategies {
             this.maximum = maximum;
         }
 
+        /**
+         * Math.abs(Integer.min_value)==Integer.min_value 这一个倒是没有想到
+         */
+        @SuppressWarnings("rawtypes")
         @Override
         public long computeSleepTime(Attempt failedAttempt) {
-            long t = Math.abs(RANDOM.nextLong()) % (maximum - minimum);
+            long t = Math.abs(RANDOM.nextLong() % (maximum - minimum));
             return t + minimum;
         }
     }
@@ -262,6 +267,7 @@ public final class WaitStrategies {
             this.increment = increment;
         }
 
+        @SuppressWarnings("rawtypes")
         @Override
         public long computeSleepTime(Attempt failedAttempt) {
             long result = initialSleepTime + (increment * (failedAttempt.getAttemptNumber() - 1));
@@ -282,6 +288,7 @@ public final class WaitStrategies {
             this.maximumWait = maximumWait;
         }
 
+        @SuppressWarnings("rawtypes")
         @Override
         public long computeSleepTime(Attempt failedAttempt) {
             double exp = Math.pow(2, failedAttempt.getAttemptNumber());
@@ -306,6 +313,7 @@ public final class WaitStrategies {
             this.maximumWait = maximumWait;
         }
 
+        @SuppressWarnings("rawtypes")
         @Override
         public long computeSleepTime(Attempt failedAttempt) {
             long fib = fib(failedAttempt.getAttemptNumber());
@@ -347,6 +355,7 @@ public final class WaitStrategies {
             this.waitStrategies = waitStrategies;
         }
 
+        @SuppressWarnings("rawtypes")
         @Override
         public long computeSleepTime(Attempt failedAttempt) {
             long waitTime = 0L;
@@ -367,7 +376,7 @@ public final class WaitStrategies {
             this.function = function;
         }
 
-        @SuppressWarnings({ "ThrowableResultOfMethodCallIgnored", "ConstantConditions", "unchecked" })
+        @SuppressWarnings({ "rawtypes", "unchecked" })
         @Override
         public long computeSleepTime(Attempt lastAttempt) {
             if (lastAttempt.hasException()) {
