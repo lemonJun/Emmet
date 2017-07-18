@@ -137,6 +137,7 @@ public class ConstructorAccessTest extends TestCase {
         Float test2;
         private String test3;
 
+        @Override
         public boolean equals(Object obj) {
             if (this == obj)
                 return true;
@@ -166,6 +167,15 @@ public class ConstructorAccessTest extends TestCase {
                 return false;
             return true;
         }
+
+        /* (non-Javadoc)
+         * @see java.lang.Object#hashCode()
+         */
+        @Override
+        public int hashCode() {
+            return super.hashCode();
+        }
+
     }
 
     static public class HasArgumentConstructor {
@@ -175,6 +185,7 @@ public class ConstructorAccessTest extends TestCase {
             this.moo = moo;
         }
 
+        @Override
         public boolean equals(Object obj) {
             if (this == obj)
                 return true;
@@ -189,6 +200,11 @@ public class ConstructorAccessTest extends TestCase {
             } else if (!moo.equals(other.moo))
                 return false;
             return true;
+        }
+
+        @Override
+        public int hashCode() {
+            return super.hashCode();
         }
 
         public String getMoo() {

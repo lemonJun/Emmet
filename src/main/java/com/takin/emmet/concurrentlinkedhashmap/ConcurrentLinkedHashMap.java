@@ -185,7 +185,7 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V> imple
     @GuardedBy("evictionLock")
     final long[] readBufferReadCount;
     @GuardedBy("evictionLock")
-    final LinkedDeque<Node<K, V>> evictionDeque;
+    final transient LinkedDeque<Node<K, V>> evictionDeque;
 
     @GuardedBy("evictionLock") // must write under lock
     final AtomicLong weightedSize;

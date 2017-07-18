@@ -5,7 +5,7 @@ public class SpinMain {
 
     //    private static TimeCost timeCost = new TimeCost(new TTASLock());
 
-    private static final Lock lock = new MCSLock();
+    private static final Lock lock = new CLHLock();
 
     private static volatile int value = 0;
 
