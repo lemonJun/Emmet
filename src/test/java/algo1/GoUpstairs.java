@@ -19,7 +19,7 @@ public class GoUpstairs {
         // write code here  
         if (n <= 2)
             return n;
-        int f = 1 % 1000000007;
+        int f = 1 % 1000000007;//????
         int s = 2 % 1000000007;
         int t = 0;
         for (int i = 3; i <= n; i++) {
