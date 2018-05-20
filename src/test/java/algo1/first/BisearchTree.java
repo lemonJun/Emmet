@@ -18,7 +18,7 @@ import java.util.List;
  *  
  *  
  *  
- *  
+ * 二叉树
  * @since 
  * @see
  */
@@ -29,50 +29,40 @@ public class BisearchTree {
 
     private static FirstNode root = null;
 
-    static class FirstNode {
-        private Integer key;
-        private FirstNode left;
-        private FirstNode right;
-        private FirstNode parent;
-
-        public FirstNode(int value) {
-            key = value;
-            parent = null;
-            left = null;
-            right = null;
+    public static void main(String[] args) {
+        BisearchTree bh = new BisearchTree();
+        //        int[] keys = new int[] { 15, 6, 18, 3, 17, 13, 23, 18, 20, 2, 9, 4, 33 };
+        int[] keys = new int[] { 15, 6, 18, 3, 7, 2, 4, 13, 9, 17, 20 };
+        for (int key : keys) {
+            bh.add(key);
         }
+        orderWalk(root);
+        System.out.println();
+        //        morrisOrderWalk(root);
+        System.out.println();
 
-        public Integer getKey() {
-            return key;
-        }
+        frontWalk(root);
+        //        System.out.println();
+        //
+        //        morrisProcWalk(root);
+        System.out.println();
+        //
+        backWalk(root);
+        //        System.out.println();
+        //        morrisBackWalk(root);
 
-        public void setKey(Integer key) {
-            this.key = key;
-        }
+        //
+        //        FirstNode min = min(root);
+        //        System.out.println(min.getKey());
+        //
+        //        FirstNode max = max(root);
+        //        System.out.println(max.getKey());
 
-        public FirstNode getLeft() {
-            return left;
-        }
-
-        public void setLeft(FirstNode left) {
-            this.left = left;
-        }
-
-        public FirstNode getRight() {
-            return right;
-        }
-
-        public void setRight(FirstNode right) {
-            this.right = right;
-        }
-
-        public FirstNode getParent() {
-            return parent;
-        }
-
-        public void setParent(FirstNode parent) {
-            this.parent = parent;
-        }
+        //        FirstNode succ = successor(tmp);
+        //        System.out.println(succ.getKey());
+        //
+        //        FirstNode proc = processor(tmp);
+        //        System.out.println(proc.getKey());
 
     }
 
@@ -397,41 +387,50 @@ public class BisearchTree {
 
     }
 
-    public static void main(String[] args) {
-        BisearchTree bh = new BisearchTree();
-        //        int[] keys = new int[] { 15, 6, 18, 3, 17, 13, 23, 18, 20, 2, 9, 4, 33 };
-        int[] keys = new int[] { 15, 6, 18, 3, 7, 2, 4, 13, 9, 17, 20 };
-        for (int key : keys) {
-            bh.add(key);
+    static class FirstNode {
+        private Integer key;
+        private FirstNode left;
+        private FirstNode right;
+        private FirstNode parent;
+
+        public FirstNode(int value) {
+            key = value;
+            parent = null;
+            left = null;
+            right = null;
         }
-        orderWalk(root);
-        System.out.println();
-        morrisOrderWalk(root);
-        System.out.println();
 
-        frontWalk(root);
-        System.out.println();
+        public Integer getKey() {
+            return key;
+        }
 
-        morrisProcWalk(root);
-        System.out.println();
+        public void setKey(Integer key) {
+            this.key = key;
+        }
 
-        backWalk(root);
-        System.out.println();
-        morrisBackWalk(root);
+        public FirstNode getLeft() {
+            return left;
+        }
 
-        //
-        //        FirstNode min = min(root);
-        //        System.out.println(min.getKey());
-        //
-        //        FirstNode max = max(root);
-        //        System.out.println(max.getKey());
+        public void setLeft(FirstNode left) {
+            this.left = left;
+        }
 
-        //        FirstNode succ = successor(tmp);
-        //        System.out.println(succ.getKey());
-        //
-        //        FirstNode proc = processor(tmp);
-        //        System.out.println(proc.getKey());
+        public FirstNode getRight() {
+            return right;
+        }
 
+        public void setRight(FirstNode right) {
+            this.right = right;
+        }
+
+        public FirstNode getParent() {
+            return parent;
+        }
+
+        public void setParent(FirstNode parent) {
+            this.parent = parent;
+        }
     }
 
 }
